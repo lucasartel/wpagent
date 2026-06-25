@@ -3,20 +3,24 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>WPAgents - Agentes de IA para WordPress</title>
-	<meta name="description" content="WPAgents transforma sites WordPress em ambientes com agentes de IA treinados, memória de usuário, RAG com documentos e integrações com provedores de IA.">
+	<title>WPAgent - Agentes de IA para WordPress</title>
+	<meta name="description" content="WPAgent e um plugin gratuito para criar agentes de IA no WordPress com memoria, documentos de treinamento, WordPress AI Connectors e OpenRouter.">
 	<style>
 		:root {
 			--bg: #050608;
 			--panel: #101217;
 			--panel-2: #151821;
+			--panel-3: #0b0d12;
 			--text: #f5f7fb;
 			--muted: #aeb7c4;
+			--soft: #d7dde7;
 			--line: rgba(255, 255, 255, 0.12);
+			--line-strong: rgba(255, 255, 255, 0.2);
 			--cyan: #14c7de;
+			--cyan-soft: rgba(20, 199, 222, 0.14);
 			--pink: #ff2ca8;
 			--red: #e34b42;
-			--silver: #c6ced9;
+			--green: #52d273;
 			--shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
 		}
 
@@ -43,8 +47,8 @@
 
 		.page-shell {
 			background:
-				linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+				linear-gradient(rgba(255, 255, 255, 0.034) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
 				#050608;
 			background-size: 52px 52px;
 			min-height: 100vh;
@@ -53,27 +57,20 @@
 		.nav {
 			align-items: center;
 			backdrop-filter: blur(18px);
-			background: rgba(5, 6, 8, 0.78);
+			background: rgba(5, 6, 8, 0.8);
 			border-bottom: 1px solid var(--line);
 			display: flex;
-			gap: 28px;
+			gap: 24px;
 			justify-content: space-between;
-			padding: 18px max(24px, calc((100vw - 1160px) / 2));
+			padding: 16px max(24px, calc((100vw - 1180px) / 2));
 			position: sticky;
 			top: 0;
 			z-index: 20;
 		}
 
-		.logo {
-			align-items: center;
-			display: flex;
-			gap: 12px;
-			min-width: 0;
-		}
-
 		.logo img {
 			display: block;
-			height: 54px;
+			height: 52px;
 			object-fit: contain;
 			width: auto;
 		}
@@ -81,13 +78,13 @@
 		.nav-links {
 			align-items: center;
 			display: flex;
-			gap: 20px;
+			gap: 18px;
 		}
 
 		.nav-links a {
 			color: var(--muted);
 			font-size: 14px;
-			font-weight: 650;
+			font-weight: 700;
 		}
 
 		.nav-links a:hover {
@@ -100,10 +97,11 @@
 			border-radius: 8px;
 			display: inline-flex;
 			font-size: 14px;
-			font-weight: 800;
+			font-weight: 850;
 			justify-content: center;
-			min-height: 42px;
-			padding: 0 16px;
+			min-height: 44px;
+			padding: 0 17px;
+			white-space: nowrap;
 		}
 
 		.button-primary {
@@ -117,48 +115,66 @@
 			color: var(--text);
 		}
 
+		.button-ghost {
+			background: transparent;
+			color: var(--soft);
+		}
+
 		.hero {
 			display: grid;
-			gap: 42px;
+			gap: 44px;
 			grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
 			margin: 0 auto;
-			max-width: 1160px;
-			min-height: calc(100vh - 82px);
-			padding: 64px 24px 48px;
+			max-width: 1180px;
+			min-height: calc(100vh - 85px);
+			padding: 66px 24px 52px;
 		}
 
 		.hero-copy {
-			align-self: start;
+			align-self: center;
 			min-width: 0;
-			padding-top: 22px;
 		}
 
 		.eyebrow {
 			color: var(--cyan);
 			display: block;
 			font-size: 13px;
-			font-weight: 900;
+			font-weight: 950;
 			letter-spacing: 0.12em;
 			margin-bottom: 16px;
 			text-transform: uppercase;
 		}
 
 		h1 {
-			font-size: clamp(42px, 6.2vw, 78px);
+			font-size: clamp(42px, 6vw, 76px);
 			letter-spacing: 0;
 			line-height: 0.98;
 			margin: 0;
-			max-width: 780px;
+			max-width: 820px;
+		}
+
+		h2 {
+			font-size: clamp(32px, 4vw, 52px);
+			letter-spacing: 0;
+			line-height: 1.05;
+			margin: 0;
+		}
+
+		h3 {
+			font-size: 18px;
+			line-height: 1.22;
+			margin: 0;
 		}
 
 		.lead {
 			color: var(--muted);
 			font-size: clamp(18px, 2vw, 22px);
 			margin: 24px 0 0;
-			max-width: 660px;
+			max-width: 700px;
 		}
 
-		.hero-actions {
+		.hero-actions,
+		.cta-actions {
 			display: flex;
 			flex-wrap: wrap;
 			gap: 12px;
@@ -169,18 +185,20 @@
 			color: var(--muted);
 			display: flex;
 			flex-wrap: wrap;
-			gap: 14px;
-			margin-top: 34px;
+			gap: 10px;
+			margin-top: 32px;
 		}
 
-		.hero-proof span {
+		.hero-proof span,
+		.badge {
 			border: 1px solid var(--line);
 			border-radius: 999px;
 			font-size: 13px;
+			font-weight: 750;
 			padding: 8px 12px;
 		}
 
-		.product-board {
+		.version-card {
 			align-self: center;
 			background: rgba(16, 18, 23, 0.92);
 			border: 1px solid var(--line);
@@ -190,13 +208,12 @@
 			overflow: hidden;
 		}
 
-		.board-top {
+		.version-top {
 			align-items: center;
 			border-bottom: 1px solid var(--line);
 			display: flex;
-			gap: 10px;
 			justify-content: space-between;
-			padding: 14px;
+			padding: 16px;
 		}
 
 		.window-dots {
@@ -211,171 +228,70 @@
 			width: 10px;
 		}
 
-		.board-top strong {
+		.release-panel {
+			display: grid;
+			gap: 18px;
+			padding: 24px;
+		}
+
+		.release-number {
+			align-items: baseline;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+		}
+
+		.release-number strong {
+			font-size: clamp(30px, 4vw, 46px);
+			line-height: 1;
+		}
+
+		.release-number span {
+			color: var(--green);
 			font-size: 13px;
-			color: var(--silver);
+			font-weight: 850;
 		}
 
-		.chat-preview {
-			display: grid;
-			grid-template-columns: 148px minmax(0, 1fr);
-			min-height: 520px;
-		}
-
-		.preview-sidebar {
-			background: #0b0d12;
-			border-right: 1px solid var(--line);
-			padding: 14px;
-		}
-
-		.preview-agent {
-			border: 1px solid var(--line);
-			border-radius: 8px;
-			display: grid;
-			gap: 6px;
-			margin-bottom: 10px;
-			padding: 10px;
-		}
-
-		.preview-agent strong,
-		.preview-field strong {
-			font-size: 12px;
-		}
-
-		.preview-agent span,
-		.preview-field span {
+		.release-panel p {
 			color: var(--muted);
-			font-size: 11px;
+			margin: 0;
 		}
 
-		.preview-field {
-			background: #11151d;
-			border: 1px solid var(--line);
-			border-radius: 8px;
-			display: grid;
-			gap: 8px;
-			margin-top: 22px;
-			padding: 10px;
-		}
-
-		.input-line {
+		.command {
 			background: #07090d;
-			border: 1px solid rgba(255, 255, 255, 0.1);
-			border-radius: 6px;
-			height: 28px;
-		}
-
-		.preview-main {
-			display: grid;
-			grid-template-rows: auto minmax(0, 1fr) auto;
-			min-width: 0;
-		}
-
-		.preview-header {
-			align-items: center;
-			border-bottom: 1px solid var(--line);
-			display: flex;
-			justify-content: space-between;
-			padding: 14px 16px;
-		}
-
-		.preview-header strong {
-			font-size: 14px;
-		}
-
-		.preview-badge {
-			background: rgba(20, 199, 222, 0.12);
-			border: 1px solid rgba(20, 199, 222, 0.36);
-			border-radius: 999px;
-			color: #7ee7f2;
-			font-size: 12px;
-			font-weight: 800;
-			padding: 7px 10px;
-		}
-
-		.preview-messages {
-			display: flex;
-			flex-direction: column;
-			gap: 14px;
-			padding: 18px;
-		}
-
-		.message {
+			border: 1px solid var(--line);
 			border-radius: 8px;
+			color: var(--soft);
+			font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 			font-size: 13px;
-			max-width: 88%;
-			padding: 12px;
-		}
-
-		.message-user {
-			align-self: flex-end;
-			background: #255ea8;
-		}
-
-		.message-agent {
-			background: #171d28;
-			border: 1px solid var(--line);
-		}
-
-		.sources {
-			display: grid;
-			gap: 8px;
-			margin-top: 12px;
-		}
-
-		.source-pill {
-			background: rgba(255, 255, 255, 0.05);
-			border: 1px solid var(--line);
-			border-radius: 6px;
-			color: var(--muted);
-			font-size: 11px;
-			padding: 8px;
-		}
-
-		.preview-composer {
-			border-top: 1px solid var(--line);
+			overflow-x: auto;
 			padding: 14px;
+			white-space: nowrap;
 		}
 
-		.composer-box {
-			align-items: center;
-			background: #0b0d12;
-			border: 1px solid var(--line);
-			border-radius: 8px;
-			display: flex;
+		.release-links {
+			display: grid;
 			gap: 10px;
-			justify-content: space-between;
-			padding: 10px;
+			grid-template-columns: 1fr 1fr;
 		}
 
-		.composer-box span {
+		.release-meta {
+			border-top: 1px solid var(--line);
 			color: var(--muted);
+			display: grid;
+			gap: 10px;
 			font-size: 13px;
-		}
-
-		.composer-box b {
-			background: #f5f7fb;
-			border-radius: 6px;
-			color: #090b10;
-			font-size: 12px;
-			padding: 8px 10px;
+			padding-top: 18px;
 		}
 
 		.section {
 			margin: 0 auto;
-			max-width: 1160px;
-			padding: 72px 24px;
+			max-width: 1180px;
+			padding: 74px 24px;
 		}
 
 		.section-heading {
-			max-width: 780px;
-		}
-
-		h2 {
-			font-size: clamp(32px, 4vw, 52px);
-			letter-spacing: 0;
-			line-height: 1.05;
-			margin: 0;
+			max-width: 820px;
 		}
 
 		.section-heading p {
@@ -391,65 +307,63 @@
 			margin-top: 34px;
 		}
 
-		.feature {
-			background: rgba(16, 18, 23, 0.86);
+		.feature,
+		.use-card,
+		.safety-card,
+		.step {
+			background: rgba(16, 18, 23, 0.88);
 			border: 1px solid var(--line);
 			border-radius: 8px;
-			min-height: 176px;
+			min-width: 0;
 			padding: 20px;
+		}
+
+		.feature {
+			min-height: 166px;
+		}
+
+		.feature p,
+		.use-card p,
+		.safety-card p,
+		.step p {
+			color: var(--muted);
+			font-size: 14px;
+			margin: 11px 0 0;
 		}
 
 		.feature-icon {
 			align-items: center;
-			background: #0b0d12;
+			background: var(--panel-3);
 			border: 1px solid var(--line);
 			border-radius: 8px;
+			color: var(--cyan);
 			display: inline-flex;
+			font-size: 15px;
+			font-weight: 950;
 			height: 38px;
 			justify-content: center;
 			margin-bottom: 18px;
 			width: 38px;
 		}
 
-		.feature-icon svg {
-			height: 20px;
-			stroke: var(--cyan);
-			width: 20px;
-		}
-
-		.feature h3,
-		.flow-step h3,
-		.role-card h3 {
-			font-size: 18px;
-			line-height: 1.2;
-			margin: 0;
-		}
-
-		.feature p,
-		.flow-step p,
-		.role-card p {
-			color: var(--muted);
-			font-size: 14px;
-			margin: 12px 0 0;
-		}
-
-		.flow {
+		.workflow {
 			border: 1px solid var(--line);
 			border-radius: 8px;
 			display: grid;
-			grid-template-columns: repeat(4, minmax(0, 1fr));
+			grid-template-columns: repeat(6, minmax(0, 1fr));
 			margin-top: 34px;
 			overflow: hidden;
 		}
 
-		.flow-step {
+		.step {
 			background: rgba(16, 18, 23, 0.78);
+			border: 0;
+			border-radius: 0;
 			border-right: 1px solid var(--line);
 			min-height: 210px;
-			padding: 22px;
 		}
 
-		.flow-step:last-child {
+		.step:last-child {
 			border-right: 0;
 		}
 
@@ -457,40 +371,53 @@
 			color: var(--pink);
 			display: block;
 			font-size: 13px;
-			font-weight: 900;
+			font-weight: 950;
 			margin-bottom: 18px;
 		}
 
-		.roles {
+		.two-col {
 			display: grid;
-			gap: 16px;
+			gap: 18px;
+			grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+			margin-top: 34px;
+		}
+
+		.stack {
+			display: grid;
+			gap: 14px;
+		}
+
+		.use-grid,
+		.safety-grid {
+			display: grid;
+			gap: 14px;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			margin-top: 34px;
 		}
 
-		.role-card {
+		.list-card {
 			background: #101217;
 			border: 1px solid var(--line);
 			border-radius: 8px;
 			padding: 24px;
 		}
 
-		.role-card ul {
+		.list-card ul {
 			color: var(--muted);
 			display: grid;
-			gap: 8px;
+			gap: 10px;
 			list-style: none;
 			margin: 18px 0 0;
 			padding: 0;
 		}
 
-		.role-card li {
+		.list-card li {
 			font-size: 14px;
-			padding-left: 20px;
+			padding-left: 21px;
 			position: relative;
 		}
 
-		.role-card li::before {
+		.list-card li::before {
 			background: var(--cyan);
 			border-radius: 99px;
 			content: "";
@@ -502,15 +429,20 @@
 		}
 
 		.integrations {
-			align-items: center;
+			align-items: start;
 			background: #101217;
 			border: 1px solid var(--line);
 			border-radius: 8px;
 			display: grid;
 			gap: 28px;
-			grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
 			margin-top: 34px;
 			padding: 28px;
+		}
+
+		.integrations p {
+			color: var(--muted);
+			margin: 14px 0 0;
 		}
 
 		.integration-list {
@@ -523,10 +455,26 @@
 			background: rgba(255, 255, 255, 0.06);
 			border: 1px solid var(--line);
 			border-radius: 999px;
-			color: var(--silver);
+			color: var(--soft);
 			font-size: 14px;
-			font-weight: 750;
+			font-weight: 800;
 			padding: 10px 13px;
+		}
+
+		.download-band {
+			background: var(--cyan-soft);
+			border: 1px solid rgba(20, 199, 222, 0.34);
+			border-radius: 8px;
+			display: grid;
+			gap: 22px;
+			grid-template-columns: minmax(0, 1fr) auto;
+			margin-top: 34px;
+			padding: 26px;
+		}
+
+		.download-band p {
+			color: var(--muted);
+			margin: 10px 0 0;
 		}
 
 		.cta {
@@ -534,7 +482,7 @@
 			border-radius: 8px;
 			color: #090b10;
 			margin: 60px auto 0;
-			max-width: 1160px;
+			max-width: 1180px;
 			padding: 42px;
 		}
 
@@ -546,14 +494,7 @@
 			color: #3b4450;
 			font-size: 18px;
 			margin: 14px 0 0;
-			max-width: 740px;
-		}
-
-		.cta-actions {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 12px;
-			margin-top: 26px;
+			max-width: 780px;
 		}
 
 		.cta .button-primary {
@@ -572,8 +513,27 @@
 			color: var(--muted);
 			font-size: 13px;
 			margin: 0 auto;
-			max-width: 1160px;
+			max-width: 1180px;
 			padding: 28px 24px 42px;
+		}
+
+		.footer a {
+			color: var(--soft);
+			font-weight: 800;
+		}
+
+		@media (max-width: 1040px) {
+			.workflow {
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+			}
+
+			.step:nth-child(3) {
+				border-right: 0;
+			}
+
+			.step:nth-child(-n+3) {
+				border-bottom: 1px solid var(--line);
+			}
 		}
 
 		@media (max-width: 920px) {
@@ -581,40 +541,40 @@
 				display: none;
 			}
 
-			.hero {
+			.hero,
+			.two-col,
+			.integrations,
+			.download-band {
 				grid-template-columns: 1fr;
-				padding-top: 40px;
 			}
 
-			.hero-copy {
-				padding-top: 0;
-			}
-
-			.product-board {
-				align-self: start;
+			.hero {
+				padding-top: 42px;
 			}
 
 			.feature-grid,
-			.flow,
-			.roles,
-			.integrations {
+			.use-grid,
+			.safety-grid {
 				grid-template-columns: 1fr;
 			}
 
-			.flow-step,
-			.flow-step:last-child {
-				border-bottom: 1px solid var(--line);
-				border-right: 0;
+			.release-links {
+				grid-template-columns: 1fr;
 			}
 
-			.flow-step:last-child {
-				border-bottom: 0;
+			.download-band {
+				align-items: start;
 			}
 		}
 
-		@media (max-width: 620px) {
+		@media (max-width: 640px) {
 			.logo img {
 				height: 42px;
+			}
+
+			.nav {
+				padding-left: 16px;
+				padding-right: 16px;
 			}
 
 			.hero,
@@ -623,17 +583,19 @@
 				padding-right: 16px;
 			}
 
-			.chat-preview {
+			.workflow {
 				grid-template-columns: 1fr;
 			}
 
-			.preview-sidebar {
+			.step,
+			.step:nth-child(3),
+			.step:nth-child(-n+3) {
 				border-bottom: 1px solid var(--line);
 				border-right: 0;
 			}
 
-			.message {
-				max-width: 100%;
+			.step:last-child {
+				border-bottom: 0;
 			}
 
 			.cta {
@@ -648,212 +610,201 @@
 <body>
 	<div class="page-shell">
 		<header class="nav">
-			<a class="logo" href="#top" aria-label="WPAgents">
-				<img src="logo-WPagents-nav.png" alt="WPAgents">
+			<a class="logo" href="#top" aria-label="WPAgent">
+				<img src="logo-WPagents-nav.png" alt="WPAgent">
 			</a>
 			<nav class="nav-links" aria-label="Navegacao principal">
+				<a href="#download">Download</a>
 				<a href="#funcionalidades">Funcionalidades</a>
-				<a href="#rag">RAG</a>
-				<a href="#assistentes">Assistentes</a>
-				<a href="#integracoes">Integracoes</a>
+				<a href="#como-funciona">Como funciona</a>
+				<a href="#seguranca">Seguranca</a>
 			</nav>
-			<a class="button button-secondary" href="#comece">Ver proposta</a>
+			<a class="button button-secondary" href="https://github.com/lucasartel/wpagent/releases/latest">Baixar</a>
 		</header>
 
 		<main id="top">
 			<section class="hero">
 				<div class="hero-copy">
-					<span class="eyebrow">Plugin de IA para WordPress</span>
-					<h1>Agentes treinados, personalizados e prontos para conversar dentro do seu site.</h1>
-					<p class="lead">O WPAgents permite criar assistentes de IA por shortcode, treinar cada agente com documentos, manter memoria do usuario e integrar provedores como WordPress AI, OpenRouter, OpenAI, Claude e Gemini.</p>
+					<span class="eyebrow">Plugin gratuito e open source</span>
+					<h1>Agentes de IA para WordPress com memoria, documentos e multiplos provedores.</h1>
+					<p class="lead">WPAgent transforma qualquer site WordPress em uma plataforma de assistentes treinados com conteudo proprio, conversas persistentes, perfis de usuario, RAG com documentos e integracao com WordPress AI / Connectors ou OpenRouter.</p>
 					<div class="hero-actions">
-						<a class="button button-primary" href="#funcionalidades">Explorar funcionalidades</a>
-						<a class="button button-secondary" href="#rag">Como o treinamento funciona</a>
+						<a class="button button-primary" href="https://github.com/lucasartel/wpagent/releases/latest/download/wpagent-0.4.14.zip">Baixar ultima versao</a>
+						<a class="button button-secondary" href="https://github.com/lucasartel/wpagent">Ver no GitHub</a>
+						<a class="button button-ghost" href="#funcionalidades">Explorar recursos</a>
 					</div>
 					<div class="hero-proof" aria-label="Principais recursos">
-						<span>Multiagente</span>
+						<span>GPL-2.0-or-later</span>
+						<span>WordPress AI</span>
+						<span>OpenRouter</span>
 						<span>RAG com documentos</span>
 						<span>Memoria por usuario</span>
-						<span>Chat publico e admin</span>
 					</div>
 				</div>
 
-				<div class="product-board" aria-label="Previa da interface do WPAgents">
-					<div class="board-top">
+				<aside class="version-card" id="download" aria-label="Download da ultima versao">
+					<div class="version-top">
 						<div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-						<strong>Shortcode do agente</strong>
+						<strong>Release atual</strong>
 					</div>
-					<div class="chat-preview">
-						<aside class="preview-sidebar">
-							<div class="preview-agent">
-								<strong>Educadoria</strong>
-								<span>BNCC, planos e atividades</span>
-							</div>
-							<div class="preview-agent">
-								<strong>HomilyAI</strong>
-								<span>Aconselhamento treinado</span>
-							</div>
-							<div class="preview-field">
-								<strong>Perfil estruturado</strong>
-								<span>Ano em que leciono</span>
-								<div class="input-line"></div>
-								<span>Estilo de aula</span>
-								<div class="input-line"></div>
-							</div>
-						</aside>
-						<section class="preview-main">
-							<div class="preview-header">
-								<strong>Nova conversa</strong>
-								<span class="preview-badge">RAG ativo</span>
-							</div>
-							<div class="preview-messages">
-								<div class="message message-user">Crie uma atividade ABP para o 7 ano de Ciencias sobre sustentabilidade.</div>
-								<div class="message message-agent">
-									<strong>Atividade pronta para adaptar</strong><br>
-									Problema central, objetivos, etapas, avaliacao e recursos organizados em uma resposta exportavel.
-									<div class="sources">
-										<div class="source-pill">Fonte consultada: BNCC - Ciencias da Natureza</div>
-										<div class="source-pill">Exportacao disponivel: RTF</div>
-									</div>
-								</div>
-							</div>
-							<div class="preview-composer">
-								<div class="composer-box">
-									<span>Escreva sua mensagem...</span>
-									<b>Enviar</b>
-								</div>
-							</div>
-						</section>
+					<div class="release-panel">
+						<div class="release-number">
+							<strong>v0.4.14</strong>
+							<span>Disponivel agora</span>
+						</div>
+						<p>Baixe o ZIP instalavel e envie pelo painel do WordPress em Plugins > Adicionar novo > Enviar plugin.</p>
+						<div class="command">wpagent-0.4.14.zip</div>
+						<div class="release-links">
+							<a class="button button-primary" href="https://github.com/lucasartel/wpagent/releases/latest/download/wpagent-0.4.14.zip">Download ZIP</a>
+							<a class="button button-secondary" href="https://github.com/lucasartel/wpagent/releases/latest">Notas da release</a>
+						</div>
+						<div class="release-meta">
+							<span>Repositorio: github.com/lucasartel/wpagent</span>
+							<span>Licenca: GPL-2.0-or-later</span>
+							<span>Requer WordPress 7.0 e PHP 7.4+</span>
+						</div>
 					</div>
-				</div>
+				</aside>
 			</section>
 
 			<section class="section" id="funcionalidades">
 				<div class="section-heading">
-					<span class="eyebrow">Funcionalidades do plugin</span>
-					<h2>Uma camada completa para criar agentes de IA dentro do WordPress.</h2>
-					<p>O WPAgents foi pensado para sites que precisam de assistentes treinados, contexto persistente e controle administrativo sem depender de uma plataforma externa de chat.</p>
+					<span class="eyebrow">Funcionalidades</span>
+					<h2>Mais que um chatbot: uma camada de agentes para WordPress.</h2>
+					<p>Cada agente pode ter comportamento, base de conhecimento, historico, memoria, provedor e regras proprias. O mesmo plugin serve para Educadoria, HomilyAI, atendimento publico, suporte interno e produtos digitais.</p>
 				</div>
 
 				<div class="feature-grid">
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
-						<h3>Agentes independentes</h3>
-						<p>Crie varios agentes, cada um com slug, shortcode, prompt, provedor, modelo, arquivos de treinamento e limites proprios.</p>
+						<span class="feature-icon">01</span>
+						<h3>Multiagentes configuraveis</h3>
+						<p>Crie agentes independentes com slug, prompt, shortcode, provedor, modelo, limites e treinamento proprio.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/></svg></span>
-						<h3>Treinamento com documentos</h3>
-						<p>Envie TXT, Markdown, CSV, JSON, HTML, DOCX e textos manuais. O plugin divide o conteudo em trechos pesquisaveis.</p>
+						<span class="feature-icon">02</span>
+						<h3>Chat por shortcode</h3>
+						<p>Adicione qualquer agente a uma pagina ou post com `[wpagent_chat agent="default"]`.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v18M4 8h16M6 16h12"/></svg></span>
-						<h3>Busca por chunks e embeddings</h3>
-						<p>Use busca por palavras-chave ou embeddings para encontrar os trechos mais relevantes antes de enviar contexto ao modelo.</p>
+						<span class="feature-icon">03</span>
+						<h3>Upload de documentos</h3>
+						<p>Indexe TXT, Markdown, CSV, JSON, HTML, DOCX, PDF com texto e conteudo colado manualmente.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-						<h3>Perfil estruturado do usuario</h3>
-						<p>Configure campos por agente, como serie, disciplina, estilo pessoal, objetivos e preferencias. O agente usa isso nas respostas.</p>
+						<span class="feature-icon">04</span>
+						<h3>RAG por chunks</h3>
+						<p>O plugin busca trechos relevantes da base antes de enviar contexto para o modelo.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 5h14v10H8l-3 3z"/></svg></span>
-						<h3>Conversas persistentes</h3>
-						<p>Usuarios logados podem criar, renomear, alternar e apagar conversas, mantendo continuidade por agente.</p>
+						<span class="feature-icon">05</span>
+						<h3>Embeddings opcionais</h3>
+						<p>Gere embeddings em lotes via WP-Cron e use busca semantica antes do fallback por palavra-chave.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M8 7h8M8 11h8M8 15h5"/><path d="M6 3h12v18H6z"/></svg></span>
-						<h3>Exportacao em RTF</h3>
-						<p>Cada resposta do agente pode ser baixada em RTF para edicao no Word, LibreOffice ou Google Docs.</p>
+						<span class="feature-icon">06</span>
+						<h3>Memoria por usuario</h3>
+						<p>O agente pode considerar memorias persistentes e interacoes recentes para respostas mais pessoais.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 18V6M10 18V9M16 18V4M22 18H2"/></svg></span>
+						<span class="feature-icon">07</span>
+						<h3>Perfil declarado</h3>
+						<p>Configure campos estruturados por agente, como turma, area de atuacao, objetivos e preferencias.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon">08</span>
+						<h3>Conversas salvas</h3>
+						<p>Usuarios logados podem criar, renomear, alternar e apagar conversas por agente.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon">09</span>
+						<h3>Assistente publico</h3>
+						<p>Ative um pop-up no front-end para visitantes, com permissao explicita e rate limit.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon">10</span>
+						<h3>Assistente do admin</h3>
+						<p>Disponibilize um agente interno no painel para apoiar rotinas editoriais e operacionais.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon">11</span>
 						<h3>Relatorios e tokens</h3>
-						<p>Acompanhe uso por agente e defina limites diarios, semanais e mensais para controlar custo e consumo.</p>
+						<p>Acompanhe consumo e defina limites diarios, semanais e mensais por agente.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v20M4 6h16M6 18h12"/></svg></span>
-						<h3>Internacionalizacao</h3>
-						<p>Textos preparados para WordPress em portugues, ingles e espanhol, acompanhando o idioma do site.</p>
+						<span class="feature-icon">12</span>
+						<h3>Exportacao de respostas</h3>
+						<p>Respostas podem ser copiadas ou baixadas em RTF para edicao em Word, LibreOffice ou Docs.</p>
 					</article>
 					<article class="feature">
-						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span>
-						<h3>Shortcodes e pop-ups</h3>
-						<p>Use agentes em paginas por shortcode ou ative um assistente publico automaticamente no front-end.</p>
+						<span class="feature-icon">13</span>
+						<h3>Propostas de email</h3>
+						<p>O agente prepara emails estruturados, mas o envio real depende de confirmacao do usuario.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon">14</span>
+						<h3>Acoes administrativas</h3>
+						<p>Integra WordPress Abilities API para propostas de acao com permissao e confirmacao humana.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon">15</span>
+						<h3>Tarefas periodicas</h3>
+						<p>Use WP-Cron para rascunhos, relatorios de comentarios e revisoes conservadoras do site.</p>
 					</article>
 				</div>
 			</section>
 
-			<section class="section" id="rag">
+			<section class="section" id="como-funciona">
 				<div class="section-heading">
-					<span class="eyebrow">RAG e memoria</span>
-					<h2>O agente responde com base no que o site sabe e no contexto de quem esta conversando.</h2>
-					<p>Em vez de jogar documentos inteiros no prompt, o WPAgents pesquisa apenas os trechos relevantes e combina isso com perfil, memoria e historico recente.</p>
+					<span class="eyebrow">Como funciona</span>
+					<h2>Do ZIP ao agente publicado em poucos passos.</h2>
+					<p>O fluxo foi pensado para administradores WordPress: instalar, configurar provedor, criar agente, adicionar conhecimento e publicar o shortcode.</p>
 				</div>
-				<div class="flow">
-					<div class="flow-step">
+
+				<div class="workflow">
+					<article class="step">
 						<span class="step-number">01</span>
-						<h3>Importe a base</h3>
-						<p>O administrador envia documentos ou cola texto limpo diretamente na configuracao do agente.</p>
-					</div>
-					<div class="flow-step">
-						<span class="step-number">02</span>
-						<h3>Indexe em trechos</h3>
-						<p>O conteudo e quebrado em chunks, pronto para busca por palavra-chave ou busca semantica.</p>
-					</div>
-					<div class="flow-step">
-						<span class="step-number">03</span>
-						<h3>Personalize por usuario</h3>
-						<p>Perfil estruturado, memorias e conversas recentes tornam a resposta mais contextual.</p>
-					</div>
-					<div class="flow-step">
-						<span class="step-number">04</span>
-						<h3>Entregue com controle</h3>
-						<p>O usuario recebe uma resposta util, com possibilidade de copiar ou exportar em RTF.</p>
-					</div>
-				</div>
-			</section>
-
-			<section class="section" id="assistentes">
-				<div class="section-heading">
-					<span class="eyebrow">Modos de assistente</span>
-					<h2>Do atendimento publico ao assistente interno do WordPress.</h2>
-					<p>O WPAgents separa claramente o que e publico, o que e para usuarios logados e o que e exclusivo de administradores.</p>
-				</div>
-				<div class="roles">
-					<article class="role-card">
-						<h3>Assistente publico do site</h3>
-						<p>Um agente treinado para visitantes, exibido como pop-up no front-end quando o usuario nao esta logado.</p>
-						<ul>
-							<li>Atendimento, captacao, suporte e FAQ.</li>
-							<li>Respostas baseadas na documentacao do site.</li>
-							<li>Controle de uso para visitantes anonimos.</li>
-						</ul>
+						<h3>Instale</h3>
+						<p>Baixe o ZIP da ultima release e envie pelo painel de plugins do WordPress.</p>
 					</article>
-					<article class="role-card">
-						<h3>Assistente interno do admin</h3>
-						<p>Um agente de apoio operacional para administradores dentro do painel do WordPress.</p>
-						<ul>
-							<li>Criar rascunhos de posts e paginas.</li>
-							<li>Consultar e moderar comentarios com confirmacao.</li>
-							<li>Alterar titulos e apoiar rotinas editoriais.</li>
-						</ul>
+					<article class="step">
+						<span class="step-number">02</span>
+						<h3>Conecte IA</h3>
+						<p>Use WordPress AI / Connectors ou configure OpenRouter direto como fallback.</p>
+					</article>
+					<article class="step">
+						<span class="step-number">03</span>
+						<h3>Crie um agente</h3>
+						<p>Defina nome, slug, prompt, modelo, contexto, acesso de visitantes e limites.</p>
+					</article>
+					<article class="step">
+						<span class="step-number">04</span>
+						<h3>Treine</h3>
+						<p>Envie documentos, cole texto limpo e ajuste quantos trechos entram no prompt.</p>
+					</article>
+					<article class="step">
+						<span class="step-number">05</span>
+						<h3>Publique</h3>
+						<p>Cole o shortcode em qualquer pagina, post ou area do site.</p>
+					</article>
+					<article class="step">
+						<span class="step-number">06</span>
+						<h3>Acompanhe</h3>
+						<p>Revise conversas, tokens, limites, emails e tarefas periodicas no admin.</p>
 					</article>
 				</div>
 			</section>
 
 			<section class="section" id="integracoes">
 				<div class="section-heading">
-					<span class="eyebrow">Integracoes e controle</span>
-					<h2>Use os provedores que ja fazem parte do seu fluxo.</h2>
-					<p>O plugin trabalha com o WordPress AI oficial quando disponivel e mantem OpenRouter direto como fallback ou opcao avancada.</p>
+					<span class="eyebrow">Provedores e conhecimento</span>
+					<h2>Flexivel para projetos diferentes, sem prender o site a um unico fornecedor.</h2>
 				</div>
 				<div class="integrations">
 					<div>
-						<h3>Conectores de IA</h3>
-						<p class="lead">Configure modelos por agente, use chaves globais e mantenha flexibilidade para sites com necessidades diferentes.</p>
+						<h3>Camada recomendada: WordPress AI / Connectors</h3>
+						<p>Configure OpenAI, Gemini, Claude, OpenRouter ou outros conectores no plugin oficial de IA do WordPress. O WPAgent usa essa camada quando disponivel e mantem OpenRouter direto como opcao avancada.</p>
 					</div>
-					<div class="integration-list" aria-label="Provedores suportados">
+					<div class="integration-list" aria-label="Integracoes suportadas">
 						<span>WordPress AI</span>
 						<span>OpenRouter</span>
 						<span>OpenAI</span>
@@ -861,23 +812,101 @@
 						<span>Gemini</span>
 						<span>Modelos por agente</span>
 						<span>Fallback configuravel</span>
+						<span>Embeddings</span>
 						<span>WP-Cron</span>
+						<span>Shortcodes</span>
 					</div>
 				</div>
 			</section>
 
-			<section class="cta" id="comece">
-				<h2>Transforme seu WordPress em uma plataforma de agentes especializados.</h2>
-				<p>Use o WPAgents para educacao, atendimento, conteudo, suporte interno, comunidades, portais de membros e produtos digitais com IA personalizada.</p>
+			<section class="section" id="usos">
+				<div class="section-heading">
+					<span class="eyebrow">Casos de uso</span>
+					<h2>Um motor comum para varios tipos de projeto WordPress com IA.</h2>
+				</div>
+				<div class="use-grid">
+					<article class="use-card">
+						<h3>Educacao e Educadoria</h3>
+						<p>Agentes para planejamento de aulas, BNCC, atividades, tutoria, acompanhamento pedagogico e atendimento de professores.</p>
+					</article>
+					<article class="use-card">
+						<h3>HomilyAI e pastoral</h3>
+						<p>Assistentes treinados com textos, estudos, liturgia, homilias, aconselhamento e materiais de formacao.</p>
+					</article>
+					<article class="use-card">
+						<h3>Atendimento contextual</h3>
+						<p>Responda visitantes com base em documentos, politicas, catalogos, FAQs e conteudo institucional.</p>
+					</article>
+					<article class="use-card">
+						<h3>Operacao WordPress</h3>
+						<p>Apoie administradores com rascunhos, revisoes, comentarios, tarefas periodicas e propostas de acao confirmadas.</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="seguranca">
+				<div class="section-heading">
+					<span class="eyebrow">Seguranca e controle</span>
+					<h2>IA com permissao explicita, limites e confirmacao humana.</h2>
+					<p>O plugin foi desenhado para deixar claro quando o agente apenas conversa, quando propoe algo e quando uma acao real depende de confirmacao.</p>
+				</div>
+				<div class="safety-grid">
+					<article class="safety-card">
+						<h3>Permissoes WordPress</h3>
+						<p>Configuracao de agentes e assistente admin exigem `manage_options`.</p>
+					</article>
+					<article class="safety-card">
+						<h3>Visitantes sob controle</h3>
+						<p>Chat anonimo precisa ser habilitado por agente e recebe rate limit.</p>
+					</article>
+					<article class="safety-card">
+						<h3>Emails confirmados</h3>
+						<p>O agente prepara a proposta, mas o usuario precisa confirmar antes do `wp_mail()`.</p>
+					</article>
+					<article class="safety-card">
+						<h3>Acoes administrativas confirmadas</h3>
+						<p>A Abilities API passa por capability checks e confirmacao no chat.</p>
+					</article>
+					<article class="safety-card">
+						<h3>Chaves protegidas</h3>
+						<p>OpenRouter API keys nao sao exibidas de volta na tela de configuracao.</p>
+					</article>
+					<article class="safety-card">
+						<h3>Privacidade consciente</h3>
+						<p>Conversas, memorias, perfis e eventos de email devem ser declarados na politica de privacidade do site.</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="download-final">
+				<div class="section-heading">
+					<span class="eyebrow">Download</span>
+					<h2>Comece pela ultima release publicada no GitHub.</h2>
+				</div>
+				<div class="download-band">
+					<div>
+						<h3>WPAgent v0.4.14</h3>
+						<p>Release open source inicial com multiagentes, chat REST, memoria, documentos, embeddings opcionais, relatorios, propostas de email e acoes admin confirmadas.</p>
+					</div>
+					<div class="cta-actions">
+						<a class="button button-primary" href="https://github.com/lucasartel/wpagent/releases/latest/download/wpagent-0.4.14.zip">Baixar ZIP</a>
+						<a class="button button-secondary" href="https://github.com/lucasartel/wpagent/releases">Todas as versoes</a>
+					</div>
+				</div>
+			</section>
+
+			<section class="cta">
+				<h2>Gratuito, aberto e pronto para evoluir com a comunidade.</h2>
+				<p>Use o WPAgent como base para criar agentes especializados em educacao, conteudo, atendimento, pastoral, documentacao interna e operacao WordPress.</p>
 				<div class="cta-actions">
-					<a class="button button-primary" href="#funcionalidades">Rever funcionalidades</a>
-					<a class="button button-secondary" href="#top">Voltar ao topo</a>
+					<a class="button button-primary" href="https://github.com/lucasartel/wpagent">Abrir no GitHub</a>
+					<a class="button button-secondary" href="https://github.com/lucasartel/wpagent/issues">Reportar issue</a>
 				</div>
 			</section>
 		</main>
 
 		<footer class="footer">
-			WPAgents - proposta visual de landing page dark para apresentacao do plugin.
+			WPAgent - plugin gratuito para agentes de IA no WordPress. <a href="https://github.com/lucasartel/wpagent">GitHub</a> | <a href="https://github.com/lucasartel/wpagent/releases/latest">Ultima release</a>
 		</footer>
 	</div>
 </body>
