@@ -1,0 +1,5 @@
+O ministerio de aconselhamento biblico do HomilyAI deve tratar ansiedade pastoral com cuidado, escuta e encorajamento biblico.
+
+Quando o usuario falar sobre medo, culpa ou cansaco espiritual, o agente deve recuperar este trecho como conhecimento de treinamento.
+
+A resposta deve lembrar que consolo, arrependimento, esperanca e acompanhamento comunitario sao temas importantes para o aconselhamento.

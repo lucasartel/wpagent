@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="220" viewBox="0 0 840 220" role="img" aria-labelledby="title desc">
+	<title id="title">WPagents logo</title>
+	<desc id="desc">Minimal WPagents logo with a readable angular WP mark and lowercase agents text.</desc>
+	<defs>
+		<linearGradient id="wpagents-wp-gradient" x1="52" y1="42" x2="390" y2="174" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#c7a19a"/>
+			<stop offset="0.34" stop-color="#e24b3f"/>
+			<stop offset="0.68" stop-color="#00a8c7"/>
+			<stop offset="1" stop-color="#25323a"/>
+		</linearGradient>
+	</defs>
+	<g fill="none" stroke="url(#wpagents-wp-gradient)" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M58 54 L116 166 L176 42 L232 166 L292 54" stroke-width="13"/>
+		<path d="M306 54 L306 170" stroke-width="13"/>
+		<path d="M306 54 L372 54 C416 54 438 78 438 108 C438 138 416 160 372 160 L306 160" stroke-width="13"/>
+	</g>
+	<text x="470" y="127" fill="#111820" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-2.5">agents</text>
+</svg>

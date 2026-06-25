@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+ocr-tools/**/node_modules/
+
+# Local environments and caches
+.cache/
+.tools/
+.venv*/
+.tmp*/
+.agents/
+.codex/
+
+# Runtime logs
+*.log
+wp-playground.*.log
+playground-server.*.log
+
+# Release artifacts
+dist/
+*.zip
+
+# Local document conversion outputs and OCR experiments
+converted/
+test-fixtures/**/*.png
+test-fixtures/surya-bhs-page-35/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

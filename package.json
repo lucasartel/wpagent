@@ -1,0 +1,15 @@
+{
+  "name": "wpagent",
+  "version": "0.4.14",
+  "private": true,
+  "description": "WordPress 7.0 AI companion plugin with OpenRouter and user memory.",
+  "scripts": {
+    "wp:start": "wp-playground-cli server --wp=7.0 --php=8.4 --mount=./wpagent:/wordpress/wp-content/plugins/wpagent --blueprint=./playground/blueprint.json --blueprint-may-read-adjacent-files",
+    "wp:blueprint": "wp-playground-cli run-blueprint --wp=7.0 --php=8.4 --mount=./wpagent:/wordpress/wp-content/plugins/wpagent --blueprint=./playground/blueprint.json --blueprint-may-read-adjacent-files",
+    "lint:php": "node ./scripts/php-sanity-check.mjs",
+    "build:zip": "node ./scripts/build-zip.mjs"
+  },
+  "devDependencies": {
+    "@wp-playground/cli": "^2.0.19"
+  }
+}

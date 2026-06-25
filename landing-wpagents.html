@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WPAgents - Agentes de IA para WordPress</title>
+	<meta name="description" content="WPAgents transforma sites WordPress em ambientes com agentes de IA treinados, memória de usuário, RAG com documentos e integrações com provedores de IA.">
+	<style>
+		:root {
+			--bg: #050608;
+			--panel: #101217;
+			--panel-2: #151821;
+			--text: #f5f7fb;
+			--muted: #aeb7c4;
+			--line: rgba(255, 255, 255, 0.12);
+			--cyan: #14c7de;
+			--pink: #ff2ca8;
+			--red: #e34b42;
+			--silver: #c6ced9;
+			--shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			background: var(--bg);
+			color: var(--text);
+			font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			line-height: 1.5;
+			margin: 0;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		.page-shell {
+			background:
+				linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+				#050608;
+			background-size: 52px 52px;
+			min-height: 100vh;
+		}
+
+		.nav {
+			align-items: center;
+			backdrop-filter: blur(18px);
+			background: rgba(5, 6, 8, 0.78);
+			border-bottom: 1px solid var(--line);
+			display: flex;
+			gap: 28px;
+			justify-content: space-between;
+			padding: 18px max(24px, calc((100vw - 1160px) / 2));
+			position: sticky;
+			top: 0;
+			z-index: 20;
+		}
+
+		.logo {
+			align-items: center;
+			display: flex;
+			gap: 12px;
+			min-width: 0;
+		}
+
+		.logo img {
+			display: block;
+			height: 54px;
+			object-fit: contain;
+			width: auto;
+		}
+
+		.nav-links {
+			align-items: center;
+			display: flex;
+			gap: 20px;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			font-size: 14px;
+			font-weight: 650;
+		}
+
+		.nav-links a:hover {
+			color: var(--text);
+		}
+
+		.button {
+			align-items: center;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: inline-flex;
+			font-size: 14px;
+			font-weight: 800;
+			justify-content: center;
+			min-height: 42px;
+			padding: 0 16px;
+		}
+
+		.button-primary {
+			background: #f5f7fb;
+			border-color: #f5f7fb;
+			color: #090b10;
+		}
+
+		.button-secondary {
+			background: rgba(255, 255, 255, 0.06);
+			color: var(--text);
+		}
+
+		.hero {
+			display: grid;
+			gap: 42px;
+			grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+			margin: 0 auto;
+			max-width: 1160px;
+			min-height: calc(100vh - 82px);
+			padding: 64px 24px 48px;
+		}
+
+		.hero-copy {
+			align-self: start;
+			min-width: 0;
+			padding-top: 22px;
+		}
+
+		.eyebrow {
+			color: var(--cyan);
+			display: block;
+			font-size: 13px;
+			font-weight: 900;
+			letter-spacing: 0.12em;
+			margin-bottom: 16px;
+			text-transform: uppercase;
+		}
+
+		h1 {
+			font-size: clamp(42px, 6.2vw, 78px);
+			letter-spacing: 0;
+			line-height: 0.98;
+			margin: 0;
+			max-width: 780px;
+		}
+
+		.lead {
+			color: var(--muted);
+			font-size: clamp(18px, 2vw, 22px);
+			margin: 24px 0 0;
+			max-width: 660px;
+		}
+
+		.hero-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			margin-top: 32px;
+		}
+
+		.hero-proof {
+			color: var(--muted);
+			display: flex;
+			flex-wrap: wrap;
+			gap: 14px;
+			margin-top: 34px;
+		}
+
+		.hero-proof span {
+			border: 1px solid var(--line);
+			border-radius: 999px;
+			font-size: 13px;
+			padding: 8px 12px;
+		}
+
+		.product-board {
+			align-self: center;
+			background: rgba(16, 18, 23, 0.92);
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			box-shadow: var(--shadow);
+			min-width: 0;
+			overflow: hidden;
+		}
+
+		.board-top {
+			align-items: center;
+			border-bottom: 1px solid var(--line);
+			display: flex;
+			gap: 10px;
+			justify-content: space-between;
+			padding: 14px;
+		}
+
+		.window-dots {
+			display: flex;
+			gap: 7px;
+		}
+
+		.window-dots span {
+			background: #3a414c;
+			border-radius: 99px;
+			height: 10px;
+			width: 10px;
+		}
+
+		.board-top strong {
+			font-size: 13px;
+			color: var(--silver);
+		}
+
+		.chat-preview {
+			display: grid;
+			grid-template-columns: 148px minmax(0, 1fr);
+			min-height: 520px;
+		}
+
+		.preview-sidebar {
+			background: #0b0d12;
+			border-right: 1px solid var(--line);
+			padding: 14px;
+		}
+
+		.preview-agent {
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: grid;
+			gap: 6px;
+			margin-bottom: 10px;
+			padding: 10px;
+		}
+
+		.preview-agent strong,
+		.preview-field strong {
+			font-size: 12px;
+		}
+
+		.preview-agent span,
+		.preview-field span {
+			color: var(--muted);
+			font-size: 11px;
+		}
+
+		.preview-field {
+			background: #11151d;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: grid;
+			gap: 8px;
+			margin-top: 22px;
+			padding: 10px;
+		}
+
+		.input-line {
+			background: #07090d;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 6px;
+			height: 28px;
+		}
+
+		.preview-main {
+			display: grid;
+			grid-template-rows: auto minmax(0, 1fr) auto;
+			min-width: 0;
+		}
+
+		.preview-header {
+			align-items: center;
+			border-bottom: 1px solid var(--line);
+			display: flex;
+			justify-content: space-between;
+			padding: 14px 16px;
+		}
+
+		.preview-header strong {
+			font-size: 14px;
+		}
+
+		.preview-badge {
+			background: rgba(20, 199, 222, 0.12);
+			border: 1px solid rgba(20, 199, 222, 0.36);
+			border-radius: 999px;
+			color: #7ee7f2;
+			font-size: 12px;
+			font-weight: 800;
+			padding: 7px 10px;
+		}
+
+		.preview-messages {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+			padding: 18px;
+		}
+
+		.message {
+			border-radius: 8px;
+			font-size: 13px;
+			max-width: 88%;
+			padding: 12px;
+		}
+
+		.message-user {
+			align-self: flex-end;
+			background: #255ea8;
+		}
+
+		.message-agent {
+			background: #171d28;
+			border: 1px solid var(--line);
+		}
+
+		.sources {
+			display: grid;
+			gap: 8px;
+			margin-top: 12px;
+		}
+
+		.source-pill {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid var(--line);
+			border-radius: 6px;
+			color: var(--muted);
+			font-size: 11px;
+			padding: 8px;
+		}
+
+		.preview-composer {
+			border-top: 1px solid var(--line);
+			padding: 14px;
+		}
+
+		.composer-box {
+			align-items: center;
+			background: #0b0d12;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: flex;
+			gap: 10px;
+			justify-content: space-between;
+			padding: 10px;
+		}
+
+		.composer-box span {
+			color: var(--muted);
+			font-size: 13px;
+		}
+
+		.composer-box b {
+			background: #f5f7fb;
+			border-radius: 6px;
+			color: #090b10;
+			font-size: 12px;
+			padding: 8px 10px;
+		}
+
+		.section {
+			margin: 0 auto;
+			max-width: 1160px;
+			padding: 72px 24px;
+		}
+
+		.section-heading {
+			max-width: 780px;
+		}
+
+		h2 {
+			font-size: clamp(32px, 4vw, 52px);
+			letter-spacing: 0;
+			line-height: 1.05;
+			margin: 0;
+		}
+
+		.section-heading p {
+			color: var(--muted);
+			font-size: 18px;
+			margin: 18px 0 0;
+		}
+
+		.feature-grid {
+			display: grid;
+			gap: 14px;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			margin-top: 34px;
+		}
+
+		.feature {
+			background: rgba(16, 18, 23, 0.86);
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			min-height: 176px;
+			padding: 20px;
+		}
+
+		.feature-icon {
+			align-items: center;
+			background: #0b0d12;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: inline-flex;
+			height: 38px;
+			justify-content: center;
+			margin-bottom: 18px;
+			width: 38px;
+		}
+
+		.feature-icon svg {
+			height: 20px;
+			stroke: var(--cyan);
+			width: 20px;
+		}
+
+		.feature h3,
+		.flow-step h3,
+		.role-card h3 {
+			font-size: 18px;
+			line-height: 1.2;
+			margin: 0;
+		}
+
+		.feature p,
+		.flow-step p,
+		.role-card p {
+			color: var(--muted);
+			font-size: 14px;
+			margin: 12px 0 0;
+		}
+
+		.flow {
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			margin-top: 34px;
+			overflow: hidden;
+		}
+
+		.flow-step {
+			background: rgba(16, 18, 23, 0.78);
+			border-right: 1px solid var(--line);
+			min-height: 210px;
+			padding: 22px;
+		}
+
+		.flow-step:last-child {
+			border-right: 0;
+		}
+
+		.step-number {
+			color: var(--pink);
+			display: block;
+			font-size: 13px;
+			font-weight: 900;
+			margin-bottom: 18px;
+		}
+
+		.roles {
+			display: grid;
+			gap: 16px;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			margin-top: 34px;
+		}
+
+		.role-card {
+			background: #101217;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 24px;
+		}
+
+		.role-card ul {
+			color: var(--muted);
+			display: grid;
+			gap: 8px;
+			list-style: none;
+			margin: 18px 0 0;
+			padding: 0;
+		}
+
+		.role-card li {
+			font-size: 14px;
+			padding-left: 20px;
+			position: relative;
+		}
+
+		.role-card li::before {
+			background: var(--cyan);
+			border-radius: 99px;
+			content: "";
+			height: 7px;
+			left: 0;
+			position: absolute;
+			top: 8px;
+			width: 7px;
+		}
+
+		.integrations {
+			align-items: center;
+			background: #101217;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			display: grid;
+			gap: 28px;
+			grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+			margin-top: 34px;
+			padding: 28px;
+		}
+
+		.integration-list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.integration-list span {
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid var(--line);
+			border-radius: 999px;
+			color: var(--silver);
+			font-size: 14px;
+			font-weight: 750;
+			padding: 10px 13px;
+		}
+
+		.cta {
+			background: #f5f7fb;
+			border-radius: 8px;
+			color: #090b10;
+			margin: 60px auto 0;
+			max-width: 1160px;
+			padding: 42px;
+		}
+
+		.cta h2 {
+			color: #090b10;
+		}
+
+		.cta p {
+			color: #3b4450;
+			font-size: 18px;
+			margin: 14px 0 0;
+			max-width: 740px;
+		}
+
+		.cta-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			margin-top: 26px;
+		}
+
+		.cta .button-primary {
+			background: #090b10;
+			border-color: #090b10;
+			color: #fff;
+		}
+
+		.cta .button-secondary {
+			background: transparent;
+			border-color: rgba(9, 11, 16, 0.22);
+			color: #090b10;
+		}
+
+		.footer {
+			color: var(--muted);
+			font-size: 13px;
+			margin: 0 auto;
+			max-width: 1160px;
+			padding: 28px 24px 42px;
+		}
+
+		@media (max-width: 920px) {
+			.nav-links {
+				display: none;
+			}
+
+			.hero {
+				grid-template-columns: 1fr;
+				padding-top: 40px;
+			}
+
+			.hero-copy {
+				padding-top: 0;
+			}
+
+			.product-board {
+				align-self: start;
+			}
+
+			.feature-grid,
+			.flow,
+			.roles,
+			.integrations {
+				grid-template-columns: 1fr;
+			}
+
+			.flow-step,
+			.flow-step:last-child {
+				border-bottom: 1px solid var(--line);
+				border-right: 0;
+			}
+
+			.flow-step:last-child {
+				border-bottom: 0;
+			}
+		}
+
+		@media (max-width: 620px) {
+			.logo img {
+				height: 42px;
+			}
+
+			.hero,
+			.section {
+				padding-left: 16px;
+				padding-right: 16px;
+			}
+
+			.chat-preview {
+				grid-template-columns: 1fr;
+			}
+
+			.preview-sidebar {
+				border-bottom: 1px solid var(--line);
+				border-right: 0;
+			}
+
+			.message {
+				max-width: 100%;
+			}
+
+			.cta {
+				border-radius: 0;
+				margin-left: 0;
+				margin-right: 0;
+				padding: 32px 20px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="page-shell">
+		<header class="nav">
+			<a class="logo" href="#top" aria-label="WPAgents">
+				<img src="logo-WPagents-nav.png" alt="WPAgents">
+			</a>
+			<nav class="nav-links" aria-label="Navegacao principal">
+				<a href="#funcionalidades">Funcionalidades</a>
+				<a href="#rag">RAG</a>
+				<a href="#assistentes">Assistentes</a>
+				<a href="#integracoes">Integracoes</a>
+			</nav>
+			<a class="button button-secondary" href="#comece">Ver proposta</a>
+		</header>
+
+		<main id="top">
+			<section class="hero">
+				<div class="hero-copy">
+					<span class="eyebrow">Plugin de IA para WordPress</span>
+					<h1>Agentes treinados, personalizados e prontos para conversar dentro do seu site.</h1>
+					<p class="lead">O WPAgents permite criar assistentes de IA por shortcode, treinar cada agente com documentos, manter memoria do usuario e integrar provedores como WordPress AI, OpenRouter, OpenAI, Claude e Gemini.</p>
+					<div class="hero-actions">
+						<a class="button button-primary" href="#funcionalidades">Explorar funcionalidades</a>
+						<a class="button button-secondary" href="#rag">Como o treinamento funciona</a>
+					</div>
+					<div class="hero-proof" aria-label="Principais recursos">
+						<span>Multiagente</span>
+						<span>RAG com documentos</span>
+						<span>Memoria por usuario</span>
+						<span>Chat publico e admin</span>
+					</div>
+				</div>
+
+				<div class="product-board" aria-label="Previa da interface do WPAgents">
+					<div class="board-top">
+						<div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+						<strong>Shortcode do agente</strong>
+					</div>
+					<div class="chat-preview">
+						<aside class="preview-sidebar">
+							<div class="preview-agent">
+								<strong>Educadoria</strong>
+								<span>BNCC, planos e atividades</span>
+							</div>
+							<div class="preview-agent">
+								<strong>HomilyAI</strong>
+								<span>Aconselhamento treinado</span>
+							</div>
+							<div class="preview-field">
+								<strong>Perfil estruturado</strong>
+								<span>Ano em que leciono</span>
+								<div class="input-line"></div>
+								<span>Estilo de aula</span>
+								<div class="input-line"></div>
+							</div>
+						</aside>
+						<section class="preview-main">
+							<div class="preview-header">
+								<strong>Nova conversa</strong>
+								<span class="preview-badge">RAG ativo</span>
+							</div>
+							<div class="preview-messages">
+								<div class="message message-user">Crie uma atividade ABP para o 7 ano de Ciencias sobre sustentabilidade.</div>
+								<div class="message message-agent">
+									<strong>Atividade pronta para adaptar</strong><br>
+									Problema central, objetivos, etapas, avaliacao e recursos organizados em uma resposta exportavel.
+									<div class="sources">
+										<div class="source-pill">Fonte consultada: BNCC - Ciencias da Natureza</div>
+										<div class="source-pill">Exportacao disponivel: RTF</div>
+									</div>
+								</div>
+							</div>
+							<div class="preview-composer">
+								<div class="composer-box">
+									<span>Escreva sua mensagem...</span>
+									<b>Enviar</b>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+
+			<section class="section" id="funcionalidades">
+				<div class="section-heading">
+					<span class="eyebrow">Funcionalidades do plugin</span>
+					<h2>Uma camada completa para criar agentes de IA dentro do WordPress.</h2>
+					<p>O WPAgents foi pensado para sites que precisam de assistentes treinados, contexto persistente e controle administrativo sem depender de uma plataforma externa de chat.</p>
+				</div>
+
+				<div class="feature-grid">
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+						<h3>Agentes independentes</h3>
+						<p>Crie varios agentes, cada um com slug, shortcode, prompt, provedor, modelo, arquivos de treinamento e limites proprios.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/></svg></span>
+						<h3>Treinamento com documentos</h3>
+						<p>Envie TXT, Markdown, CSV, JSON, HTML, DOCX e textos manuais. O plugin divide o conteudo em trechos pesquisaveis.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v18M4 8h16M6 16h12"/></svg></span>
+						<h3>Busca por chunks e embeddings</h3>
+						<p>Use busca por palavras-chave ou embeddings para encontrar os trechos mais relevantes antes de enviar contexto ao modelo.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+						<h3>Perfil estruturado do usuario</h3>
+						<p>Configure campos por agente, como serie, disciplina, estilo pessoal, objetivos e preferencias. O agente usa isso nas respostas.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 5h14v10H8l-3 3z"/></svg></span>
+						<h3>Conversas persistentes</h3>
+						<p>Usuarios logados podem criar, renomear, alternar e apagar conversas, mantendo continuidade por agente.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M8 7h8M8 11h8M8 15h5"/><path d="M6 3h12v18H6z"/></svg></span>
+						<h3>Exportacao em RTF</h3>
+						<p>Cada resposta do agente pode ser baixada em RTF para edicao no Word, LibreOffice ou Google Docs.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 18V6M10 18V9M16 18V4M22 18H2"/></svg></span>
+						<h3>Relatorios e tokens</h3>
+						<p>Acompanhe uso por agente e defina limites diarios, semanais e mensais para controlar custo e consumo.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v20M4 6h16M6 18h12"/></svg></span>
+						<h3>Internacionalizacao</h3>
+						<p>Textos preparados para WordPress em portugues, ingles e espanhol, acompanhando o idioma do site.</p>
+					</article>
+					<article class="feature">
+						<span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg></span>
+						<h3>Shortcodes e pop-ups</h3>
+						<p>Use agentes em paginas por shortcode ou ative um assistente publico automaticamente no front-end.</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="rag">
+				<div class="section-heading">
+					<span class="eyebrow">RAG e memoria</span>
+					<h2>O agente responde com base no que o site sabe e no contexto de quem esta conversando.</h2>
+					<p>Em vez de jogar documentos inteiros no prompt, o WPAgents pesquisa apenas os trechos relevantes e combina isso com perfil, memoria e historico recente.</p>
+				</div>
+				<div class="flow">
+					<div class="flow-step">
+						<span class="step-number">01</span>
+						<h3>Importe a base</h3>
+						<p>O administrador envia documentos ou cola texto limpo diretamente na configuracao do agente.</p>
+					</div>
+					<div class="flow-step">
+						<span class="step-number">02</span>
+						<h3>Indexe em trechos</h3>
+						<p>O conteudo e quebrado em chunks, pronto para busca por palavra-chave ou busca semantica.</p>
+					</div>
+					<div class="flow-step">
+						<span class="step-number">03</span>
+						<h3>Personalize por usuario</h3>
+						<p>Perfil estruturado, memorias e conversas recentes tornam a resposta mais contextual.</p>
+					</div>
+					<div class="flow-step">
+						<span class="step-number">04</span>
+						<h3>Entregue com controle</h3>
+						<p>O usuario recebe uma resposta util, com possibilidade de copiar ou exportar em RTF.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="section" id="assistentes">
+				<div class="section-heading">
+					<span class="eyebrow">Modos de assistente</span>
+					<h2>Do atendimento publico ao assistente interno do WordPress.</h2>
+					<p>O WPAgents separa claramente o que e publico, o que e para usuarios logados e o que e exclusivo de administradores.</p>
+				</div>
+				<div class="roles">
+					<article class="role-card">
+						<h3>Assistente publico do site</h3>
+						<p>Um agente treinado para visitantes, exibido como pop-up no front-end quando o usuario nao esta logado.</p>
+						<ul>
+							<li>Atendimento, captacao, suporte e FAQ.</li>
+							<li>Respostas baseadas na documentacao do site.</li>
+							<li>Controle de uso para visitantes anonimos.</li>
+						</ul>
+					</article>
+					<article class="role-card">
+						<h3>Assistente interno do admin</h3>
+						<p>Um agente de apoio operacional para administradores dentro do painel do WordPress.</p>
+						<ul>
+							<li>Criar rascunhos de posts e paginas.</li>
+							<li>Consultar e moderar comentarios com confirmacao.</li>
+							<li>Alterar titulos e apoiar rotinas editoriais.</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="integracoes">
+				<div class="section-heading">
+					<span class="eyebrow">Integracoes e controle</span>
+					<h2>Use os provedores que ja fazem parte do seu fluxo.</h2>
+					<p>O plugin trabalha com o WordPress AI oficial quando disponivel e mantem OpenRouter direto como fallback ou opcao avancada.</p>
+				</div>
+				<div class="integrations">
+					<div>
+						<h3>Conectores de IA</h3>
+						<p class="lead">Configure modelos por agente, use chaves globais e mantenha flexibilidade para sites com necessidades diferentes.</p>
+					</div>
+					<div class="integration-list" aria-label="Provedores suportados">
+						<span>WordPress AI</span>
+						<span>OpenRouter</span>
+						<span>OpenAI</span>
+						<span>Claude</span>
+						<span>Gemini</span>
+						<span>Modelos por agente</span>
+						<span>Fallback configuravel</span>
+						<span>WP-Cron</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="cta" id="comece">
+				<h2>Transforme seu WordPress em uma plataforma de agentes especializados.</h2>
+				<p>Use o WPAgents para educacao, atendimento, conteudo, suporte interno, comunidades, portais de membros e produtos digitais com IA personalizada.</p>
+				<div class="cta-actions">
+					<a class="button button-primary" href="#funcionalidades">Rever funcionalidades</a>
+					<a class="button button-secondary" href="#top">Voltar ao topo</a>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			WPAgents - proposta visual de landing page dark para apresentacao do plugin.
+		</footer>
+	</div>
+</body>
+</html>
