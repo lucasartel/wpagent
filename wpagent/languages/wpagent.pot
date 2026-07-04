@@ -85,6 +85,18 @@ msgstr ""
 msgid "A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA."
 msgstr ""
 
+#: wpagent/includes/class-wpagent-i18n.php:59
+msgid "O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:60
+msgid "O servidor ou provedor de IA ficou indisponivel por alguns instantes. Tente novamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:61
+msgid "O servidor retornou uma pagina de erro em vez de uma resposta do WPAgent. Tente novamente em instantes."
+msgstr ""
+
 #: wpagent/includes/class-wpagent-admin-abilities.php:423
 #: wpagent/includes/class-wpagent-admin-abilities.php:454
 msgid "Ability nao encontrada."
@@ -1677,4 +1689,3 @@ msgstr ""
 #: wpagent/includes/class-wpagent-document-indexer.php:396
 msgid "ZipArchive nao esta disponivel para extrair arquivos DOCX."
 msgstr ""
-

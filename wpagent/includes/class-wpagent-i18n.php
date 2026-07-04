@@ -56,6 +56,9 @@ class WPAgent_I18n {
 		return array(
 			'genericErrorPrefix'       => __( 'Erro no WPAgent. Status ', 'wpagent' ),
 			'timeoutError'             => __( 'A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA.', 'wpagent' ),
+			'serverTimeoutError'       => __( 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.', 'wpagent' ),
+			'serverUnavailableError'   => __( 'O servidor ou provedor de IA ficou indisponivel por alguns instantes. Tente novamente.', 'wpagent' ),
+			'invalidServerResponse'    => __( 'O servidor retornou uma pagina de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.', 'wpagent' ),
 			'emptyTitle'               => __( 'Como posso ajudar?', 'wpagent' ),
 			'emptyText'                => __( 'Escreva uma pergunta ou escolha uma conversa anterior.', 'wpagent' ),
 			'loginToSave'              => __( 'Entre na conta para salvar e retomar conversas.', 'wpagent' ),
@@ -973,6 +976,21 @@ class WPAgent_I18n {
 				'en' => 'The response took too long. Check the key, model, and AI provider.',
 				'pt' => 'A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA.',
 				'es' => 'La respuesta tardó demasiado. Verifica la clave, el modelo y el proveedor de IA.',
+			),
+			'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.' => array(
+				'en' => 'The server took too long to respond. Try again in a moment or use a shorter question.',
+				'pt' => 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.',
+				'es' => 'El servidor tardó demasiado en responder. Inténtalo de nuevo en unos instantes o usa una pregunta más corta.',
+			),
+			'O servidor ou provedor de IA ficou indisponivel por alguns instantes. Tente novamente.' => array(
+				'en' => 'The server or AI provider was unavailable for a moment. Try again.',
+				'pt' => 'O servidor ou provedor de IA ficou indisponível por alguns instantes. Tente novamente.',
+				'es' => 'El servidor o proveedor de IA no estuvo disponible por unos instantes. Inténtalo de nuevo.',
+			),
+			'O servidor retornou uma pagina de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.' => array(
+				'en' => 'The server returned an error page instead of a WPAgent response. Try again in a moment.',
+				'pt' => 'O servidor retornou uma página de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.',
+				'es' => 'El servidor devolvió una página de error en lugar de una respuesta de WPAgent. Inténtalo de nuevo en unos instantes.',
 			),
 			'Entre na conta para salvar e retomar conversas.' => array(
 				'en' => 'Sign in to save and resume conversations.',

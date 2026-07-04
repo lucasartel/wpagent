@@ -1,5 +1,6 @@
 (function () {
 	var i18n = window.wpagentChatI18n || {};
+	var chatRequestTimeoutMs = 70000;
 
 	function t(key, fallback) {
 		return i18n[key] || fallback;
@@ -10,6 +11,48 @@
 			return window.crypto.randomUUID();
 		}
 		return 'wpagent-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+	}
+
+	function responseLooksHtml(response, text) {
+		var contentType = response.headers && response.headers.get ? response.headers.get('content-type') || '' : '';
+		if (contentType.indexOf('text/html') !== -1) {
+			return true;
+		}
+
+		return /^\s*(<!doctype\s+html|<html[\s>]|<head[\s>]|<body[\s>])/i.test(text || '');
+	}
+
+	function compactErrorText(text) {
+		var cleaned = String(text || '')
+			.replace(/<script[\s\S]*?<\/script>/gi, ' ')
+			.replace(/<style[\s\S]*?<\/style>/gi, ' ')
+			.replace(/<[^>]+>/g, ' ')
+			.replace(/\s+/g, ' ')
+			.trim();
+
+		if (!cleaned) {
+			return '';
+		}
+
+		return cleaned.length > 220 ? cleaned.slice(0, 217) + '...' : cleaned;
+	}
+
+	function responseErrorMessage(response, body, text, isHtml) {
+		var status = response.status || 0;
+
+		if (status === 504) {
+			return t('serverTimeoutError', 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.');
+		}
+
+		if (status === 502 || status === 503) {
+			return t('serverUnavailableError', 'O servidor ou provedor de IA ficou indisponível por alguns instantes. Tente novamente.');
+		}
+
+		if (isHtml) {
+			return t('invalidServerResponse', 'O servidor retornou uma página de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.');
+		}
+
+		return body.message || compactErrorText(text) || (t('genericErrorPrefix', 'Erro no WPAgent. Status ') + status);
 	}
 
 	function request(config, url, options) {
@@ -24,7 +67,7 @@
 			options.signal = controller.signal;
 			timer = window.setTimeout(function () {
 				controller.abort();
-			}, 90000);
+			}, chatRequestTimeoutMs);
 		}
 
 		return fetch(url, options).then(function (response) {
@@ -33,15 +76,19 @@
 			}
 			return response.text().then(function (text) {
 				var body = {};
-				if (text) {
+				var isHtml = responseLooksHtml(response, text);
+				if (text && !isHtml) {
 					try {
 						body = JSON.parse(text);
 					} catch (error) {
-						body = { message: text };
+						body = { message: compactErrorText(text) };
 					}
 				}
 				if (!response.ok) {
-					throw new Error(body.message || (t('genericErrorPrefix', 'Erro no WPAgent. Status ') + response.status));
+					throw new Error(responseErrorMessage(response, body, text, isHtml));
+				}
+				if (isHtml) {
+					throw new Error(t('invalidServerResponse', 'O servidor retornou uma página de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.'));
 				}
 				return body;
 			});
@@ -50,7 +97,7 @@
 				window.clearTimeout(timer);
 			}
 			if (error.name === 'AbortError') {
-				throw new Error(t('timeoutError', 'A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA.'));
+				throw new Error(t('serverTimeoutError', 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.'));
 			}
 			throw error;
 		});

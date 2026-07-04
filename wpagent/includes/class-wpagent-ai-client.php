@@ -205,9 +205,9 @@ class WPAgent_AI_Client {
 	}
 
 	private function request_timeout( $context ) {
-		$timeout = (int) apply_filters( 'wpagent_ai_request_timeout', 75, $context );
+		$timeout = (int) apply_filters( 'wpagent_ai_request_timeout', 60, $context );
 
-		return max( 15, min( 120, $timeout ) );
+		return max( 15, min( 90, $timeout ) );
 	}
 
 	private function provider_exception_error( $code, Throwable $throwable ) {
