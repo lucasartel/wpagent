@@ -326,6 +326,14 @@ msgstr ""
 msgid "Cole este shortcode em qualquer pagina ou post."
 msgstr ""
 
+#: wpagent/includes/class-wpagent-agents.php:285
+msgid "Aparencia padrao do chat"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:295
+msgid "Define se o chat abre em modo claro ou escuro antes de o visitante alternar com o botao de tema."
+msgstr ""
+
 #: wpagent/includes/class-wpagent-settings.php:208
 msgid "Com esta opcao ativa, novos agentes herdam os fornecedores, chaves e preferencias configuradas no plugin AI oficial. Agentes existentes podem ser ajustados individualmente na tela do agente."
 msgstr ""

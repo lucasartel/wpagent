@@ -101,6 +101,7 @@ class WPAgent_Shortcode {
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>"
 			data-logged-in="<?php echo is_user_logged_in() ? '1' : '0'; ?>"
 			data-user-profile-enabled="<?php echo '1' === ( $agent['user_profile_enabled'] ?? '0' ) ? '1' : '0'; ?>"
+			data-default-theme="<?php echo 'dark' === ( $agent['default_theme'] ?? 'light' ) ? 'dark' : 'light'; ?>"
 			data-i18n="<?php echo esc_attr( wp_json_encode( WPAgent_I18n::chat_strings() ) ); ?>"
 		>
 			<div class="wpagent-chat__mobile-bar">

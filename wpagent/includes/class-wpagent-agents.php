@@ -277,10 +277,20 @@ class WPAgent_Agents {
 	}
 
 	public function render_shortcode_box( $post ) {
-		$agent = $this->get_agent_by_post( $post->ID );
+		$agent         = $this->get_agent_by_post( $post->ID );
+		$default_theme = 'dark' === $agent['default_theme'] ? 'dark' : 'light';
 		?>
 		<p><code>[wpagent_chat agent="<?php echo esc_attr( $agent['slug'] ); ?>"]</code></p>
 		<p class="description"><?php esc_html_e( 'Cole este shortcode em qualquer pagina ou post.', 'wpagent' ); ?></p>
+		<hr>
+		<p>
+			<label for="wpagent-agent-default-theme"><?php esc_html_e( 'Aparencia padrao do chat', 'wpagent' ); ?></label><br>
+			<select id="wpagent-agent-default-theme" name="wpagent_agent[default_theme]">
+				<option value="light" <?php selected( $default_theme, 'light' ); ?>><?php esc_html_e( 'Modo claro', 'wpagent' ); ?></option>
+				<option value="dark" <?php selected( $default_theme, 'dark' ); ?>><?php esc_html_e( 'Modo escuro', 'wpagent' ); ?></option>
+			</select>
+		</p>
+		<p class="description"><?php esc_html_e( 'Define se o chat abre em modo claro ou escuro antes de o visitante alternar com o botao de tema.', 'wpagent' ); ?></p>
 		<?php
 	}
 
@@ -403,6 +413,7 @@ class WPAgent_Agents {
 			'_wpagent_allow_guest_chat'        => $allow_guest_chat,
 			'_wpagent_public_site_assistant'   => $public_site_assistant,
 			'_wpagent_admin_assistant'         => empty( $input['admin_assistant'] ) ? '0' : '1',
+			'_wpagent_default_theme'           => ( 'dark' === ( $input['default_theme'] ?? '' ) ) ? 'dark' : 'light',
 			'_wpagent_user_profile_enabled'    => empty( $input['user_profile_enabled'] ) ? '0' : '1',
 			'_wpagent_user_profile_label'      => sanitize_text_field( $input['user_profile_label'] ?? __( 'Sobre voce', 'wpagent' ) ),
 			'_wpagent_user_profile_description' => sanitize_textarea_field( $input['user_profile_description'] ?? __( 'Compartilhe informacoes que ajudam este agente a personalizar as respostas.', 'wpagent' ) ),
@@ -490,6 +501,7 @@ class WPAgent_Agents {
 			'allow_guest_chat'         => $this->meta_or_default( $post_id, '_wpagent_allow_guest_chat', $defaults['allow_guest_chat'] ),
 			'public_site_assistant'    => $this->meta_or_default( $post_id, '_wpagent_public_site_assistant', $defaults['public_site_assistant'] ),
 			'admin_assistant'          => $this->meta_or_default( $post_id, '_wpagent_admin_assistant', $defaults['admin_assistant'] ),
+			'default_theme'            => $this->meta_or_default( $post_id, '_wpagent_default_theme', $defaults['default_theme'] ),
 			'user_profile_enabled'     => $this->meta_or_default( $post_id, '_wpagent_user_profile_enabled', $defaults['user_profile_enabled'] ),
 			'user_profile_label'       => $this->meta_or_default( $post_id, '_wpagent_user_profile_label', $defaults['user_profile_label'] ),
 			'user_profile_description' => $this->meta_or_default( $post_id, '_wpagent_user_profile_description', $defaults['user_profile_description'] ),
@@ -609,6 +621,7 @@ class WPAgent_Agents {
 		update_post_meta( $post_id, '_wpagent_allow_guest_chat', $default['allow_guest_chat'] );
 		update_post_meta( $post_id, '_wpagent_public_site_assistant', $default['public_site_assistant'] );
 		update_post_meta( $post_id, '_wpagent_admin_assistant', $default['admin_assistant'] );
+		update_post_meta( $post_id, '_wpagent_default_theme', $default['default_theme'] );
 		update_post_meta( $post_id, '_wpagent_user_profile_enabled', $default['user_profile_enabled'] );
 		update_post_meta( $post_id, '_wpagent_user_profile_label', $default['user_profile_label'] );
 		update_post_meta( $post_id, '_wpagent_user_profile_description', $default['user_profile_description'] );
@@ -638,6 +651,7 @@ class WPAgent_Agents {
 			'allow_guest_chat'         => $this->settings->get( 'allow_guest_chat', '0' ),
 			'public_site_assistant'    => '0',
 			'admin_assistant'          => '0',
+			'default_theme'            => 'light',
 			'user_profile_enabled'     => '0',
 			'user_profile_label'       => __( 'Sobre voce', 'wpagent' ),
 			'user_profile_description' => __( 'Compartilhe informacoes que ajudam este agente a personalizar as respostas.', 'wpagent' ),

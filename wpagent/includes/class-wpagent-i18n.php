@@ -832,6 +832,16 @@ class WPAgent_I18n {
 				'pt' => 'Cole este shortcode em qualquer página ou post.',
 				'es' => 'Pega este shortcode en cualquier página o entrada.',
 			),
+			'Aparencia padrao do chat' => array(
+				'en' => 'Default chat appearance',
+				'pt' => 'Aparência padrão do chat',
+				'es' => 'Apariencia predeterminada del chat',
+			),
+			'Define se o chat abre em modo claro ou escuro antes de o visitante alternar com o botao de tema.' => array(
+				'en' => 'Sets whether the chat opens in light or dark mode before the visitor toggles the theme button.',
+				'pt' => 'Define se o chat abre em modo claro ou escuro antes de o visitante alternar com o botão de tema.',
+				'es' => 'Define si el chat se abre en modo claro u oscuro antes de que el visitante alterne con el botón de tema.',
+			),
 			'Envie documentos para compor a base pesquisavel deste agente. O WPAgent quebra textos longos em trechos e usa somente os trechos relevantes em cada resposta.' => array(
 				'en' => 'Upload documents to build this agent searchable knowledge base. WPAgent splits long texts into chunks and uses only the relevant snippets in each response.',
 				'pt' => 'Envie documentos para compor a base pesquisável deste agente. O WPAgent quebra textos longos em trechos e usa somente os trechos relevantes em cada resposta.',
@@ -1159,7 +1169,7 @@ class WPAgent_I18n {
 			),
 			'Nao foi possivel gerar o RTF' => array(
 				'en' => 'Could not generate the RTF',
-				'pt' => 'NÃ£o foi possÃ­vel gerar o RTF',
+				'pt' => 'Não foi possível gerar o RTF',
 				'es' => 'No fue posible generar el RTF',
 			),
 			'Modo escuro' => array(
@@ -1439,13 +1449,13 @@ class WPAgent_I18n {
 			),
 			'Nao foi possivel concluir a resposta do provedor de IA. Tente novamente em instantes.' => array(
 				'en' => 'The AI provider could not complete the response. Try again in a moment.',
-				'pt' => 'NÃ£o foi possÃ­vel concluir a resposta do provedor de IA. Tente novamente em instantes.',
-				'es' => 'No fue posible completar la respuesta del proveedor de IA. IntÃ©ntalo de nuevo en unos instantes.',
+				'pt' => 'Não foi possível concluir a resposta do provedor de IA. Tente novamente em instantes.',
+				'es' => 'No fue posible completar la respuesta del proveedor de IA. Inténtalo de nuevo en unos instantes.',
 			),
 			'A resposta demorou demais. Tente novamente em instantes ou use uma pergunta mais curta.' => array(
 				'en' => 'The response took too long. Try again in a moment or use a shorter question.',
 				'pt' => 'A resposta demorou demais. Tente novamente em instantes ou use uma pergunta mais curta.',
-				'es' => 'La respuesta tardÃ³ demasiado. IntÃ©ntalo de nuevo en unos instantes o usa una pregunta mÃ¡s corta.',
+				'es' => 'La respuesta tardó demasiado. Inténtalo de nuevo en unos instantes o usa una pregunta más corta.',
 			),
 			'Configure a chave da OpenRouter nas opcoes do WPAgent.' => array(
 				'en' => 'Configure the OpenRouter key in WPAgent settings.',
@@ -1518,48 +1528,48 @@ class WPAgent_I18n {
 			),
 			'Sobre voce' => array(
 				'en' => 'About you',
-				'pt' => 'Sobre vocÃª',
+				'pt' => 'Sobre você',
 				'es' => 'Sobre ti',
 			),
 			'Compartilhe informacoes que ajudam este agente a personalizar as respostas.' => array(
 				'en' => 'Share information that helps this agent personalize its responses.',
-				'pt' => 'Compartilhe informaÃ§Ãµes que ajudam este agente a personalizar as respostas.',
-				'es' => 'Comparte informaciÃ³n que ayude a este agente a personalizar sus respuestas.',
+				'pt' => 'Compartilhe informações que ajudam este agente a personalizar as respostas.',
+				'es' => 'Comparte información que ayude a este agente a personalizar sus respuestas.',
 			),
 			'Perfil declarado pelo usuario' => array(
 				'en' => 'User-declared profile',
-				'pt' => 'Perfil declarado pelo usuÃ¡rio',
+				'pt' => 'Perfil declarado pelo usuário',
 				'es' => 'Perfil declarado por el usuario',
 			),
 			'Permitir que usuarios logados informem dados pessoais para este agente considerar nas respostas.' => array(
 				'en' => 'Allow logged-in users to provide personal context for this agent to consider in replies.',
-				'pt' => 'Permitir que usuÃ¡rios logados informem dados pessoais para este agente considerar nas respostas.',
+				'pt' => 'Permitir que usuários logados informem dados pessoais para este agente considerar nas respostas.',
 				'es' => 'Permitir que usuarios conectados proporcionen contexto personal para que este agente lo considere en sus respuestas.',
 			),
 			'Titulo do campo' => array(
 				'en' => 'Field title',
-				'pt' => 'TÃ­tulo do campo',
-				'es' => 'TÃ­tulo del campo',
+				'pt' => 'Título do campo',
+				'es' => 'Título del campo',
 			),
 			'Descricao para o usuario' => array(
 				'en' => 'Description for the user',
-				'pt' => 'DescriÃ§Ã£o para o usuÃ¡rio',
-				'es' => 'DescripciÃ³n para el usuario',
+				'pt' => 'Descrição para o usuário',
+				'es' => 'Descripción para el usuario',
 			),
 			'Explique quais informacoes ajudam este agente a personalizar as respostas.' => array(
 				'en' => 'Explain which information helps this agent personalize its responses.',
-				'pt' => 'Explique quais informaÃ§Ãµes ajudam este agente a personalizar as respostas.',
-				'es' => 'Explica quÃ© informaciÃ³n ayuda a este agente a personalizar sus respuestas.',
+				'pt' => 'Explique quais informações ajudam este agente a personalizar as respostas.',
+				'es' => 'Explica qué información ayuda a este agente a personalizar sus respuestas.',
 			),
 			'Use para orientar o usuario a informar contexto estavel, como turma, area de atuacao, estilo pessoal, objetivos e preferencias. Essas informacoes entram no prompt como contexto declarado pelo usuario.' => array(
 				'en' => 'Use this to guide users toward stable context such as class year, field of work, personal style, goals, and preferences. This information enters the prompt as user-declared context.',
-				'pt' => 'Use para orientar o usuÃ¡rio a informar contexto estÃ¡vel, como turma, Ã¡rea de atuaÃ§Ã£o, estilo pessoal, objetivos e preferÃªncias. Essas informaÃ§Ãµes entram no prompt como contexto declarado pelo usuÃ¡rio.',
-				'es' => 'Ãšsalo para orientar al usuario a informar contexto estable, como curso, Ã¡rea de trabajo, estilo personal, objetivos y preferencias. Esta informaciÃ³n entra en el prompt como contexto declarado por el usuario.',
+				'pt' => 'Use para orientar o usuário a informar contexto estável, como turma, área de atuação, estilo pessoal, objetivos e preferências. Essas informações entram no prompt como contexto declarado pelo usuário.',
+				'es' => 'Úsalo para orientar al usuario a informar contexto estable, como curso, área de trabajo, estilo personal, objetivos y preferencias. Esta información entra en el prompt como contexto declarado por el usuario.',
 			),
 			'Ex.: ano em que leciono, estilo de aula, objetivos e preferencias...' => array(
 				'en' => 'Example: grade I teach, class style, goals, and preferences...',
-				'pt' => 'Ex.: ano em que leciono, estilo de aula, objetivos e preferÃªncias...',
-				'es' => 'Ej.: curso en el que enseÃ±o, estilo de clase, objetivos y preferencias...',
+				'pt' => 'Ex.: ano em que leciono, estilo de aula, objetivos e preferências...',
+				'es' => 'Ej.: curso en el que enseño, estilo de clase, objetivos y preferencias...',
 			),
 			'Campos estruturados' => array(
 				'en' => 'Structured fields',
@@ -1569,12 +1579,12 @@ class WPAgent_I18n {
 			'Ano em que leciono | teaching_year | text | Ex.: 7 ano' => array(
 				'en' => 'Grade I teach | teaching_year | text | Example: 7th grade',
 				'pt' => 'Ano em que leciono | teaching_year | text | Ex.: 7 ano',
-				'es' => 'Curso en el que enseÃƒÂ±o | teaching_year | text | Ej.: 7Âº aÃƒÂ±o',
+				'es' => 'Curso en el que enseño | teaching_year | text | Ej.: 7º año',
 			),
 			'Adicione um campo por linha no formato: Rotulo | chave | tipo | placeholder. Tipos aceitos: text ou textarea. A chave deve usar letras, numeros e sublinhado.' => array(
 				'en' => 'Add one field per line in this format: Label | key | type | placeholder. Accepted types: text or textarea. The key should use letters, numbers, and underscores.',
-				'pt' => 'Adicione um campo por linha no formato: RÃƒÂ³tulo | chave | tipo | placeholder. Tipos aceitos: text ou textarea. A chave deve usar letras, nÃƒÂºmeros e sublinhado.',
-				'es' => 'Agrega un campo por lÃƒÂ­nea con este formato: Etiqueta | clave | tipo | placeholder. Tipos aceptados: text o textarea. La clave debe usar letras, nÃƒÂºmeros y guion bajo.',
+				'pt' => 'Adicione um campo por linha no formato: Rótulo | chave | tipo | placeholder. Tipos aceitos: text ou textarea. A chave deve usar letras, números e sublinhado.',
+				'es' => 'Agrega un campo por línea con este formato: Etiqueta | clave | tipo | placeholder. Tipos aceptados: text o textarea. La clave debe usar letras, números y guion bajo.',
 			),
 			'Envio de email autorizado' => array(
 				'en' => 'Authorized email sending',
@@ -1608,7 +1618,7 @@ class WPAgent_I18n {
 			),
 			'Observacoes adicionais' => array(
 				'en' => 'Additional notes',
-				'pt' => 'ObservaÃƒÂ§ÃƒÂµes adicionais',
+				'pt' => 'Observações adicionais',
 				'es' => 'Observaciones adicionales',
 			),
 			'Salvar perfil' => array(
@@ -1653,7 +1663,7 @@ class WPAgent_I18n {
 			),
 			'Nao foi possivel salvar o perfil do usuario.' => array(
 				'en' => 'Could not save the user profile.',
-				'pt' => 'NÃ£o foi possÃ­vel salvar o perfil do usuÃ¡rio.',
+				'pt' => 'Não foi possível salvar o perfil do usuário.',
 				'es' => 'No fue posible guardar el perfil del usuario.',
 			),
 			'Usuarios' => array(

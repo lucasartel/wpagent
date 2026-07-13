@@ -151,7 +151,8 @@
 			emailActionsUrl: chat.getAttribute('data-email-actions-url') || '',
 			nonce: chat.getAttribute('data-nonce') || '',
 			isLoggedIn: chat.getAttribute('data-logged-in') === '1',
-			userProfileEnabled: chat.getAttribute('data-user-profile-enabled') === '1'
+			userProfileEnabled: chat.getAttribute('data-user-profile-enabled') === '1',
+			defaultTheme: chat.getAttribute('data-default-theme') === 'dark' ? 'dark' : 'light'
 		};
 		var storedGuestState = loadGuestState();
 		var sessionId = storedGuestState.sessionId || uuid();
@@ -173,7 +174,12 @@
 				stored = window.localStorage.getItem(themeStorageKey) || '';
 			} catch (error) {}
 
-			applyTheme(stored === 'dark' ? 'dark' : 'light');
+			if (stored === 'dark' || stored === 'light') {
+				applyTheme(stored);
+				return;
+			}
+
+			applyTheme(config.defaultTheme === 'dark' ? 'dark' : 'light');
 		}
 
 		function toggleTheme() {

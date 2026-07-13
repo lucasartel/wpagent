@@ -4,7 +4,7 @@ Tags: ai, chatbot, agents, rag, openrouter
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.4.14
+Stable tag: 0.4.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,11 @@ Yes. Depending on configuration, WPAgent can store conversation history, profile
 No. Admin abilities require an administrator, WordPress capability checks, and explicit confirmation in the UI before execution.
 
 == Changelog ==
+
+= 0.4.15 =
+* Fix garbled accented characters (mojibake) in Portuguese/Spanish interface strings.
+* Add per-agent default chat theme (light/dark) option in the agent editor.
+* Handle chat timeout and server error pages with localized messages.
 
 = 0.4.14 =
 * Current open source preparation release.
