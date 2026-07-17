@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Repository' ) ) {
 class WPAgent_Repository {
 	public function record_interaction( $data ) {
 		global $wpdb;
@@ -1112,4 +1113,411 @@ class WPAgent_Repository {
 			'month' => wp_date( 'Y-m-01 00:00:00', $now ),
 		);
 	}
+
+	public function get_conversation_interactions( $conversation_id, $agent_slug, $limit = 50 ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_interactions';
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} WHERE conversation_id = %s AND agent_slug = %s ORDER BY id ASC LIMIT %d",
+				$conversation_id,
+				$agent_slug,
+				$limit
+			),
+			ARRAY_A
+		);
+	}
+
+	public function create_email_schedule( $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_schedules';
+		$wpdb->insert( $table, $data );
+		return $wpdb->insert_id;
+	}
+
+	public function get_email_schedule( $id ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_schedules';
+		return $wpdb->get_row(
+			$wpdb->prepare( "SELECT * FROM {$table} WHERE id = %d", $id ),
+			ARRAY_A
+		);
+	}
+
+	public function get_email_schedule_by_signature( $agent_slug, $signature ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_schedules';
+		return $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} WHERE agent_slug = %s AND signature = %s",
+				$agent_slug,
+				$signature
+			),
+			ARRAY_A
+		);
+	}
+
+	public function update_email_schedule( $id, $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_schedules';
+		return $wpdb->update( $table, $data, array( 'id' => $id ) );
+	}
+
+	public function delete_email_schedule( $id ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_schedules';
+		return $wpdb->delete( $table, array( 'id' => $id ) );
+	}
+
+	public function list_email_schedules( $args = array() ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_schedules';
+		$where = '1=1';
+		if ( ! empty( $args['agent_slug'] ) ) {
+			$where .= $wpdb->prepare( ' AND agent_slug = %s', $args['agent_slug'] );
+		}
+		if ( ! empty( $args['status'] ) ) {
+			$where .= $wpdb->prepare( ' AND status = %s', $args['status'] );
+		}
+		$order = 'ORDER BY updated_at DESC';
+		return $wpdb->get_results( "SELECT * FROM {$table} WHERE {$where} {$order}", ARRAY_A );
+	}
+
+	public function create_email_subscription( $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		$wpdb->insert( $table, $data );
+		return $wpdb->insert_id;
+	}
+
+	public function get_email_subscription_by_email( $schedule_id, $email ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		return $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} WHERE schedule_id = %d AND recipient_email = %s",
+				$schedule_id,
+				$email
+			),
+			ARRAY_A
+		);
+	}
+
+	public function get_email_subscription_by_token( $token ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		return $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} WHERE unsubscribe_token = %s",
+				$token
+			),
+			ARRAY_A
+		);
+	}
+
+	public function update_email_subscription( $id, $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		return $wpdb->update( $table, $data, array( 'id' => $id ) );
+	}
+
+	public function get_due_email_subscriptions( $per_run = 30 ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		$schedules_table = $wpdb->prefix . 'wpagent_email_schedules';
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT s.*
+				FROM {$table} s
+				INNER JOIN {$schedules_table} sch ON s.schedule_id = sch.id
+				WHERE s.consent_status = 'subscribed'
+					AND s.status = 'active'
+					AND sch.status = 'active'
+					AND (s.next_send_at IS NULL OR s.next_send_at <= NOW())
+				ORDER BY s.next_send_at ASC
+				LIMIT %d",
+				$per_run
+			),
+			ARRAY_A
+		);
+	}
+
+	public function list_email_subscriptions( $schedule_id, $args = array() ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		$where = $wpdb->prepare( 'schedule_id = %d', $schedule_id );
+		if ( ! empty( $args['status'] ) ) {
+			$where .= $wpdb->prepare( ' AND status = %s', $args['status'] );
+		}
+		$limit = '';
+		if ( ! empty( $args['limit'] ) ) {
+			$limit = $wpdb->prepare( ' LIMIT %d', $args['limit'] );
+		}
+		$order = 'ORDER BY subscribed_at DESC';
+		return $wpdb->get_results( "SELECT * FROM {$table} WHERE {$where} {$order} {$limit}", ARRAY_A );
+	}
+
+	public function count_email_subscriptions( $schedule_id, $status = 'subscribed' ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_email_subscriptions';
+		return (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$table} WHERE schedule_id = %d AND status = %s",
+				$schedule_id,
+				$status
+			)
+		);
+	}
+
+	public function upsert_conversation_summary( $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_conversation_summaries';
+		$existing = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT id FROM {$table} WHERE conversation_id = %s AND agent_slug = %s",
+				$data['conversation_id'],
+				$data['agent_slug']
+			)
+		);
+		if ( isset( $data['data_points'] ) && is_array( $data['data_points'] ) ) {
+			$data['data_points'] = wp_json_encode( $data['data_points'], JSON_UNESCAPED_UNICODE );
+		}
+		if ( $existing ) {
+			$data['updated_at'] = current_time( 'mysql' );
+			$wpdb->update( $table, $data, array( 'id' => $existing ) );
+			return $existing;
+		}
+		$data['created_at'] = current_time( 'mysql' );
+		$data['updated_at'] = current_time( 'mysql' );
+		$wpdb->insert( $table, $data );
+		return $wpdb->insert_id;
+	}
+
+	public function get_conversation_summary( $conversation_id, $agent_slug ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_conversation_summaries';
+		$row = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} WHERE conversation_id = %s AND agent_slug = %s",
+				$conversation_id,
+				$agent_slug
+			),
+			ARRAY_A
+		);
+		if ( $row ) {
+			$row = $this->decode_summary_data_points( $row );
+		}
+		return $row;
+	}
+
+	public function list_conversation_summaries( $args = array() ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_conversation_summaries';
+		$where = '1=1';
+		if ( ! empty( $args['agent_slug'] ) ) {
+			$where .= $wpdb->prepare( ' AND cs.agent_slug = %s', $args['agent_slug'] );
+		}
+		if ( ! empty( $args['user_id'] ) ) {
+			$where .= $wpdb->prepare( ' AND cs.user_id = %d', $args['user_id'] );
+		}
+		$join = '';
+		$select_extra = '';
+		if ( ! empty( $args['with_conversation'] ) ) {
+			$conv_table = $wpdb->prefix . 'wpagent_conversations';
+			$join = "LEFT JOIN {$conv_table} c ON cs.conversation_id = c.conversation_id";
+			$select_extra = ', c.title as conversation_title, c.updated_at as conversation_updated';
+		}
+		$limit = '';
+		if ( ! empty( $args['limit'] ) ) {
+			$limit = $wpdb->prepare( ' LIMIT %d', $args['limit'] );
+		}
+		$order = 'ORDER BY cs.updated_at DESC';
+		$rows = $wpdb->get_results(
+			"SELECT cs.* {$select_extra} FROM {$table} cs {$join} WHERE {$where} {$order} {$limit}",
+			ARRAY_A
+		);
+		if ( $rows ) {
+			foreach ( $rows as &$row ) {
+				$row = $this->decode_summary_data_points( $row );
+			}
+		}
+		return $rows;
+	}
+
+	private function decode_summary_data_points( $row ) {
+		if ( isset( $row['data_points'] ) && is_string( $row['data_points'] ) ) {
+			$decoded = json_decode( $row['data_points'], true );
+			if ( is_array( $decoded ) ) {
+				$row['data_points'] = $decoded;
+			}
+		} elseif ( ! isset( $row['data_points'] ) ) {
+			$row['data_points'] = array();
+		}
+		return $row;
+	}
+
+	public function get_conversations_needing_summary( $agent_slug, $delay_hours = 4, $limit = 10 ) {
+		global $wpdb;
+		$conv_table   = $wpdb->prefix . 'wpagent_conversations';
+		$int_table    = $wpdb->prefix . 'wpagent_interactions';
+		$summ_table   = $wpdb->prefix . 'wpagent_conversation_summaries';
+		$gmt_offset   = (float) get_option( 'gmt_offset', 0 );
+		$cutoff       = gmdate( 'Y-m-d H:i:s', time() + $gmt_offset * 3600 - $delay_hours * 3600 );
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT c.*,
+					COUNT(DISTINCT i.id) AS interaction_count,
+					MAX(i.id) AS last_interaction_id,
+					MAX(i.created_at) AS last_interaction_at
+				FROM {$conv_table} c
+				LEFT JOIN {$int_table} i ON c.conversation_id = i.conversation_id AND c.agent_slug = i.agent_slug
+				LEFT JOIN {$summ_table} s ON c.conversation_id = s.conversation_id AND c.agent_slug = s.agent_slug
+				WHERE c.agent_slug = %s
+					AND c.updated_at <= %s
+					AND s.id IS NULL
+				GROUP BY c.id
+				ORDER BY c.updated_at ASC
+				LIMIT %d",
+				$agent_slug,
+				$cutoff,
+				$limit
+			),
+			ARRAY_A
+		);
+	}
+
+	public function track_tokens_usage( $user_id, $tokens ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_user_tokens_usage';
+		$user_id = absint( $user_id );
+		$tokens  = absint( $tokens );
+
+		if ( 0 === $user_id || 0 === $tokens ) {
+			return false;
+		}
+
+		$now   = current_time( 'mysql' );
+		$year  = (int) current_time( 'Y' );
+		$month = (int) current_time( 'm' );
+
+		return false !== $wpdb->query(
+			$wpdb->prepare(
+				"INSERT INTO {$table} (user_id, year, month, total_tokens, created_at, updated_at)
+				VALUES (%d, %d, %d, %d, %s, %s)
+				ON DUPLICATE KEY UPDATE
+					total_tokens = total_tokens + %d,
+					updated_at = %s",
+				$user_id,
+				$year,
+				$month,
+				$tokens,
+				$now,
+				$now,
+				$tokens,
+				$now
+			)
+		);
+	}
+
+	public function get_user_monthly_usage( $user_id, $year = null, $month = null ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_user_tokens_usage';
+
+		if ( null === $year || null === $month ) {
+			$year = (int) current_time( 'Y' );
+			$month = (int) current_time( 'm' );
+		}
+
+		$result = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} WHERE user_id = %d AND year = %d AND month = %d",
+				absint( $user_id ),
+				absint( $year ),
+				absint( $month )
+			),
+			ARRAY_A
+		);
+
+		return $result ?: array(
+			'user_id' => absint( $user_id ),
+			'year' => absint( $year ),
+			'month' => absint( $month ),
+			'total_tokens' => 0,
+		);
+	}
+
+	public function can_user_use_tokens( $user_id, $tokens_needed = 1 ) {
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
+		$settings = get_option( 'wpagent_settings', array() );
+		$enable_global_limit = ! empty( $settings['enable_global_token_limit'] );
+		if ( ! $enable_global_limit ) {
+			return true;
+		}
+
+		$global_limit = (int) ( $settings['global_token_limit'] ?? 100000 );
+		if ( 0 === $global_limit ) {
+			return true;
+		}
+
+		$usage = $this->get_user_monthly_usage( $user_id );
+		$current_usage = (int) ( $usage['total_tokens'] ?? 0 );
+
+		if ( ( $current_usage + $tokens_needed ) > $global_limit ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function reset_monthly_usage( $user_id ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_user_tokens_usage';
+
+		return $wpdb->update(
+			$table,
+			array(
+				'total_tokens' => 0,
+				'updated_at' => current_time( 'mysql' ),
+			),
+			array(
+				'user_id' => absint( $user_id ),
+				'year'    => (int) current_time( 'Y' ),
+				'month'   => (int) current_time( 'm' ),
+			),
+			array( '%d', '%s' ),
+			array( '%d' )
+		);
+	}
+
+	public function get_all_users_token_usage( $limit = 100, $year = null, $month = null ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpagent_user_tokens_usage';
+
+		if ( null === $year ) {
+			$year = (int) current_time( 'Y' );
+		}
+		if ( null === $month ) {
+			$month = (int) current_time( 'm' );
+		}
+
+		$results = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT user_id, year, month, total_tokens, created_at, updated_at
+				FROM {$table}
+				WHERE user_id > 0 AND year = %d AND month = %d
+				ORDER BY total_tokens DESC
+				LIMIT %d",
+				absint( $year ),
+				absint( $month ),
+				absint( $limit )
+			),
+			ARRAY_A
+		);
+
+		return $results ?: array();
+	}
+}
 }

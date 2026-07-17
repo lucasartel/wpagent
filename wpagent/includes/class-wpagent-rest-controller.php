@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_REST_Controller' ) ) {
 class WPAgent_REST_Controller {
 	private $repository;
 	private $settings;
@@ -12,7 +13,7 @@ class WPAgent_REST_Controller {
 	private $admin_abilities;
 	private $email_actions;
 
-	public function __construct( WPAgent_Repository $repository, WPAgent_Settings $settings, WPAgent_Agents $agents, WPAgent_AI_Client $ai_client, WPAgent_Admin_Abilities $admin_abilities = null, WPAgent_Email_Actions $email_actions = null ) {
+	public function __construct( WPAgent_Repository $repository, WPAgent_Settings $settings, WPAgent_Agents $agents, WPAgent_AI_Client $ai_client, ?WPAgent_Admin_Abilities $admin_abilities = null, ?WPAgent_Email_Actions $email_actions = null ) {
 		$this->repository      = $repository;
 		$this->settings        = $settings;
 		$this->agents          = $agents;
@@ -167,7 +168,7 @@ class WPAgent_REST_Controller {
 		);
 	}
 
-	public function can_manage_conversations( WP_REST_Request $request = null ) {
+	public function can_manage_conversations( ?WP_REST_Request $request = null ) {
 		if ( ! is_user_logged_in() ) {
 			return false;
 		}
@@ -317,11 +318,20 @@ class WPAgent_REST_Controller {
 			)
 		);
 
+		$total_tokens = $response['token_input'] + $response['token_output'];
+		$this->repository->track_tokens_usage( $user_id, $total_tokens );
+
 		if ( $conversation_id && $user_id ) {
 			$this->repository->touch_conversation( $conversation_id, $user_id, $agent_slug );
 		}
 
 		$this->ai_client->maybe_extract_memory( $message, $response['reply'], $interaction_id, $user_id, $agent_slug );
+
+		$current_monthly = $this->repository->get_user_monthly_usage( $user_id );
+		$current_usage = (int) ( $current_monthly['total_tokens'] ?? 0 );
+		$global_limit = (int) $this->settings->get( 'global_token_limit', 100000 );
+		$enable_global_limit = '1' === $this->settings->get( 'enable_global_token_limit', '0' );
+		$monthly_limit = $enable_global_limit && ! current_user_can( 'manage_options' ) ? $global_limit : 0;
 
 		return rest_ensure_response(
 			array(
@@ -335,6 +345,12 @@ class WPAgent_REST_Controller {
 				'knowledge_sources' => $this->knowledge_sources_for_metadata( $response['knowledge'] ?? array() ),
 				'proposed_ability' => $ability_proposal,
 				'proposed_email'   => $email_proposal,
+				'token_usage' => array(
+					'current_monthly' => $current_usage,
+					'monthly_limit' => $monthly_limit,
+					'enable_global_limit' => $enable_global_limit,
+					'remaining' => $monthly_limit > 0 ? max( 0, $monthly_limit - $current_usage ) : null,
+				),
 			)
 		);
 	}
@@ -594,4 +610,5 @@ class WPAgent_REST_Controller {
 			number_format_i18n( $limit )
 		);
 	}
+}
 }

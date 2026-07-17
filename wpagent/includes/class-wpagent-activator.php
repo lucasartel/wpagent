@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Activator' ) ) {
 class WPAgent_Activator {
 	public static function activate() {
 		global $wpdb;
@@ -156,9 +157,105 @@ class WPAgent_Activator {
 			KEY recipient_hash_created (recipient_email_hash, created_at)
 		) {$charset_collate};";
 
+		$email_schedules = $wpdb->prefix . 'wpagent_email_schedules';
+		$sql[] = "CREATE TABLE {$email_schedules} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			agent_slug varchar(120) NOT NULL DEFAULT 'default',
+			name varchar(255) NOT NULL DEFAULT '',
+			schedule_type varchar(40) NOT NULL DEFAULT 'recurring',
+			frequency varchar(20) NOT NULL DEFAULT 'weekly',
+			sequence_steps longtext NULL,
+			subject_template varchar(500) NOT NULL DEFAULT '',
+			content_prompt longtext NOT NULL,
+			consent_required tinyint unsigned NOT NULL DEFAULT 0,
+			max_occurrences int unsigned NOT NULL DEFAULT 0,
+			status varchar(40) NOT NULL DEFAULT 'draft',
+			origin varchar(20) NOT NULL DEFAULT '',
+			signature varchar(64) NOT NULL DEFAULT '',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			last_send_at datetime NULL,
+			next_send_at datetime NULL,
+			total_sends int unsigned NOT NULL DEFAULT 0,
+			metadata longtext NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY  (id),
+			KEY agent_status (agent_slug, status),
+			KEY next_send (status, next_send_at),
+			UNIQUE KEY signature (agent_slug, signature)
+		) {$charset_collate};";
+
+		$email_subscriptions = $wpdb->prefix . 'wpagent_email_subscriptions';
+		$sql[] = "CREATE TABLE {$email_subscriptions} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			schedule_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			agent_slug varchar(120) NOT NULL DEFAULT '',
+			recipient_email varchar(190) NOT NULL DEFAULT '',
+			recipient_name varchar(190) NOT NULL DEFAULT '',
+			conversation_id varchar(120) NOT NULL DEFAULT '',
+			session_id varchar(120) NOT NULL DEFAULT '',
+			interaction_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			consent_note text NULL,
+			consent_status varchar(40) NOT NULL DEFAULT 'subscribed',
+			consented_at datetime NULL,
+			current_step int unsigned NOT NULL DEFAULT 0,
+			next_send_at datetime NULL,
+			occurrences_sent int unsigned NOT NULL DEFAULT 0,
+			last_sent_at datetime NULL,
+			status varchar(40) NOT NULL DEFAULT 'subscribed',
+			unsubscribe_token varchar(64) NOT NULL DEFAULT '',
+			unsubscribed_at datetime NULL,
+			metadata longtext NULL,
+			subscribed_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY  (id),
+			KEY schedule_status (schedule_id, status),
+			KEY next_send (status, next_send_at),
+			KEY unsubscribe_token (unsubscribe_token),
+			KEY schedule_email (schedule_id, recipient_email)
+		) {$charset_collate};";
+
+		$user_tokens_usage = $wpdb->prefix . 'wpagent_user_tokens_usage';
+		$sql[] = "CREATE TABLE {$user_tokens_usage} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			year int unsigned NOT NULL DEFAULT 0,
+			month int unsigned NOT NULL DEFAULT 0,
+			total_tokens int unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_month (user_id, year, month)
+		) {$charset_collate};";
+
+		$conversation_summaries = $wpdb->prefix . 'wpagent_conversation_summaries';
+		$sql[] = "CREATE TABLE {$conversation_summaries} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			conversation_id varchar(120) NOT NULL DEFAULT '',
+			agent_slug varchar(120) NOT NULL DEFAULT 'default',
+			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			conversation_title varchar(255) NOT NULL DEFAULT '',
+			summary longtext NULL,
+			data_points longtext NULL,
+			interaction_count int unsigned NOT NULL DEFAULT 0,
+			last_interaction_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			last_interaction_at datetime NULL,
+			model varchar(190) NOT NULL DEFAULT '',
+			provider varchar(190) NOT NULL DEFAULT '',
+			generated_at datetime NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY  (id),
+			UNIQUE KEY conversation_agent (conversation_id, agent_slug),
+			KEY agent_user (agent_slug, user_id)
+		) {$charset_collate};";
+
 		foreach ( $sql as $statement ) {
 			dbDelta( $statement );
 		}
+
+		self::seed_current_month_user_token_usage( $user_tokens_usage );
 
 		$defaults = array(
 			'agent_name'             => 'WPAgent',
@@ -193,6 +290,22 @@ class WPAgent_Activator {
 		add_option( 'wpagent_settings', $defaults );
 		update_option( 'wpagent_schema_version', WPAGENT_VERSION );
 		self::ensure_default_agent( $defaults );
+	}
+
+	public static function deactivate() {
+		$hooks = array(
+			'wpagent_process_embedding_batch',
+			'wpagent_process_periodic_tasks',
+			'wpagent_send_email_events',
+			'wpagent_process_email_schedules',
+			'wpagent_process_conversation_summaries',
+		);
+		foreach ( $hooks as $hook ) {
+			$timestamp = wp_next_scheduled( $hook );
+			if ( $timestamp ) {
+				wp_unschedule_event( $timestamp, $hook );
+			}
+		}
 	}
 
 	private static function ensure_default_agent( $defaults ) {
@@ -243,5 +356,35 @@ class WPAgent_Activator {
 		update_post_meta( $post_id, '_wpagent_token_limit_day', 0 );
 		update_post_meta( $post_id, '_wpagent_token_limit_week', 0 );
 		update_post_meta( $post_id, '_wpagent_token_limit_month', 0 );
+		update_post_meta( $post_id, '_wpagent_show_token_usage', '0' );
 	}
+
+	private static function seed_current_month_user_token_usage( $usage_table ) {
+		global $wpdb;
+
+		$interactions_table = $wpdb->prefix . 'wpagent_interactions';
+		$now                = current_time( 'mysql' );
+		$year               = (int) current_time( 'Y' );
+		$month              = (int) current_time( 'm' );
+		$month_start        = current_time( 'Y-m-01 00:00:00' );
+
+		$wpdb->query(
+			$wpdb->prepare(
+				"INSERT INTO {$usage_table} (user_id, year, month, total_tokens, created_at, updated_at)
+				SELECT user_id, %d, %d, SUM(token_input + token_output), %s, %s
+				FROM {$interactions_table}
+				WHERE user_id > 0 AND created_at >= %s
+				GROUP BY user_id
+				ON DUPLICATE KEY UPDATE
+					total_tokens = VALUES(total_tokens),
+					updated_at = VALUES(updated_at)",
+				$year,
+				$month,
+				$now,
+				$now,
+				$month_start
+			)
+		);
+	}
+}
 }

@@ -1,1699 +1,2441 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WPAgent 0.4.14\n"
-"Report-Msgid-Bugs-To: https://example.com/wpagent\n"
-"POT-Creation-Date: 2026-06-24 00:00+0000\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-17 14:00-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Text Domain: wpagent\n"
 
-#: wpagent/includes/class-wpagent-prompt-builder.php:171
-msgid " (pag. %d)"
+#: wpagent/includes/class-wpagent-admin-abilities.php:42
+msgid "Gerenciamento de conteudo"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-i18n.php:81
-msgid "\"?"
+#: wpagent/includes/class-wpagent-admin-abilities.php:43
+msgid "Capacidades para criar, consultar e atualizar conteudos do WordPress."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:346
-msgid "%1$d trechos, %2$d caracteres"
+#: wpagent/includes/class-wpagent-admin-abilities.php:56
+msgid "Criar post como rascunho"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:913
-msgid "%1$d/%2$d prontos"
+#: wpagent/includes/class-wpagent-admin-abilities.php:57
+msgid ""
+"Cria um novo post ou pagina como rascunho para revisao humana no WordPress."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-reports.php:165
-msgid "%1$s enviados, %2$s falhas, %3$s total"
+#: wpagent/includes/class-wpagent-admin-abilities.php:64
+msgid "Titulo do conteudo."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:852
-msgid "%1$s foi recebido, mas nao foi indexado: %2$s"
+#: wpagent/includes/class-wpagent-admin-abilities.php:69
+msgid "Conteudo em HTML ou texto simples."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-embeddings.php:133
-msgid "%d embeddings processados manualmente."
+#: wpagent/includes/class-wpagent-admin-abilities.php:73
+msgid "Resumo opcional."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-embeddings.php:102
-msgid "%d embeddings processados no ultimo lote."
+#: wpagent/includes/class-wpagent-admin-abilities.php:77
+msgid "Tipo de post. Use post ou page."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-document-indexer.php:136
-msgid "%d trechos indexados a partir do texto manual."
+#: wpagent/includes/class-wpagent-admin-abilities.php:93
+msgid "Use para criar apenas rascunhos revisaveis. Nunca afirme que publicou."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-document-indexer.php:92
-msgid "%d trechos indexados."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:416
-#: wpagent/includes/class-wpagent-rest-controller.php:368
-msgid "A Abilities API do WordPress nao esta disponivel."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:46
-msgid "A cada hora"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:272
-msgid "A contagem depende do fornecedor retornar uso de tokens. OpenRouter normalmente retorna; alguns conectores do WordPress AI podem retornar 0."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:561
-msgid "A extracao encontrou muitos simbolos e poucas palavras legiveis. Converta o documento para TXT/Markdown ou use um extrator/OCR externo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:553
-msgid "A extracao nao encontrou texto legivel suficiente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:224
-msgid "A listagem automatica de modelos depende de cada conector expor essa informacao. Por enquanto, use o ID oficial do modelo informado pelo fornecedor."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:110
-msgid "A proposta de email expirou ou foi alterada. Peca ao agente para preparar o envio novamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-ai-client.php:254
-msgid "A resposta demorou demais. Tente novamente em instantes ou use uma pergunta mais curta."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:58
-msgid "A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:59
-msgid "O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:60
-msgid "O servidor ou provedor de IA ficou indisponivel por alguns instantes. Tente novamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:61
-msgid "O servidor retornou uma pagina de erro em vez de uma resposta do WPAgent. Tente novamente em instantes."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:423
-#: wpagent/includes/class-wpagent-admin-abilities.php:454
-msgid "Ability nao encontrada."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:65
-msgid "Abrir conversa "
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:406
-msgid "Abrir rascunho"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:693
-msgid "Acao de comentario invalida."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:295
-msgid "Acao de moderacao. reject move o comentario para a lixeira."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:103
-msgid "Acao executada"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:99
-msgid "Acao proposta"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:45
-msgid "Acompanhe o consumo de tokens registrado por agente e por usuario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:101
-msgid "Acompanhe os emails coletados com consentimento durante conversas em que o agente preparou e enviou mensagens autorizadas pelo usuario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:40
-msgid "Adicionar agente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:232
-msgid "Adicione um campo por linha no formato: Rotulo | chave | tipo | placeholder. Tipos aceitos: text ou textarea. A chave deve usar letras, numeros e sublinhado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:253
-msgid "agendado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:39
-msgid "Agent"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:62
-#: wpagent/includes/class-wpagent-reports.php:105
-#: wpagent/includes/class-wpagent-reports.php:140
-#: wpagent/includes/class-wpagent-reports.php:184
-msgid "Agente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:38
-msgid "Agents"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:887
-msgid "Aguardando extrator"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:902
-msgid "Aguardando indice"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:415
-msgid "Ainda nao executada."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:139
-msgid "Altera somente o titulo de um post ou pagina existente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:138
-msgid "Alterar titulo de post ou pagina"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:33
-msgid "Analisa comentarios pendentes e gera recomendacoes. Nao aprova, rejeita ou marca spam sozinho."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:39
-msgid "Analise as atualizacoes de plugins disponiveis e recomende uma ordem segura de revisao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:230
-msgid "Ano em que leciono | teaching_year | text | Ex.: 7 ano"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:82
-msgid "Apagando conversa..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:80
-msgid "Apagar a conversa \""
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:66
-msgid "Apagar conversa "
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:352
-msgid "Apenas relatorios e recomendacoes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:283
-msgid "Aprova, rejeita, marca como spam ou coloca um comentario na lixeira."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:282
-msgid "Aprovar ou rejeitar comentario"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-prompt-builder.php:148
-msgid "Arquivo de treinamento"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:150
-msgid "Arquivo nao encontrado para indexacao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:85
-msgid "Arquivos de treinamento"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:335
-msgid "As tarefas usam WP-Cron. Em hospedagens comuns, elas rodam quando o site recebe visitas ou quando ha cron real configurado no servidor."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:210
-msgid "Assistente interno do admin"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:203
-msgid "Assistente publico do site"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:362
-msgid "Ativar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:260
-msgid "Ativar busca semantica por embeddings para documentos indexados."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:334
-msgid "Ativar cuidador periodico do site."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:90
-msgid "Atualiza titulo, conteudo, resumo ou status de um post existente, respeitando as permissoes do usuario atual."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:354
-msgid "Atualizacao de plugins, publicacao de posts e moderacao de comentarios continuam exigindo acao humana nesta versao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:89
+#: wpagent/includes/class-wpagent-admin-abilities.php:102
 msgid "Atualizar post existente"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:191
-#: wpagent/includes/class-wpagent-agents.php:192
+#: wpagent/includes/class-wpagent-admin-abilities.php:103
+msgid ""
+"Atualiza titulo, conteudo, resumo ou status de um post existente, "
+"respeitando as permissoes do usuario atual."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:110
+msgid "ID do post a atualizar."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:115
+msgid "Novo titulo opcional."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:119
+msgid "Novo conteudo opcional em HTML ou texto simples."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:123
+msgid "Novo resumo opcional."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:127
+msgid "Novo status opcional."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:142
+msgid ""
+"Use somente apos identificar claramente qual post sera alterado. Peca "
+"confirmacao quando faltar ID ou titulo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:151
+msgid "Alterar titulo de post ou pagina"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:152
+msgid "Altera somente o titulo de um post ou pagina existente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:159
+msgid "ID do post ou pagina."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:164
+msgid "Novo titulo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:179
+msgid ""
+"Use quando o usuario pedir apenas para alterar titulo de post ou pagina. Se "
+"o ID nao estiver claro, use wpagent/search-posts antes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:188
+msgid "Buscar posts"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:189
+msgid ""
+"Busca posts e paginas por texto para encontrar o ID correto antes de uma "
+"edicao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:196
+msgid "Texto para buscar no titulo ou conteudo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:200
+msgid "Tipo de post. Use post, page ou any."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:206
+#: wpagent/includes/class-wpagent-admin-abilities.php:262
+msgid "Quantidade maxima de resultados."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:230
+msgid "Use antes de editar quando o usuario nao informar o ID do post."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:239
+msgid "Ver comentarios"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:240
+msgid ""
+"Lista comentarios para revisao, incluindo pendentes, aprovados, spam ou "
+"lixeira."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:247
+msgid "Status dos comentarios."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:253
+msgid "Texto opcional para buscar."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:257
+msgid "ID opcional do post."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:286
+msgid "Use para encontrar o ID do comentario antes de aprovar ou rejeitar."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:295
+msgid "Aprovar ou rejeitar comentario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:296
+msgid "Aprova, rejeita, marca como spam ou coloca um comentario na lixeira."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:303
+msgid "ID do comentario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:308
+msgid "Acao de moderacao. reject move o comentario para a lixeira."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:323
+msgid ""
+"Use somente quando o ID do comentario e a acao estiverem claros. Para "
+"rejeitar, use action=reject."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:418
+msgid "Preparei uma acao administrativa para sua revisao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:429
+#: wpagent/includes/class-wpagent-rest-controller.php:384
+msgid "A Abilities API do WordPress nao esta disponivel."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:436
+#: wpagent/includes/class-wpagent-admin-abilities.php:467
+msgid "Ability nao encontrada."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:443
+msgid "O usuario atual nao tem permissao para executar esta ability."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:498
+msgid "Voce nao tem permissao para criar este tipo de conteudo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:517
+msgid "Rascunho criado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:543
+msgid "Voce nao tem permissao para editar este post."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:562
+msgid "Voce nao tem permissao para publicar este post."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:572
+msgid "Post atualizado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:591
+msgid "Voce nao tem permissao para alterar o titulo deste conteudo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:606
+msgid "Titulo atualizado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:693
+msgid "Voce nao tem permissao para moderar este comentario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:706
+msgid "Acao de comentario invalida."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:711
+msgid "Nao foi possivel atualizar o comentario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:714
+msgid "Comentario moderado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:895
+#: wpagent/includes/class-wpagent-admin-abilities.php:896
+msgid "Uso de Tokens"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:909
+msgid "Configuracao nao disponivel."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:928
+#: wpagent/includes/class-wpagent-admin-abilities.php:1018
+msgid "WPAgent - Uso de Tokens"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:930
+msgid "Configure o limite na pagina de Configuracoes Gerais."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:931
+msgid "Ir para Configuracoes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:934
+msgid "Controle ativo:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:935
+msgid "Sim"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:935
+msgid "Nao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:937
+msgid "Limite:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:938
+msgid "Ilimitado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:938
+#, php-format
+msgid "%s tokens/mes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:941
+msgid "Resumo de Uso Mensal"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:945
+#: wpagent/includes/class-wpagent-reports.php:186
+msgid "Usuario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:946
+msgid "Total de Tokens"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:947
+msgid "Criado em"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:948
+#: wpagent/includes/class-wpagent-email-schedules.php:687
+msgid "Acoes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:954
+#, php-format
+msgid "Total: %s tokens de %s usuários ativos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:960
+#: wpagent/includes/class-wpagent-admin-abilities.php:1053
+msgid "Nenhum dado de uso de tokens encontrado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:969
+#, php-format
+msgid "ID: %d"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:979
+msgid "Resetar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:990
+msgid "Resetar Uso de Usuario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:991
+msgid "Tem certeza que deseja resetar o uso de tokens deste usuario?"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:996
+msgid "Resetar Tokens"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:1025
+msgid "Repositorio nao disponivel."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:1035
+msgid "Total de tokens este mes:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:1036
+msgid "Usuarios ativos:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:1038
+msgid "Top usuarios por uso:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-admin-abilities.php:1047
+#, php-format
+msgid "%s tokens"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:39
+msgid "Agents"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:40
+msgid "Agent"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:41
+msgid "Adicionar agente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:42
+msgid "Editar agente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:68
+msgid "Configuracao do agente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:77
+#: wpagent/includes/class-wpagent-agents.php:453
+msgid "Shortcode"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:86
+msgid "Arquivos de treinamento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:153
+#: wpagent/includes/class-wpagent-agents.php:454
+msgid "Identificador"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:156
+msgid ""
+"Use apenas letras, numeros e hifens. Ele define o shortcode e separa memoria/"
+"treinamento."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:160
+msgid "Fornecedor de IA"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:163
+msgid "WordPress AI / Connectors (recomendado)"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:164
+msgid "OpenRouter direto pelo WPAgent"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:166
+msgid ""
+"Use WordPress AI para aproveitar OpenAI, Gemini, Claude, OpenRouter ou "
+"outros conectores configurados no plugin oficial de IA do WordPress. O "
+"OpenRouter direto permanece disponivel como fallback ou opcao avancada."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:170
+#: wpagent/includes/class-wpagent-settings.php:233
+msgid "Modelo OpenRouter direto"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:173
+msgid ""
+"Usado somente quando este agente estiver em OpenRouter direto ou quando o "
+"WordPress AI falhar e houver uma chave OpenRouter no WPAgent."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:177
+msgid "Modelo do agente no WordPress AI"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:180
+#: wpagent/includes/class-wpagent-settings.php:220
+#: wpagent/includes/class-wpagent-settings.php:267
+msgid "Provider"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:185
+msgid "Model"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:190
+msgid ""
+"Deixe em branco para herdar o modelo padrao definido em WPAgent > Settings. "
+"Preencha apenas quando este agente precisar usar um provider/model "
+"especifico."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:195
+#, php-format
+msgid "Modelo efetivo atual: %1$s / %2$s"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:196
+#: wpagent/includes/class-wpagent-agents.php:197
 msgid "automatico"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-periodic-tasks.php:32
+#: wpagent/includes/class-wpagent-agents.php:204
+msgid "Visitantes anonimos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:205
+msgid "Permitir chat sem login para este agente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:208
+msgid "Assistente publico do site"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:210
+msgid ""
+"Exibir este agente automaticamente como pop-up no front-end para visitantes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:211
+msgid ""
+"Use para atendimento publico do site. Ao ativar, o chat sem login tambem "
+"fica habilitado para este agente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:215
+msgid "Assistente interno do admin"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:217
+msgid ""
+"Exibir este agente automaticamente como pop-up no painel para "
+"administradores."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:218
+msgid ""
+"Use para apoio operacional no WordPress. Nesta versao ele conversa no "
+"painel; a execucao de acoes administrativas deve ser habilitada por "
+"ferramentas com permissao propria."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:222
+msgid "Perfil declarado pelo usuario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:224
+msgid ""
+"Permitir que usuarios logados informem dados pessoais para este agente "
+"considerar nas respostas."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:226
+msgid "Titulo do campo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:227
+#: wpagent/includes/class-wpagent-agents.php:430
+#: wpagent/includes/class-wpagent-agents.php:670
+#: wpagent/includes/class-wpagent-rest-controller.php:416
+#: wpagent/includes/class-wpagent-shortcode.php:129
+msgid "Sobre voce"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:230
+msgid "Descricao para o usuario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:231
+msgid ""
+"Explique quais informacoes ajudam este agente a personalizar as respostas."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:234
+msgid "Campos estruturados"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:235
+msgid "Ano em que leciono | teaching_year | text | Ex.: 7 ano"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:237
+msgid ""
+"Adicione um campo por linha no formato: Rotulo | chave | tipo | placeholder. "
+"Tipos aceitos: text ou textarea. A chave deve usar letras, numeros e "
+"sublinhado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:238
+msgid ""
+"Use para orientar o usuario a informar contexto estavel, como turma, area de "
+"atuacao, estilo pessoal, objetivos e preferencias. Essas informacoes entram "
+"no prompt como contexto declarado pelo usuario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:242
+msgid "Envio de email autorizado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:244
+msgid ""
+"Permitir que este agente prepare emails para envio apos confirmacao do "
+"usuario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:245
+msgid ""
+"O agente pode coletar email, nome e dados relevantes durante a conversa, mas "
+"o envio so acontece quando o usuario confirma no botao exibido pelo WPAgent."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:247
+msgid "Instrucoes adicionais para emails"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:248
+msgid ""
+"Ex.: envie apenas materiais finalizados; inclua uma saudacao curta; nao "
+"envie anexos."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:250
+msgid ""
+"Use para casos como enviar plano de aula, mensagem pastoral, resumo, "
+"proposta, dados de produto ou material de apoio. O envio usa wp_mail(), "
+"entao a entrega depende da configuracao de email/SMTP do WordPress."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:254
+msgid "Instrucao base"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:257
+msgid ""
+"Define o papel, tom, limites e regras fixas do agente. Links externos aqui "
+"sao tratados como texto; para usar o conteudo, importe ou cole o material em "
+"Treinamentos."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:261
+msgid "Limites de contexto"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:263
+#: wpagent/includes/class-wpagent-settings.php:257
+msgid "Treinamentos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:264
+#: wpagent/includes/class-wpagent-settings.php:258
+msgid "Memorias"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:265
+#: wpagent/includes/class-wpagent-conversation-summaries.php:90
+#: wpagent/includes/class-wpagent-reports.php:64
+#: wpagent/includes/class-wpagent-reports.php:187
+msgid "Interacoes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:266
+msgid ""
+"Treinamentos: quantidade maxima de trechos da base do agente enviados ao "
+"modelo. Memorias: registros persistentes sobre o usuario. Interacoes: pares "
+"recentes de pergunta/resposta da conversa atual."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:267
+msgid ""
+"Valores maiores dao mais contexto, mas aumentam custo, latencia e risco de "
+"ultrapassar o limite do modelo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:271
+msgid "Limites de tokens"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:273
+msgid "Por dia"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:274
+msgid "Por semana"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:275
+msgid "Por mes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:276
+msgid ""
+"Controla o total de tokens consumidos por este agente em todos os usuarios. "
+"Use 0 para ilimitado. O bloqueio acontece quando o consumo registrado do "
+"periodo atinge o limite."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:277
+msgid ""
+"A contagem depende do fornecedor retornar uso de tokens. OpenRouter "
+"normalmente retorna; alguns conectores do WordPress AI podem retornar 0."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:281
+msgid "Uso mensal no chat"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:283
+msgid "Mostrar o consumo mensal de tokens deste usuario no shortcode."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:284
+msgid ""
+"Esta opcao apenas controla a exibicao no chat. O limite mensal por usuario "
+"continua sendo configurado nas Configuracoes Gerais."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:296
+msgid "Cole este shortcode em qualquer pagina ou post."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:299
+msgid "Aparencia padrao do chat"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:301
+#: wpagent/includes/class-wpagent-i18n.php:103
+msgid "Modo claro"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:302
+#: wpagent/includes/class-wpagent-i18n.php:102
+#: wpagent/includes/class-wpagent-shortcode.php:150
+msgid "Modo escuro"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:305
+msgid ""
+"Define se o chat abre em modo claro ou escuro antes de o visitante alternar "
+"com o botao de tema."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:333
+msgid ""
+"Envie documentos para compor a base pesquisavel deste agente. O WPAgent "
+"quebra textos longos em trechos e usa somente os trechos relevantes em cada "
+"resposta."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:334
+msgid ""
+"TXT, Markdown, CSV, JSON, HTML e DOCX sao extraidos automaticamente. PDF e "
+"tentado apenas quando houver texto legivel; se a extracao sair corrompida, "
+"ele nao sera usado no chat."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:337
+#: wpagent/includes/class-wpagent-agents.php:835
+#: wpagent/includes/class-wpagent-document-indexer.php:117
+msgid "Texto manual de treinamento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:338
+msgid ""
+"Use este campo para colar uma versao limpa em TXT/Markdown de PDFs grandes "
+"quando a hospedagem nao tiver extrator confiavel. Ao salvar, o texto sera "
+"dividido em trechos pesquisaveis."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:339
+msgid "Titulo da fonte, ex.: BNCC em Markdown"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:340
+msgid "Cole aqui o texto limpo ou Markdown..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:345
+#: wpagent/includes/class-wpagent-agents.php:357
+msgid "Documento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:346
+#: wpagent/includes/class-wpagent-conversation-summaries.php:145
+#: wpagent/includes/class-wpagent-conversation-summaries.php:266
+#: wpagent/includes/class-wpagent-email-schedules.php:686
+#: wpagent/includes/class-wpagent-email-schedules.php:830
+msgid "Status"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:347
+msgid "Indice"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:348
+#: wpagent/includes/class-wpagent-settings.php:263
+msgid "Embeddings"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:349
+#: wpagent/includes/class-wpagent-agents.php:375
+msgid "Reindexar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:350
+#: wpagent/includes/class-wpagent-agents.php:376
+msgid "Remover"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:368
+#, php-format
+msgid "%1$d trechos, %2$d caracteres"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:382
+msgid "Nenhum documento indexado ainda."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:431
+#: wpagent/includes/class-wpagent-agents.php:671
+#: wpagent/includes/class-wpagent-rest-controller.php:417
+#: wpagent/includes/class-wpagent-shortcode.php:130
+msgid ""
+"Compartilhe informacoes que ajudam este agente a personalizar as respostas."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:867
+#, php-format
+msgid "Nao foi possivel enviar %1$s: %2$s"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:881
+#, php-format
+msgid "%1$s foi recebido, mas nao foi indexado: %2$s"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:914
+#: wpagent/includes/class-wpagent-i18n.php:90
+msgid "Processando"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:915
+msgid "Indexado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:916
+msgid "Aguardando extrator"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:917
+msgid "Extracao insuficiente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:918
+msgid "Sem texto"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:927
+msgid "Desativado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:931
+msgid "Aguardando indice"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-agents.php:942
+#, php-format
+msgid "%1$d/%2$d prontos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:27
+msgid ""
+"Você atingiu o limite mensal de tokens. Tente novamente em 30 dias ou fale "
+"com o administrador."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:78
+msgid "O WordPress AI Client nao esta disponivel."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:112
+msgid "Configure a chave da OpenRouter nas opcoes do WPAgent."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:145
+msgid "Erro ao chamar a OpenRouter."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:151
+msgid "O fornecedor de IA respondeu sem conteudo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:235
+#: wpagent/includes/class-wpagent-ai-client.php:259
+msgid ""
+"Nao foi possivel concluir a resposta do provedor de IA. Tente novamente em "
+"instantes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-ai-client.php:271
+#: wpagent/includes/class-wpagent-i18n.php:60
+msgid ""
+"O provedor de IA demorou demais para responder. Tente novamente em instantes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:45
+#: wpagent/includes/class-wpagent-conversation-summaries.php:46
+#: wpagent/includes/class-wpagent-conversation-summaries.php:67
+msgid "Atendimentos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:55
+#: wpagent/includes/class-wpagent-conversation-summaries.php:276
+#: wpagent/includes/class-wpagent-email-schedules.php:645
+#: wpagent/includes/class-wpagent-email-schedules.php:902
+#: wpagent/includes/class-wpagent-email-schedules.php:968
+#: wpagent/includes/class-wpagent-email-schedules.php:1007
+#: wpagent/includes/class-wpagent-embeddings.php:114
+#: wpagent/includes/class-wpagent-periodic-tasks.php:101
+msgid "Sem permissao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:68
+msgid ""
+"Resumos automaticos das conversas de cada agente, gerados 4 horas apos a "
+"ultima interacao, para consulta e follow-up humano."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:73
+msgid "Todos os agentes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:78
+msgid "Filtrar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:82
+msgid ""
+"Nenhum resumo gerado ainda. Os resumos sao produzidos automaticamente quando "
+"o agente tem a opcao ativada e a conversa fica inativa por 4 horas."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:88
+#: wpagent/includes/class-wpagent-i18n.php:68
+msgid "Conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:89
+#: wpagent/includes/class-wpagent-email-schedules.php:682
+#: wpagent/includes/class-wpagent-email-schedules.php:757
+#: wpagent/includes/class-wpagent-reports.php:63
+#: wpagent/includes/class-wpagent-reports.php:106
+#: wpagent/includes/class-wpagent-reports.php:141
+#: wpagent/includes/class-wpagent-reports.php:185
+msgid "Agente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:91
+msgid "Ultima interacao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:92
+msgid "Gerado em"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:93
+#: wpagent/includes/class-wpagent-email-schedules.php:834
+msgid "Acao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:113
+msgid "Ver"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:119
+#: wpagent/includes/class-wpagent-conversation-summaries.php:269
+msgid "Resumo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:122
+msgid "Dados extraidos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:131
+#: wpagent/includes/class-wpagent-settings.php:201
+msgid "Status:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:142
+#: wpagent/includes/class-wpagent-conversation-summaries.php:257
+msgid "Topico"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:143
+#: wpagent/includes/class-wpagent-conversation-summaries.php:260
+msgid "Objetivo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:144
+#: wpagent/includes/class-wpagent-conversation-summaries.php:263
+msgid "Dados coletados"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:146
+#: wpagent/includes/class-wpagent-email-schedules.php:681
+#: wpagent/includes/class-wpagent-email-schedules.php:754
+#: wpagent/includes/class-wpagent-email-schedules.php:829
+#: wpagent/includes/class-wpagent-reports.php:140
+msgid "Nome"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:147
+#: wpagent/includes/class-wpagent-email-schedules.php:828
+msgid "E-mail"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:244
+msgid "(formato nao reconhecido)"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:353
+msgid "Nenhum provedor de IA configurado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:382
+msgid "Erro ao gerar o resumo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-conversation-summaries.php:387
+msgid "O provedor devolveu resposta vazia."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:30
+msgid "Extraindo texto e criando indice."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:35
+msgid "Nao foi possivel registrar a fonte de treinamento."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:60
+#: wpagent/includes/class-wpagent-document-indexer.php:67
+msgid "Nenhum texto util foi encontrado neste documento."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:93
+#, php-format
+msgid "%d trechos indexados."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:122
+msgid "Indexando texto manual."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:137
+#, php-format
+msgid "%d trechos indexados a partir do texto manual."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:151
+msgid "Arquivo nao encontrado para indexacao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:171
+msgid "Tipo de arquivo ainda nao suportado para extracao automatica."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:176
+msgid "Nao foi possivel ler o arquivo enviado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:206
+msgid ""
+"PDF recebido, mas nao foi possivel extrair texto dele. Instale pdftotext no "
+"servidor, use um PDF com texto selecionavel ou conecte um extrator/OCR pelo "
+"filtro wpagent_extract_pdf_text."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:397
+msgid "ZipArchive nao esta disponivel para extrair arquivos DOCX."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:402
+msgid "Nao foi possivel abrir o arquivo DOCX."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:409
+msgid "Nao foi possivel localizar o texto principal do DOCX."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:554
+msgid "A extracao nao encontrou texto legivel suficiente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-document-indexer.php:562
+msgid ""
+"A extracao encontrou muitos simbolos e poucas palavras legiveis. Converta o "
+"documento para TXT/Markdown ou use um extrator/OCR externo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:67
+msgid "Preparei um email para sua revisao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:88
+msgid "Informe um email valido para o envio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:92
+msgid "O email precisa de assunto e conteudo antes do envio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:102
+msgid "Este agente nao esta habilitado para enviar emails."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:111
+msgid ""
+"A proposta de email expirou ou foi alterada. Peca ao agente para preparar o "
+"envio novamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:141
+msgid "Nao foi possivel registrar o email para envio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:146
+#: wpagent/includes/class-wpagent-email-actions.php:148
+msgid "Nao foi possivel agendar o envio do email."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:158
+msgid "Email agendado para envio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:173
+msgid "O email agendado perdeu destinatario, assunto ou conteudo valido."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:181
+msgid ""
+"O WordPress nao conseguiu enviar o email. Verifique a configuracao SMTP/"
+"hospedagem."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-actions.php:228
+msgid "Muitos emails solicitados em pouco tempo. Aguarde e tente novamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:90
+msgid "Preparei um agendamento de e-mails para sua confirmacao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:126
+msgid "Informe um e-mail valido para o agendamento."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:131
+msgid "O agendamento precisa de instrucoes de conteudo (content_prompt)."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:135
+msgid "A sequencia precisa de pelo menos um passo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:159
+msgid "Este agente nao esta habilitado para agendamentos de e-mail."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:168
+msgid "A proposta de agendamento expirou ou foi alterada."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:202
+msgid "Este e-mail ja esta inscrito neste agendamento."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:225
+msgid "Nao foi possivel registrar a inscricao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:236
+msgid "Inscricao confirmada. O proximo envio esta agendado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:262
+msgid "Sequencia de e-mails"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:266
+#: wpagent/includes/class-wpagent-email-schedules.php:770
+#: wpagent/includes/class-wpagent-email-schedules.php:872
+msgid "Diario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:267
+#: wpagent/includes/class-wpagent-email-schedules.php:770
+#: wpagent/includes/class-wpagent-email-schedules.php:873
+msgid "Semanal"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:268
+#: wpagent/includes/class-wpagent-email-schedules.php:770
+#: wpagent/includes/class-wpagent-email-schedules.php:874
+msgid "Mensal"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:271
+#: wpagent/includes/class-wpagent-email-schedules.php:765
+#: wpagent/includes/class-wpagent-email-schedules.php:882
+msgid "Recorrente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:461
+msgid ""
+"Voce gera o corpo de um e-mail recorrente para o destinatario. Escreva "
+"apenas o corpo pronto para envio, em texto plano, sem codigos de saida, sem "
+"markdown e sem mencionar que e automatico."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:471
+msgid "Atualizacao do WPAgent"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:531
+msgid "Nenhum provedor de IA configurado para gerar o e-mail."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:565
+msgid "Erro ao gerar o conteudo do e-mail."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:570
+msgid "O provedor de IA nao retornou conteudo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:580
+#, php-format
+msgid ""
+"Voce recebeu este e-mail porque se inscreveu na conversa com o WPAgent. Para "
+"parar de receber, acesse: %s"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:630
+#: wpagent/includes/class-wpagent-email-schedules.php:631
+msgid "Agendamentos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:653
+msgid "Agendamentos de e-mail"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:667
+#: wpagent/includes/class-wpagent-email-schedules.php:798
+msgid "Criar agendamento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:676
+msgid ""
+"Nenhum agendamento ainda. Crie um manualmente ou ative os e-mails "
+"recorrentes em um agente para que ele proponha agendamentos no chat."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:683
+#: wpagent/includes/class-wpagent-email-schedules.php:764
+msgid "Tipo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:684
+msgid "Cadencia"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:685
+#: wpagent/includes/class-wpagent-email-schedules.php:814
+msgid "Inscritos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:712
+msgid "Editar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:715
+msgid "Pausar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:717
+msgid "Retomar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:720
+msgid "Excluir"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:730
+msgid "Tem certeza?"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:766
+msgid "Sequencia (drip)"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:768
+msgid "Frequencia"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:773
+msgid "Usado apenas para agendamentos recorrentes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:775
+msgid "Passos da sequencia"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:785
+msgid ""
+"Uma linha por passo no formato: horas a partir da inscricao | rotulo. Usado "
+"apenas para sequencia."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:787
+msgid "Assunto"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:788
+msgid "Pode usar {{nome}} e {{email}}."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:790
+msgid "Instrucao de conteudo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:792
+msgid "Como a IA deve gerar o corpo de cada e-mail na hora do envio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:794
+msgid "Maximo de envios por inscrito"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:795
+msgid "0 = ilimitado (para recorrentes) ou ate o fim da sequencia."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:798
+msgid "Salvar agendamento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:800
+#: wpagent/includes/class-wpagent-email-schedules.php:859
+msgid "Voltar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:806
+msgid "Agendamento nao encontrado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:816
+msgid "Todos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:817
+msgid "Ativos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:818
+msgid "Descadastrados"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:819
+msgid "Exportar CSV"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:823
+msgid "Nenhum inscrito ainda."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:831
+msgid "Enviados"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:832
+msgid "Ultimo envio"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:833
+msgid "Proximo envio"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:852
+msgid "Descadastrar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:868
+#: wpagent/includes/class-wpagent-email-schedules.php:883
+msgid "Sequencia"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:890
+msgid "Ativo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:891
+msgid "Pausado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:892
+msgid "Arquivado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:893
+msgid "Concluido"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:894
+msgid "Inscrito"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:895
+msgid "Descadastrado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:1043
+msgid "Inscricao cancelada"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-email-schedules.php:1044
+msgid ""
+"Voce foi descadastrado e nao recebera mais esses e-mails. Pode fechar esta "
+"janela."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:30
+msgid "Every five minutes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:65
+#: wpagent/includes/class-wpagent-embeddings.php:153
+msgid "Embeddings desativados."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:75
+msgid "Nenhum chunk pendente para embeddings."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:103
+#, php-format
+msgid "%d embeddings processados no ultimo lote."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:134
+#, php-format
+msgid "%d embeddings processados manualmente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:161
+msgid "O provedor nao retornou embedding."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:196
+msgid "Provider de embeddings ainda nao suportado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:201
+msgid "Configure a chave da OpenRouter para gerar embeddings."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-embeddings.php:232
+msgid "Erro ao gerar embeddings."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:58
+msgid "Erro no WPAgent. Status "
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:59
+msgid ""
+"A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:61
+msgid ""
+"A resposta excedeu o tempo de espera do navegador. Tente novamente em "
+"instantes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:62
+msgid ""
+"O servidor ou provedor de IA ficou indisponivel por alguns instantes. Tente "
+"novamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:63
+msgid ""
+"O servidor retornou uma pagina de erro em vez de uma resposta do WPAgent. "
+"Tente novamente em instantes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:64
+#: wpagent/includes/class-wpagent-shortcode.php:155
+msgid "Como posso ajudar?"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:65
+#: wpagent/includes/class-wpagent-shortcode.php:156
+msgid "Escreva uma pergunta ou escolha uma conversa anterior."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:66
+msgid "Entre na conta para salvar e retomar conversas."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:67
+msgid "Nenhuma conversa salva ainda."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:69
+msgid "Conversa salva"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:70
+msgid "Abrir conversa "
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:71
+msgid "Apagar conversa "
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:72
+msgid "Carregando conversas..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:73
+#: wpagent/includes/class-wpagent-shortcode.php:148
+msgid "Pronto para conversar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:74
+msgid "Nao foi possivel carregar conversas"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:75
+msgid "Carregando mensagens..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:76
+msgid "Erro ao carregar conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:77
+#: wpagent/includes/class-wpagent-repository.php:111
+#: wpagent/includes/class-wpagent-rest-controller.php:459
+#: wpagent/includes/class-wpagent-rest-controller.php:516
+#: wpagent/includes/class-wpagent-shortcode.php:147
+msgid "Nova conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:78
+msgid "Nova conversa iniciada"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:79
+msgid "Erro ao criar conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:80
+msgid "Entre na conta para renomear conversas"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:81
+msgid "Nome da conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:82
+msgid "Renomeando conversa..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:83
+msgid "Conversa renomeada"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:84
+msgid "Erro ao renomear conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:85
+msgid "Apagar a conversa \""
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:86
+msgid "\"?"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:87
+msgid "Apagando conversa..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:88
+msgid "Conversa apagada"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:89
+msgid "Erro ao apagar conversa"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:91
+msgid "Processando resposta..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:92
+msgid ""
+"Configuracao do WPAgent nao encontrada nesta pagina. Atualize a pagina e "
+"tente novamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:93
+msgid "Erro de configuracao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:94
+msgid "Resposta recebida"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:95
+msgid "Erro ao responder"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:96
+msgid "Copiar resposta"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:97
+msgid "Copiado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:98
+msgid "Nao foi possivel copiar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:99
+msgid "Baixar RTF"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:100
+msgid "RTF gerado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:101
+msgid "Nao foi possivel gerar o RTF"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:104
+msgid "Acao proposta"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:105
+msgid "Executar acao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:106
+msgid "Executar esta acao no WordPress?"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:107
+msgid "Executando acao..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:108
+msgid "Acao executada"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:109
+msgid "Erro ao executar acao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:110
+msgid "Email preparado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:111
+msgid "Enviar email"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:112
+msgid "Enviar este email agora?"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:113
+msgid "Enviando email..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:114
+msgid "Email enviado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:115
+msgid "Email agendado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:116
+msgid "Erro ao enviar email"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:117
+msgid "Email enviado para "
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:118
+msgid "Email agendado para "
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:119
+msgid "Carregando perfil..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:120
+msgid "Perfil carregado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:121
+msgid "Perfil opcional"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:122
+msgid "Erro ao carregar perfil"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:123
+msgid "Salvando perfil..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:124
+msgid "Perfil salvo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:125
+msgid "Erro ao salvar perfil"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:126
+msgid "Tokens este mes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:127
+msgid " / Ilimitado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-i18n.php:128
+msgid "Limite de tokens mensal atingido. Entre em contato com o administrador."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:28
+msgid "Escrever rascunho de post"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:29
+msgid ""
+"Gera um rascunho de post para revisao editorial. Nunca publica "
+"automaticamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:30
+msgid ""
+"Escreva um post curto para o site, com tom claro e util para o publico "
+"principal."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:33
 msgid "Avaliar comentarios pendentes"
 msgstr ""
 
 #: wpagent/includes/class-wpagent-periodic-tasks.php:34
-msgid "Avalie os comentarios pendentes e destaque riscos, prioridade de resposta e sugestoes de moderacao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:94
-msgid "Baixar RTF"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:176
-msgid "Busca posts e paginas por texto para encontrar o ID correto antes de uma edicao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:175
-msgid "Buscar posts"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:178
-msgid "Cada agente exibe seu shortcode na tela de edicao e recebe seus arquivos de treinamento na propria configuracao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:229
-msgid "Campos estruturados"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:30
-msgid "Capacidades para criar, consultar e atualizar conteudos do WordPress."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:67
-msgid "Carregando conversas..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:70
-msgid "Carregando mensagens..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:114
-msgid "Carregando perfil..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:237
-msgid "Chave salva. Preencha apenas para trocar."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:318
-msgid "Cole aqui o texto limpo ou Markdown..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:283
-msgid "Cole este shortcode em qualquer pagina ou post."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:285
-msgid "Aparencia padrao do chat"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:295
-msgid "Define se o chat abre em modo claro ou escuro antes de o visitante alternar com o botao de tema."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:208
-msgid "Com esta opcao ativa, novos agentes herdam os fornecedores, chaves e preferencias configuradas no plugin AI oficial. Agentes existentes podem ser ajustados individualmente na tela do agente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:701
-msgid "Comentario moderado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:59
-#: wpagent/includes/class-wpagent-shortcode.php:148
-msgid "Como posso ajudar?"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:177
-msgid "Como usar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:408
-#: wpagent/includes/class-wpagent-agents.php:643
-#: wpagent/includes/class-wpagent-rest-controller.php:401
-#: wpagent/includes/class-wpagent-shortcode.php:123
-msgid "Compartilhe informacoes que ajudam este agente a personalizar as respostas."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:67
-msgid "Configuracao do agente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:87
-msgid "Configuracao do WPAgent nao encontrada nesta pagina. Atualize a pagina e tente novamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-ai-client.php:101
-msgid "Configure a chave da OpenRouter nas opcoes do WPAgent."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:200
-msgid "Configure a chave da OpenRouter para gerar embeddings."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:156
-msgid "Configure a conexao global com IA e crie agentes independentes, cada um com shortcode e treinamento proprio."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:354
-msgid "Configure um provedor de IA antes de executar tarefas periodicas."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:161
-msgid "Connectors"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:58
-msgid "Consumo por agente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:56
-msgid "Conteudo em HTML ou texto simples."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:271
-msgid "Controla o total de tokens consumidos por este agente em todos os usuarios. Use 0 para ilimitado. O bloqueio acontece quando o consumo registrado do periodo atinge o limite."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:63
-msgid "Conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:83
-msgid "Conversa apagada"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:78
-msgid "Conversa renomeada"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:64
-msgid "Conversa salva"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:107
-#: wpagent/includes/class-wpagent-shortcode.php:111
-#: wpagent/includes/class-wpagent-shortcode.php:138
-msgid "Conversas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:92
-msgid "Copiado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:91
-msgid "Copiar resposta"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:44
-msgid "Cria um novo post ou pagina como rascunho para revisao humana no WordPress."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:158
-msgid "Criar novo agente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:43
-msgid "Criar post como rascunho"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:252
-msgid "Define o papel, tom, limites e regras fixas do agente. Links externos aqui sao tratados como texto; para usar o conteudo, importe ou cole o material em Treinamentos."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:185
-msgid "Deixe em branco para herdar o modelo padrao definido em WPAgent > Settings. Preencha apenas quando este agente precisar usar um provider/model especifico."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:898
-msgid "Desativado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:225
-msgid "Descricao para o usuario"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:218
-msgid "Dia: %1$s / Semana: %2$s / Mes: %3$s"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:48
-msgid "Diariamente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:585
-msgid "diario"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:335
-#: wpagent/includes/class-wpagent-agents.php:323
-msgid "Documento"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-prompt-builder.php:167
-msgid "Documento de treinamento"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:47
-msgid "Duas vezes por dia"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:41
-msgid "Editar agente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:138
-msgid "Email"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:110
-msgid "Email agendado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:113
-msgid "Email agendado para "
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:157
-msgid "Email agendado para envio."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:109
-msgid "Email enviado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:112
-msgid "Email enviado para "
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:105
-msgid "Email preparado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:107
-msgid "Emails enviados"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:326
-#: wpagent/includes/class-wpagent-settings.php:258
-msgid "Embeddings"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:64
-#: wpagent/includes/class-wpagent-embeddings.php:152
-msgid "Embeddings desativados."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:158
-msgid "Enter envia. Shift + Enter quebra linha."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:68
-#: wpagent/includes/class-wpagent-reports.php:187
-msgid "Entrada"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:75
-msgid "Entre na conta para renomear conversas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:61
-msgid "Entre na conta para salvar e retomar conversas."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:251
-msgid "enviado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:108
-msgid "Enviando email..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:156
-msgid "Enviar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:106
-msgid "Enviar email"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:107
-msgid "Enviar este email agora?"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:311
-msgid "Envie documentos para compor a base pesquisavel deste agente. O WPAgent quebra textos longos em trechos e usa somente os trechos relevantes em cada resposta."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:248
-msgid "Envie uma mensagem para o agente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:237
-msgid "Envio de email autorizado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:144
-msgid "Envios"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:84
-msgid "Erro ao apagar conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:71
-msgid "Erro ao carregar conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:117
-msgid "Erro ao carregar perfil"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-ai-client.php:134
-msgid "Erro ao chamar a OpenRouter."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:394
-msgid "Erro ao chamar o provedor de IA."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:74
-msgid "Erro ao criar conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:111
-msgid "Erro ao enviar email"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:104
-msgid "Erro ao executar acao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:231
-msgid "Erro ao gerar embeddings."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:79
-msgid "Erro ao renomear conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:90
-msgid "Erro ao responder"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:120
-msgid "Erro ao salvar perfil"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:88
-msgid "Erro de configuracao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:57
-msgid "Erro no WPAgent. Status "
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:155
-msgid "Escreva sua mensagem..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:29
-msgid "Escreva um post curto para o site, com tom claro e util para o publico principal."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:60
-#: wpagent/includes/class-wpagent-shortcode.php:149
-msgid "Escreva uma pergunta ou escolha uma conversa anterior."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:27
-msgid "Escrever rascunho de post"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:592
-msgid "Este agente atingiu o limite %1$s de %2$s tokens. Tente novamente depois ou fale com o administrador."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:373
-msgid "Este agente nao esta habilitado como assistente interno do admin."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:101
-msgid "Este agente nao esta habilitado para enviar emails."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:29
-msgid "Every five minutes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:128
-msgid "Ex.: ano em que leciono, estilo de aula, objetivos e preferencias..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:243
-msgid "Ex.: envie apenas materiais finalizados; inclua uma saudacao curta; nao envie anexos."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:102
-msgid "Executando acao..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:138
-msgid "Executando tarefa."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:367
-msgid "Executar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:100
-msgid "Executar acao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:419
-msgid "Executar agora"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:101
-msgid "Executar esta acao no WordPress?"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:205
-msgid "Exibir este agente automaticamente como pop-up no front-end para visitantes."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:212
-msgid "Exibir este agente automaticamente como pop-up no painel para administradores."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:226
-msgid "Explique quais informacoes ajudam este agente a personalizar as respostas."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:888
-msgid "Extracao insuficiente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:29
-msgid "Extraindo texto e criando indice."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:108
-msgid "Falhas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:252
-msgid "falhou"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:242
-msgid "Fechar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:242
-msgid "Fechar assistente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:142
-msgid "Finalidade"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:155
-msgid "Fornecedor de IA"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:363
-msgid "Funcao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:358
-msgid "Funcoes habilitadas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:28
-msgid "Gera um rascunho de post para revisao editorial. Nunca publica automaticamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:29
-msgid "Gerenciamento de conteudo"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:65
-msgid "Hoje"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:290
-msgid "ID do comentario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:97
-msgid "ID do post a atualizar."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:146
-msgid "ID do post ou pagina."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:244
-msgid "ID opcional do post."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:430
-#: wpagent/includes/class-wpagent-agents.php:148
-msgid "Identificador"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:228
-msgid "ilimitado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:886
-msgid "Indexado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:121
-msgid "Indexando texto manual."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:325
-msgid "Indice"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:87
-msgid "Informe um email valido para o envio."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:457
-msgid "Informe um nome para a conversa."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:365
-msgid "Instrucao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:249
-msgid "Instrucao base"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:246
-msgid "Instrucao base padrao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:242
-msgid "Instrucoes adicionais para emails"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:260
-#: wpagent/includes/class-wpagent-reports.php:63
-#: wpagent/includes/class-wpagent-reports.php:186
-msgid "Interacoes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:254
-msgid "Interacoes recentes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:106
-msgid "Leads"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:100
-msgid "Leads por email"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:134
-msgid "Leads recentes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:71
-msgid "Limites"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:256
-msgid "Limites de contexto"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:266
-msgid "Limites de tokens"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:250
-msgid "Limites padrao"
+msgid ""
+"Analisa comentarios pendentes e gera recomendacoes. Nao aprova, rejeita ou "
+"marca spam sozinho."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:35
+msgid ""
+"Avalie os comentarios pendentes e destaque riscos, prioridade de resposta e "
+"sugestoes de moderacao."
 msgstr ""
 
 #: wpagent/includes/class-wpagent-periodic-tasks.php:38
-msgid "Lista atualizacoes disponiveis e gera uma recomendacao. Nao atualiza plugins automaticamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:227
-msgid "Lista comentarios para revisao, incluindo pendentes, aprovados, spam ou lixeira."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:268
-msgid "Lote por cron"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:180
-msgid "Maiores consumos por usuario"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:259
-#: wpagent/includes/class-wpagent-settings.php:253
-msgid "Memorias"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:153
-msgid "Mensagem"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:587
-msgid "mensal"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:67
-msgid "Mes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:180
-msgid "Model"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:219
-#: wpagent/includes/class-wpagent-settings.php:265
-msgid "Modelo"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:172
-msgid "Modelo do agente no WordPress AI"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:190
-msgid "Modelo efetivo atual: %1$s / %2$s"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:165
-#: wpagent/includes/class-wpagent-settings.php:228
-msgid "Modelo OpenRouter direto"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:212
-msgid "Modelo padrao do WordPress AI"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:98
-msgid "Modo claro"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:350
-msgid "Modo de execucao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:97
-#: wpagent/includes/class-wpagent-shortcode.php:143
-msgid "Modo escuro"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:567
-msgid "Muitas mensagens em pouco tempo. Aguarde um minuto e tente novamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:227
-msgid "Muitos emails solicitados em pouco tempo. Aguarde e tente novamente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:401
-msgid "Nao foi possivel abrir o arquivo DOCX."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:145
-#: wpagent/includes/class-wpagent-email-actions.php:147
-msgid "Nao foi possivel agendar o envio do email."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:483
-msgid "Nao foi possivel apagar esta conversa."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:698
-msgid "Nao foi possivel atualizar o comentario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:69
-msgid "Nao foi possivel carregar conversas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-ai-client.php:222
-#: wpagent/includes/class-wpagent-ai-client.php:242
-msgid "Nao foi possivel concluir a resposta do provedor de IA. Tente novamente em instantes."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:93
-msgid "Nao foi possivel copiar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:838
-msgid "Nao foi possivel enviar %1$s: %2$s"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:96
-msgid "Nao foi possivel gerar o RTF"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:175
-msgid "Nao foi possivel ler o arquivo enviado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:408
-msgid "Nao foi possivel localizar o texto principal do DOCX."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:34
-msgid "Nao foi possivel registrar a fonte de treinamento."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:140
-msgid "Nao foi possivel registrar o email para envio."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:417
-msgid "Nao foi possivel salvar o perfil do usuario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:291
-msgid "Nao ha lote automatico agendado no momento. Salve as configuracoes com embeddings ativos para agendar."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:74
-msgid "Nenhum chunk pendente para embeddings."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:228
-msgid "Nenhum comentario pendente para avaliar."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:360
-msgid "Nenhum documento indexado ainda."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:115
-#: wpagent/includes/class-wpagent-reports.php:151
-msgid "Nenhum lead por email registrado ainda."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:59
-#: wpagent/includes/class-wpagent-document-indexer.php:66
-msgid "Nenhum texto util foi encontrado neste documento."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:76
-#: wpagent/includes/class-wpagent-reports.php:195
-msgid "Nenhum uso registrado ainda."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:267
-msgid "Nenhuma atualizacao de plugin disponivel."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:62
-msgid "Nenhuma conversa salva ainda."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:270
-msgid "Nesta primeira versao, o provider suportado e openrouter via /api/v1/embeddings. Os embeddings sao gerados em segundo plano pelo WP-Cron."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:139
-msgid "Nome"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:76
-msgid "Nome da conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:109
-#: wpagent/includes/class-wpagent-shortcode.php:117
-msgid "Nova"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:72
-#: wpagent/includes/class-wpagent-repository.php:110
-#: wpagent/includes/class-wpagent-rest-controller.php:443
-#: wpagent/includes/class-wpagent-rest-controller.php:500
-#: wpagent/includes/class-wpagent-shortcode.php:140
-msgid "Nova conversa"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:73
-msgid "Nova conversa iniciada"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:106
-msgid "Novo conteudo opcional em HTML ou texto simples."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:110
-msgid "Novo resumo opcional."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:114
-msgid "Novo status opcional."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:102
-msgid "Novo titulo opcional."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:151
-msgid "Novo titulo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:240
-msgid "O agente pode coletar email, nome e dados relevantes durante a conversa, mas o envio so acontece quando o usuario confirma no botao exibido pelo WPAgent."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:193
-msgid "O caminho recomendado e configurar OpenAI, Gemini, Claude, OpenRouter ou outros provedores no plugin AI oficial do WordPress em Settings > Connectors. O WPAgent usa essa configuracao para chats e tarefas de IA quando disponivel."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:172
-msgid "O email agendado perdeu destinatario, assunto ou conteudo valido."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:91
-msgid "O email precisa de assunto e conteudo antes do envio."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:344
-msgid "O envio de email do WPAgent nao esta disponivel."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-ai-client.php:140
-msgid "O fornecedor de IA respondeu sem conteudo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:399
-msgid "O provedor de IA respondeu sem conteudo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:160
-msgid "O provedor nao retornou embedding."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:430
-msgid "O usuario atual nao tem permissao para executar esta ability."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-ai-client.php:69
-msgid "O WordPress AI Client nao esta disponivel."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:180
-msgid "O WordPress nao conseguiu enviar o email. Verifique a configuracao SMTP/hospedagem."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-repository.php:443
-#: wpagent/includes/class-wpagent-shortcode.php:126
-msgid "Observacoes adicionais"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:223
-msgid "Opcional. Quando preenchido, o WPAgent envia este provider/model como preferencia para o WordPress AI Client. Deixe em branco para usar o modelo padrao escolhido pelo conector/plugin AI."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:235
-msgid "OpenRouter API key opcional"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:159
-msgid "OpenRouter direto pelo WPAgent"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:242
-msgid "Padrao: visitantes anonimos"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:205
-msgid "PDF recebido, mas nao foi possivel extrair texto dele. Instale pdftotext no servidor, use um PDF com texto selecionavel ou conecte um extrator/OCR pelo filtro wpagent_extract_pdf_text."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:254
-msgid "pendente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:115
-msgid "Perfil carregado"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:217
-msgid "Perfil declarado pelo usuario"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:116
-msgid "Perfil opcional"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:119
-msgid "Perfil salvo"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:165
-msgid "Periodic Tasks"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:364
-msgid "Periodicidade"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:50
-msgid "Periodos atuais: dia desde %1$s, semana desde %2$s, mes desde %3$s."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:200
-msgid "Permitir chat sem login para este agente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:243
-msgid "Permitir chat sem login para novos agentes."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:353
-msgid "Permitir criacao de rascunhos revisaveis"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:239
-msgid "Permitir que este agente prepare emails para envio apos confirmacao do usuario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:219
-msgid "Permitir que usuarios logados informem dados pessoais para este agente considerar nas respostas."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:160
-msgid "Plugin AI do WordPress"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:268
-msgid "Por dia"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:270
-msgid "Por mes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:269
-msgid "Por semana"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:559
-msgid "Post atualizado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:238
-msgid "Preencha somente se quiser usar OpenRouter direto pelo WPAgent ou manter um fallback proprio. Se houver um conector OpenRouter no WordPress AI, o WPAgent tambem tenta espelhar esta chave para ele."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-email-actions.php:66
-msgid "Preparei um email para sua revisao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:405
-msgid "Preparei uma acao administrativa para sua revisao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:145
-msgid "Primeiro registro"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:885
-#: wpagent/includes/class-wpagent-i18n.php:85
-msgid "Processando"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:86
-msgid "Processando resposta..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:294
-msgid "Processar embeddings agora"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:68
-#: wpagent/includes/class-wpagent-shortcode.php:141
-msgid "Pronto para conversar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:205
-msgid "Provedor padrao"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:175
-#: wpagent/includes/class-wpagent-settings.php:215
-#: wpagent/includes/class-wpagent-settings.php:262
-msgid "Provider"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:195
-msgid "Provider de embeddings ainda nao suportado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:341
-msgid "Proxima verificacao automatica: %s."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:285
-msgid "Proximo lote automatico: %s."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:193
-#: wpagent/includes/class-wpagent-admin-abilities.php:249
-msgid "Quantidade maxima de resultados."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:209
-msgid "Rascunho criado com ID %d."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:504
-msgid "Rascunho criado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:206
-msgid "Rascunho de post criado para revisao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:195
-msgid "Rascunho gerado pelo WPAgent"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:327
-#: wpagent/includes/class-wpagent-agents.php:353
-msgid "Reindexar"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:293
-msgid "Relatorio de atualizacoes gerado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:253
-msgid "Relatorio de comentarios gerado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:328
-#: wpagent/includes/class-wpagent-agents.php:354
-msgid "Remover"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:77
-msgid "Renomeando conversa..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:144
-msgid "Renomear"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:23
-#: wpagent/includes/class-wpagent-reports.php:24
-msgid "Reports"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:89
-msgid "Resposta recebida"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:60
-msgid "Resumo opcional."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:37
 msgid "Revisar atualizacoes de plugins"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-i18n.php:95
-msgid "RTF gerado"
+#: wpagent/includes/class-wpagent-periodic-tasks.php:39
+msgid ""
+"Lista atualizacoes disponiveis e gera uma recomendacao. Nao atualiza plugins "
+"automaticamente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:40
+msgid ""
+"Analise as atualizacoes de plugins disponiveis e recomende uma ordem segura "
+"de revisao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:47
+msgid "A cada hora"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:48
+msgid "Duas vezes por dia"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:49
+msgid "Diariamente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:50
+msgid "Semanalmente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:58
+msgid "Weekly"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:108
+msgid "Tarefa invalida."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:139
+msgid "Executando tarefa."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:167
+msgid "Tarefa concluida."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:178
+msgid ""
+"Voce e um assistente editorial de WordPress. Gere apenas conteudo revisavel, "
+"sem publicar nada."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:187
+msgid "Sugestao de post gerada em modo relatorio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:196
+msgid "Rascunho gerado pelo WPAgent"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:207
+msgid "Rascunho de post criado para revisao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:210
+#, php-format
+msgid "Rascunho criado com ID %d."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:229
+msgid "Nenhum comentario pendente para avaliar."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:246
+msgid ""
+"Voce e um assistente de moderacao. Recomende acoes, mas nao diga que "
+"executou moderacao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:254
+msgid "Relatorio de comentarios gerado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:268
+msgid "Nenhuma atualizacao de plugin disponivel."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:286
+msgid ""
+"Voce e um assistente de manutencao WordPress. Recomende uma ordem segura de "
+"revisao, mas nao afirme que atualizou plugins."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:294
+msgid "Relatorio de atualizacoes gerado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:355
+msgid "Configure um provedor de IA antes de executar tarefas periodicas."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:395
+msgid "Erro ao chamar o provedor de IA."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-periodic-tasks.php:400
+msgid "O provedor de IA respondeu sem conteudo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-prompt-builder.php:149
+msgid "Arquivo de treinamento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-prompt-builder.php:168
+msgid "Documento de treinamento"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-prompt-builder.php:172
+#, php-format
+msgid " (pag. %d)"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:24
+#: wpagent/includes/class-wpagent-reports.php:25
+msgid "Reports"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:45
+msgid "WPAgent Reports"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:46
+msgid "Acompanhe o consumo de tokens registrado por agente e por usuario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:51
+#, php-format
+msgid "Periodos atuais: dia desde %1$s, semana desde %2$s, mes desde %3$s."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:59
+msgid "Consumo por agente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:65
+msgid "Usuarios"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:66
+msgid "Hoje"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:67
+msgid "Semana"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:68
+msgid "Mes"
 msgstr ""
 
 #: wpagent/includes/class-wpagent-reports.php:69
 #: wpagent/includes/class-wpagent-reports.php:188
-msgid "Saida"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-i18n.php:118
-msgid "Salvando perfil..."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:131
-msgid "Salvar perfil"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-embeddings.php:113
-#: wpagent/includes/class-wpagent-periodic-tasks.php:100
-msgid "Sem permissao."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:889
-msgid "Sem texto"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:66
-msgid "Semana"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-rest-controller.php:586
-msgid "semanal"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:49
-msgid "Semanalmente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:28
-#: wpagent/includes/class-wpagent-settings.php:29
-#: wpagent/includes/class-wpagent-settings.php:164
-msgid "Settings"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:76
-#: wpagent/includes/class-wpagent-agents.php:429
-msgid "Shortcode"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:407
-#: wpagent/includes/class-wpagent-agents.php:642
-#: wpagent/includes/class-wpagent-agents.php:222
-#: wpagent/includes/class-wpagent-rest-controller.php:400
-#: wpagent/includes/class-wpagent-shortcode.php:122
-msgid "Sobre voce"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:324
-msgid "Status"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:234
-msgid "Status dos comentarios."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:143
-msgid "Status recente"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:196
-msgid "Status:"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-shortcode.php:115
-msgid "Suas conversas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:186
-msgid "Sugestao de post gerada em modo relatorio."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:166
-msgid "Tarefa concluida."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-periodic-tasks.php:107
-msgid "Tarefa invalida."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:332
-msgid "Tarefas periodicas"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:806
-#: wpagent/includes/class-wpagent-agents.php:315
-#: wpagent/includes/class-wpagent-document-indexer.php:116
-msgid "Texto manual de treinamento"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:240
-msgid "Texto opcional para buscar."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:183
-msgid "Texto para buscar no titulo ou conteudo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-document-indexer.php:170
-msgid "Tipo de arquivo ainda nao suportado para extracao automatica."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:64
-msgid "Tipo de post. Use post ou page."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:187
-msgid "Tipo de post. Use post, page ou any."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:593
-msgid "Titulo atualizado."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:317
-msgid "Titulo da fonte, ex.: BNCC em Markdown"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:221
-msgid "Titulo do campo"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:51
-msgid "Titulo do conteudo."
+msgid "Entrada"
 msgstr ""
 
 #: wpagent/includes/class-wpagent-reports.php:70
 #: wpagent/includes/class-wpagent-reports.php:189
+msgid "Saida"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:71
+#: wpagent/includes/class-wpagent-reports.php:190
 msgid "Total"
 msgstr ""
 
+#: wpagent/includes/class-wpagent-reports.php:72
+msgid "Limites"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:77
+#: wpagent/includes/class-wpagent-reports.php:196
+msgid "Nenhum uso registrado ainda."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:101
+msgid "Leads por email"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:102
+msgid ""
+"Acompanhe os emails coletados com consentimento durante conversas em que o "
+"agente preparou e enviou mensagens autorizadas pelo usuario."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:107
+msgid "Leads"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:108
+msgid "Emails enviados"
+msgstr ""
+
 #: wpagent/includes/class-wpagent-reports.php:109
-msgid "Total de eventos"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:258
-#: wpagent/includes/class-wpagent-settings.php:252
-msgid "Treinamentos"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:261
-msgid "Treinamentos: quantidade maxima de trechos da base do agente enviados ao modelo. Memorias: registros persistentes sobre o usuario. Interacoes: pares recentes de pergunta/resposta da conversa atual."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:312
-msgid "TXT, Markdown, CSV, JSON, HTML e DOCX sao extraidos automaticamente. PDF e tentado apenas quando houver texto legivel; se a extracao sair corrompida, ele nao sera usado no chat."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:141
-msgid "Ultimo assunto"
+msgid "Falhas"
 msgstr ""
 
 #: wpagent/includes/class-wpagent-reports.php:110
-#: wpagent/includes/class-wpagent-reports.php:146
+msgid "Total de eventos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:111
+#: wpagent/includes/class-wpagent-reports.php:147
 msgid "Ultimo email"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-settings.php:273
-msgid "Ultimo processamento:"
+#: wpagent/includes/class-wpagent-reports.php:116
+#: wpagent/includes/class-wpagent-reports.php:152
+msgid "Nenhum lead por email registrado ainda."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-settings.php:366
-msgid "Ultimo resultado"
+#: wpagent/includes/class-wpagent-reports.php:135
+msgid "Leads recentes"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-reports.php:190
+#: wpagent/includes/class-wpagent-reports.php:139
+msgid "Email"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:142
+msgid "Ultimo assunto"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:143
+msgid "Finalidade"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:144
+msgid "Status recente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:145
+msgid "Envios"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:146
+msgid "Primeiro registro"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:166
+#, php-format
+msgid "%1$s enviados, %2$s falhas, %3$s total"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:181
+msgid "Maiores consumos por usuario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-reports.php:191
 msgid "Ultimo uso"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:168
-msgid "Usado somente quando este agente estiver em OpenRouter direto ou quando o WordPress AI falhar e houver uma chave OpenRouter no WPAgent."
+#: wpagent/includes/class-wpagent-reports.php:219
+#, php-format
+msgid "Dia: %1$s / Semana: %2$s / Mes: %3$s"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-settings.php:207
-msgid "Usar WordPress AI / Connectors como provedor padrao para novos agentes."
+#: wpagent/includes/class-wpagent-reports.php:229
+msgid "ilimitado"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-admin-abilities.php:217
-msgid "Use antes de editar quando o usuario nao informar o ID do post."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:151
-msgid "Use apenas letras, numeros e hifens. Ele define o shortcode e separa memoria/treinamento."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:316
-msgid "Use este campo para colar uma versao limpa em TXT/Markdown de PDFs grandes quando a hospedagem nao tiver extrator confiavel. Ao salvar, o texto sera dividido em trechos pesquisaveis."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:213
-msgid "Use para apoio operacional no WordPress. Nesta versao ele conversa no painel; a execucao de acoes administrativas deve ser habilitada por ferramentas com permissao propria."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:206
-msgid "Use para atendimento publico do site. Ao ativar, o chat sem login tambem fica habilitado para este agente."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:245
-msgid "Use para casos como enviar plano de aula, mensagem pastoral, resumo, proposta, dados de produto ou material de apoio. O envio usa wp_mail(), entao a entrega depende da configuracao de email/SMTP do WordPress."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:80
-msgid "Use para criar apenas rascunhos revisaveis. Nunca afirme que publicou."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:273
-msgid "Use para encontrar o ID do comentario antes de aprovar ou rejeitar."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:233
-msgid "Use para orientar o usuario a informar contexto estavel, como turma, area de atuacao, estilo pessoal, objetivos e preferencias. Essas informacoes entram no prompt como contexto declarado pelo usuario."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:166
-msgid "Use quando o usuario pedir apenas para alterar titulo de post ou pagina. Se o ID nao estiver claro, use wpagent/search-posts antes."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:129
-msgid "Use somente apos identificar claramente qual post sera alterado. Peca confirmacao quando faltar ID ou titulo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:310
-msgid "Use somente quando o ID do comentario e a acao estiverem claros. Para rejeitar, use action=reject."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:161
-msgid "Use WordPress AI para aproveitar OpenAI, Gemini, Claude, OpenRouter ou outros conectores configurados no plugin oficial de IA do WordPress. O OpenRouter direto permanece disponivel como fallback ou opcao avancada."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:185
-msgid "Usuario"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:241
-msgid "Usuario #%d"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:64
-msgid "Usuarios"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:231
-msgid "Valor usado apenas pelo modo OpenRouter direto do WPAgent ou como fallback quando o WordPress AI falhar e houver uma chave OpenRouter salva."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-agents.php:262
-msgid "Valores maiores dao mais contexto, mas aumentam custo, latencia e risco de ultrapassar o limite do modelo."
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:159
-msgid "Ver agentes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-admin-abilities.php:226
-msgid "Ver comentarios"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:410
-msgid "Ver detalhes"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:234
+#: wpagent/includes/class-wpagent-reports.php:235
 msgid "Visitante"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:199
-msgid "Visitantes anonimos"
+#: wpagent/includes/class-wpagent-reports.php:242
+#, php-format
+msgid "Usuario #%d"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-periodic-tasks.php:285
-msgid "Voce e um assistente de manutencao WordPress. Recomende uma ordem segura de revisao, mas nao afirme que atualizou plugins."
+#: wpagent/includes/class-wpagent-reports.php:252
+msgid "enviado"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-periodic-tasks.php:245
-msgid "Voce e um assistente de moderacao. Recomende acoes, mas nao diga que executou moderacao."
+#: wpagent/includes/class-wpagent-reports.php:253
+msgid "falhou"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-periodic-tasks.php:177
-msgid "Voce e um assistente editorial de WordPress. Gere apenas conteudo revisavel, sem publicar nada."
+#: wpagent/includes/class-wpagent-reports.php:254
+msgid "agendado"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-admin-abilities.php:578
-msgid "Voce nao tem permissao para alterar o titulo deste conteudo."
+#: wpagent/includes/class-wpagent-reports.php:255
+msgid "pendente"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-admin-abilities.php:485
-msgid "Voce nao tem permissao para criar este tipo de conteudo."
+#: wpagent/includes/class-wpagent-repository.php:444
+#: wpagent/includes/class-wpagent-shortcode.php:133
+msgid "Observacoes adicionais"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-admin-abilities.php:530
-msgid "Voce nao tem permissao para editar este post."
+#: wpagent/includes/class-wpagent-rest-controller.php:249
+msgid "Envie uma mensagem para o agente."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-admin-abilities.php:680
-msgid "Voce nao tem permissao para moderar este comentario."
+#: wpagent/includes/class-wpagent-rest-controller.php:360
+msgid "O envio de email do WPAgent nao esta disponivel."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-admin-abilities.php:549
-msgid "Voce nao tem permissao para publicar este post."
+#: wpagent/includes/class-wpagent-rest-controller.php:389
+msgid "Este agente nao esta habilitado como assistente interno do admin."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-periodic-tasks.php:57
-msgid "Weekly"
+#: wpagent/includes/class-wpagent-rest-controller.php:433
+msgid "Nao foi possivel salvar o perfil do usuario."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-settings.php:191
-msgid "WordPress AI / Connectors"
+#: wpagent/includes/class-wpagent-rest-controller.php:473
+msgid "Informe um nome para a conversa."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-agents.php:158
-msgid "WordPress AI / Connectors (recomendado)"
+#: wpagent/includes/class-wpagent-rest-controller.php:499
+msgid "Nao foi possivel apagar esta conversa."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-settings.php:200
-msgid "WordPress AI Client ainda nao foi detectado. Instale/ative o plugin AI oficial ou use o OpenRouter direto abaixo."
+#: wpagent/includes/class-wpagent-rest-controller.php:583
+msgid "Muitas mensagens em pouco tempo. Aguarde um minuto e tente novamente."
 msgstr ""
 
-#: wpagent/includes/class-wpagent-settings.php:198
-msgid "WordPress AI Client detectado."
+#: wpagent/includes/class-wpagent-rest-controller.php:601
+msgid "diario"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-rest-controller.php:602
+msgid "semanal"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-rest-controller.php:603
+msgid "mensal"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-rest-controller.php:608
+#, php-format
+msgid ""
+"Este agente atingiu o limite %1$s de %2$s tokens. Tente novamente depois ou "
+"fale com o administrador."
 msgstr ""
 
 #: wpagent/includes/class-wpagent-settings.php:18
-#: wpagent/includes/class-wpagent-settings.php:155
-msgid "WPAgent"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-reports.php:44
-msgid "WPAgent Reports"
-msgstr ""
-
-#: wpagent/includes/class-wpagent-settings.php:17
 msgid "WPAgent Settings"
 msgstr ""
 
-#: wpagent/includes/class-wpagent-document-indexer.php:396
-msgid "ZipArchive nao esta disponivel para extrair arquivos DOCX."
+#: wpagent/includes/class-wpagent-settings.php:19
+#: wpagent/includes/class-wpagent-settings.php:160
+msgid "WPAgent"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:29
+#: wpagent/includes/class-wpagent-settings.php:30
+#: wpagent/includes/class-wpagent-settings.php:169
+msgid "Settings"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:161
+msgid ""
+"Configure a conexao global com IA e crie agentes independentes, cada um com "
+"shortcode e treinamento proprio."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:163
+msgid "Criar novo agente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:164
+msgid "Ver agentes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:165
+msgid "Plugin AI do WordPress"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:166
+msgid "Connectors"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:170
+msgid "Periodic Tasks"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:182
+msgid "Como usar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:183
+msgid ""
+"Cada agente exibe seu shortcode na tela de edicao e recebe seus arquivos de "
+"treinamento na propria configuracao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:196
+msgid "WordPress AI / Connectors"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:198
+msgid ""
+"O caminho recomendado e configurar OpenAI, Gemini, Claude, OpenRouter ou "
+"outros provedores no plugin AI oficial do WordPress em Settings > "
+"Connectors. O WPAgent usa essa configuracao para chats e tarefas de IA "
+"quando disponivel."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:203
+msgid "WordPress AI Client detectado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:205
+msgid ""
+"WordPress AI Client ainda nao foi detectado. Instale/ative o plugin AI "
+"oficial ou use o OpenRouter direto abaixo."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:210
+msgid "Provedor padrao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:212
+msgid "Usar WordPress AI / Connectors como provedor padrao para novos agentes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:213
+msgid ""
+"Com esta opcao ativa, novos agentes herdam os fornecedores, chaves e "
+"preferencias configuradas no plugin AI oficial. Agentes existentes podem ser "
+"ajustados individualmente na tela do agente."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:217
+msgid "Modelo padrao do WordPress AI"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:224
+#: wpagent/includes/class-wpagent-settings.php:270
+msgid "Modelo"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:228
+msgid ""
+"Opcional. Quando preenchido, o WPAgent envia este provider/model como "
+"preferencia para o WordPress AI Client. Deixe em branco para usar o modelo "
+"padrao escolhido pelo conector/plugin AI."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:229
+msgid ""
+"A listagem automatica de modelos depende de cada conector expor essa "
+"informacao. Por enquanto, use o ID oficial do modelo informado pelo "
+"fornecedor."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:236
+msgid ""
+"Valor usado apenas pelo modo OpenRouter direto do WPAgent ou como fallback "
+"quando o WordPress AI falhar e houver uma chave OpenRouter salva."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:240
+msgid "OpenRouter API key opcional"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:242
+msgid "Chave salva. Preencha apenas para trocar."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:243
+msgid ""
+"Preencha somente se quiser usar OpenRouter direto pelo WPAgent ou manter um "
+"fallback proprio. Se houver um conector OpenRouter no WordPress AI, o "
+"WPAgent tambem tenta espelhar esta chave para ele."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:247
+msgid "Padrao: visitantes anonimos"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:248
+msgid "Permitir chat sem login para novos agentes."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:251
+msgid "Instrucao base padrao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:255
+msgid "Limites padrao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:259
+msgid "Interacoes recentes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:265
+msgid "Ativar busca semantica por embeddings para documentos indexados."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:273
+msgid "Lote por cron"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:275
+msgid ""
+"Nesta primeira versao, o provider suportado e openrouter via /api/v1/"
+"embeddings. Os embeddings sao gerados em segundo plano pelo WP-Cron."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:278
+msgid "Ultimo processamento:"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:290
+#, php-format
+msgid "Proximo lote automatico: %s."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:296
+msgid ""
+"Nao ha lote automatico agendado no momento. Salve as configuracoes com "
+"embeddings ativos para agendar."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:299
+msgid "Processar embeddings agora"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:304
+msgid "Controle de tokens por usuário"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:306
+msgid "Ativar controle de uso de tokens por usuário"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:308
+msgid ""
+"Quando ativado, cada usuário terá um limite mensal de tokens. "
+"Administradores não são limitados. O limite pode ser 0 para ilimitado."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:312
+msgid "Limite mensal por usuário"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:316
+msgid ""
+"Deixe em branco (0) para permitir uso ilimitado. Os tokens são resetados "
+"automaticamente no início de cada mês."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:353
+msgid "Tarefas periodicas"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:355
+msgid "Ativar cuidador periodico do site."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:356
+msgid ""
+"As tarefas usam WP-Cron. Em hospedagens comuns, elas rodam quando o site "
+"recebe visitas ou quando ha cron real configurado no servidor."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:362
+#, php-format
+msgid "Proxima verificacao automatica: %s."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:371
+msgid "Modo de execucao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:373
+msgid "Apenas relatorios e recomendacoes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:374
+msgid "Permitir criacao de rascunhos revisaveis"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:375
+msgid ""
+"Atualizacao de plugins, publicacao de posts e moderacao de comentarios "
+"continuam exigindo acao humana nesta versao."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:379
+msgid "Funcoes habilitadas"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:383
+msgid "Ativar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:384
+msgid "Funcao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:385
+msgid "Periodicidade"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:386
+msgid "Instrucao"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:387
+msgid "Ultimo resultado"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:388
+msgid "Executar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:427
+msgid "Abrir rascunho"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:431
+msgid "Ver detalhes"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:436
+msgid "Ainda nao executada."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-settings.php:440
+msgid "Executar agora"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:114
+#: wpagent/includes/class-wpagent-shortcode.php:118
+#: wpagent/includes/class-wpagent-shortcode.php:145
+msgid "Conversas"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:116
+#: wpagent/includes/class-wpagent-shortcode.php:124
+msgid "Nova"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:122
+msgid "Suas conversas"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:135
+msgid "Ex.: ano em que leciono, estilo de aula, objetivos e preferencias..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:138
+msgid "Salvar perfil"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:151
+msgid "Renomear"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:160
+msgid "Mensagem"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:162
+msgid "Escreva sua mensagem..."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:163
+msgid "Enviar"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:165
+msgid "Enter envia. Shift + Enter quebra linha."
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:258
+msgid "Fechar assistente"
+msgstr ""
+
+#: wpagent/includes/class-wpagent-shortcode.php:258
+msgid "Fechar"
 msgstr ""

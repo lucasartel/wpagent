@@ -4,8 +4,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Admin_Abilities' ) ) {
 class WPAgent_Admin_Abilities {
+	private $repository;
+	private $settings;
+
+	public function __construct( ?WPAgent_Repository $repository = null, ?WPAgent_Settings $settings = null ) {
+		$this->repository = $repository;
+		$this->settings   = $settings;
+	}
+
 	public function register() {
+		add_action( 'admin_menu', array( $this, 'add_token_usage_menu' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'add_token_usage_widget' ) );
+		add_action( 'admin_post_wpagent_reset_user_tokens', array( $this, 'handle_reset_user_tokens' ) );
+
 		if ( ! function_exists( 'wp_register_ability' ) ) {
 			return;
 		}
@@ -796,6 +809,37 @@ class WPAgent_Admin_Abilities {
 		return $type && ! empty( $type->cap->publish_posts ) && current_user_can( $type->cap->publish_posts );
 	}
 
+	public function handle_reset_user_tokens() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['action'] ) || 'wpagent_reset_user_tokens' !== $_POST['action'] ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wpagent_reset_tokens' ) ) {
+			return;
+		}
+
+		$user_id = isset( $_POST['user_id'] ) ? absint( wp_unslash( $_POST['user_id'] ) ) : 0;
+		$reset_widget = isset( $_POST['reset_user_token_usage'] );
+
+		if ( $reset_widget && $this->repository ) {
+			global $wpdb;
+			$table = $wpdb->prefix . 'wpagent_user_tokens_usage';
+			$wpdb->query( "TRUNCATE TABLE {$table}" );
+			wp_safe_redirect( admin_url( 'admin.php?page=wpagent-token-usage' ) );
+			exit;
+		}
+
+		if ( $user_id > 0 && $this->repository ) {
+			$this->repository->reset_monthly_usage( $user_id );
+			wp_safe_redirect( admin_url( 'admin.php?page=wpagent-token-usage' ) );
+			exit;
+		}
+	}
+
 	private function post_result( $post_id, $message ) {
 		$post = get_post( $post_id );
 
@@ -840,4 +884,175 @@ class WPAgent_Admin_Abilities {
 
 		return substr( $text, 0, $limit - 3 ) . '...';
 	}
+
+	public function add_token_usage_menu() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		add_submenu_page(
+			'wpagent',
+			__( 'Uso de Tokens', 'wpagent' ),
+			__( 'Uso de Tokens', 'wpagent' ),
+			'manage_options',
+			'wpagent-token-usage',
+			array( $this, 'render_token_usage_page' )
+		);
+	}
+
+	public function render_token_usage_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( ! $this->settings ) {
+			echo '<div class="wrap"><div class="notice notice-error"><p>' . esc_html__( 'Configuracao nao disponivel.', 'wpagent' ) . '</p></div></div>';
+			return;
+		}
+
+		$enable_global_limit = '1' === $this->settings->get( 'enable_global_token_limit', '0' );
+		$global_limit        = (int) $this->settings->get( 'global_token_limit', 100000 );
+
+		$users_token_usage = $this->repository ? $this->repository->get_all_users_token_usage( 100 ) : array();
+		$total_tokens = 0;
+		$active_users = 0;
+
+		foreach ( $users_token_usage as $usage ) {
+			$total_tokens += (int) ( $usage['total_tokens'] ?? 0 );
+			if ( (int) ( $usage['total_tokens'] ?? 0 ) > 0 ) {
+				$active_users++;
+			}
+		}
+		?>
+		<div class="wrap">
+			<h1><?php esc_html_e( 'WPAgent - Uso de Tokens', 'wpagent' ); ?></h1>
+			<p class="description">
+				<?php esc_html_e( 'Configure o limite na pagina de Configuracoes Gerais.', 'wpagent' ); ?>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpagent&tab=general' ) ); ?>"><?php esc_html_e( 'Ir para Configuracoes', 'wpagent' ); ?></a>
+			</p>
+			<p>
+				<strong><?php esc_html_e( 'Controle ativo:', 'wpagent' ); ?></strong>
+				<?php echo $enable_global_limit ? esc_html__( 'Sim', 'wpagent' ) : esc_html__( 'Nao', 'wpagent' ); ?>
+				&mdash;
+				<strong><?php esc_html_e( 'Limite:', 'wpagent' ); ?></strong>
+				<?php echo 0 === $global_limit ? esc_html__( 'Ilimitado', 'wpagent' ) : esc_html( sprintf( __( '%s tokens/mes', 'wpagent' ), number_format_i18n( $global_limit ) ) ); ?>
+			</p>
+
+			<h2><?php esc_html_e( 'Resumo de Uso Mensal', 'wpagent' ); ?></h2>
+			<table class="widefat striped">
+				<thead>
+					<tr>
+						<th><?php esc_html_e( 'Usuario', 'wpagent' ); ?></th>
+						<th><?php esc_html_e( 'Total de Tokens', 'wpagent' ); ?></th>
+						<th><?php esc_html_e( 'Criado em', 'wpagent' ); ?></th>
+						<th><?php esc_html_e( 'Acoes', 'wpagent' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4" class="center">
+							<strong><?php echo esc_html( sprintf( __( 'Total: %s tokens de %s usuários ativos', 'wpagent' ), number_format_i18n( $total_tokens ), number_format_i18n( $active_users ) ) ); ?></strong>
+						</td>
+					</tr>
+					<?php if ( empty( $users_token_usage ) ) : ?>
+						<tr>
+							<td colspan="4" class="center">
+								<p><?php esc_html_e( 'Nenhum dado de uso de tokens encontrado.', 'wpagent' ); ?></p>
+							</td>
+						</tr>
+					<?php else : ?>
+						<?php foreach ( $users_token_usage as $usage ) : ?>
+							<tr>
+								<td>
+									<?php
+									$user = get_userdata( absint( $usage['user_id'] ) );
+									echo $user ? esc_html( $user->display_name ) : sprintf( __( 'ID: %d', 'wpagent' ), absint( $usage['user_id'] ) );
+									?>
+								</td>
+								<td>
+							<strong><?php echo esc_html( number_format_i18n( (int) ( $usage['total_tokens'] ?? 0 ) ) ); ?></strong>
+								</td>
+								<td><?php echo esc_html( $usage['created_at'] ?? '-' ); ?></td>
+								<td>
+									<?php if ( $user && current_user_can( 'manage_options' ) ) : ?>
+										<button type="button" class="button button-small" onclick="wpagent_reset_tokens(<?php echo esc_attr( absint( $usage['user_id'] ) ); ?>)">
+											<?php esc_html_e( 'Resetar', 'wpagent' ); ?>
+										</button>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</tbody>
+			</table>
+
+			<?php if ( ! empty( $users_token_usage ) ) : ?>
+				<h2><?php esc_html_e( 'Resetar Uso de Usuario', 'wpagent' ); ?></h2>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" onsubmit="return confirm('<?php echo esc_js( __( 'Tem certeza que deseja resetar o uso de tokens deste usuario?', 'wpagent' ) ); ?>');">
+					<input type="hidden" name="action" value="wpagent_reset_user_tokens">
+					<input type="hidden" name="user_id" id="reset_user_id" value="">
+					<?php wp_nonce_field( 'wpagent_reset_tokens' ); ?>
+					<button type="submit" class="button button-secondary">
+						<?php esc_html_e( 'Resetar Tokens', 'wpagent' ); ?>
+					</button>
+				</form>
+			<?php endif; ?>
+		</div>
+
+		<script>
+		function wpagent_reset_tokens(userId) {
+			document.getElementById('reset_user_id').value = userId;
+			document.querySelector('form[action*="admin-post.php"]').submit();
+		}
+		</script>
+		<?php
+	}
+
+	public function add_token_usage_widget() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		wp_add_dashboard_widget(
+			'wpagent_token_usage_widget',
+			__( 'WPAgent - Uso de Tokens', 'wpagent' ),
+			array( $this, 'render_token_usage_widget_content' )
+		);
+	}
+
+	public function render_token_usage_widget_content() {
+		if ( ! $this->repository ) {
+			echo '<p>' . esc_html__( 'Repositorio nao disponivel.', 'wpagent' ) . '</p>';
+			return;
+		}
+		$users_token_usage = $this->repository->get_all_users_token_usage( 10 );
+		$total_tokens = 0;
+
+		foreach ( $users_token_usage as $usage ) {
+			$total_tokens += (int) ( $usage['total_tokens'] ?? 0 );
+		}
+		?>
+		<p><strong><?php esc_html_e( 'Total de tokens este mes:', 'wpagent' ); ?></strong> <?php echo esc_html( number_format_i18n( $total_tokens ) ); ?></p>
+		<p><strong><?php esc_html_e( 'Usuarios ativos:', 'wpagent' ); ?></strong> <?php echo esc_html( number_format_i18n( count( $users_token_usage ) ) ); ?></p>
+		<?php if ( ! empty( $users_token_usage ) ) : ?>
+			<p><strong><?php esc_html_e( 'Top usuarios por uso:', 'wpagent' ); ?></strong></p>
+			<ul>
+				<?php foreach ( $users_token_usage as $usage ) : ?>
+					<?php
+					$user = get_userdata( absint( $usage['user_id'] ) );
+					if ( $user ) :
+					?>
+						<li>
+							<?php echo esc_html( $user->display_name ); ?>
+							&mdash; <?php echo esc_html( sprintf( __( '%s tokens', 'wpagent' ), number_format_i18n( (int) ( $usage['total_tokens'] ?? 0 ) ) ) ); ?>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</ul>
+		<?php else : ?>
+			<p><?php esc_html_e( 'Nenhum dado de uso de tokens encontrado.', 'wpagent' ); ?></p>
+		<?php endif; ?>
+		<?php
+	}
+}
 }

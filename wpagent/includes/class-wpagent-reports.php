@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Reports' ) ) {
 class WPAgent_Reports {
 	private $repository;
 	private $agents;
@@ -266,4 +267,5 @@ class WPAgent_Reports {
 
 		return substr( $text, 0, $limit - 3 ) . '...';
 	}
+}
 }

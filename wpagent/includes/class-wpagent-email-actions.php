@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Email_Actions' ) ) {
 class WPAgent_Email_Actions {
 	private $repository;
 
@@ -262,4 +263,5 @@ class WPAgent_Email_Actions {
 
 		return substr( $text, 0, $limit - 3 ) . '...';
 	}
+}
 }

@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Document_Indexer' ) ) {
 class WPAgent_Document_Indexer {
 	private $repository;
 
@@ -607,4 +608,5 @@ class WPAgent_Document_Indexer {
 
 		return $candidates;
 	}
+}
 }

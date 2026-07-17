@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Agents' ) ) {
 class WPAgent_Agents {
 	const POST_TYPE = 'wpagent_agent';
 
@@ -125,6 +126,10 @@ class WPAgent_Agents {
 	}
 
 	public function admin_notices() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$notice = get_transient( 'wpagent_admin_notice_' . get_current_user_id() );
 		if ( ! $notice ) {
 			return;
@@ -270,6 +275,13 @@ class WPAgent_Agents {
 					<label><?php esc_html_e( 'Por mes', 'wpagent' ); ?> <input class="regular-text" type="number" min="0" name="wpagent_agent[token_limit_month]" value="<?php echo esc_attr( $agent['token_limit_month'] ); ?>"></label>
 					<p class="description"><?php esc_html_e( 'Controla o total de tokens consumidos por este agente em todos os usuarios. Use 0 para ilimitado. O bloqueio acontece quando o consumo registrado do periodo atinge o limite.', 'wpagent' ); ?></p>
 					<p class="description"><?php esc_html_e( 'A contagem depende do fornecedor retornar uso de tokens. OpenRouter normalmente retorna; alguns conectores do WordPress AI podem retornar 0.', 'wpagent' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Uso mensal no chat', 'wpagent' ); ?></th>
+				<td>
+					<label><input type="checkbox" name="wpagent_agent[show_token_usage]" value="1" <?php checked( $agent['show_token_usage'], '1' ); ?>> <?php esc_html_e( 'Mostrar o consumo mensal de tokens deste usuario no shortcode.', 'wpagent' ); ?></label>
+					<p class="description"><?php esc_html_e( 'Esta opcao apenas controla a exibicao no chat. O limite mensal por usuario continua sendo configurado nas Configuracoes Gerais.', 'wpagent' ); ?></p>
 				</td>
 			</tr>
 		</table>
@@ -427,6 +439,7 @@ class WPAgent_Agents {
 			'_wpagent_token_limit_day'         => max( 0, absint( $input['token_limit_day'] ?? 0 ) ),
 			'_wpagent_token_limit_week'        => max( 0, absint( $input['token_limit_week'] ?? 0 ) ),
 			'_wpagent_token_limit_month'       => max( 0, absint( $input['token_limit_month'] ?? 0 ) ),
+			'_wpagent_show_token_usage'        => empty( $input['show_token_usage'] ) ? '0' : '1',
 		);
 
 		foreach ( $values as $key => $value ) {
@@ -515,6 +528,7 @@ class WPAgent_Agents {
 			'token_limit_day'          => absint( $this->meta_or_default( $post_id, '_wpagent_token_limit_day', $defaults['token_limit_day'] ) ),
 			'token_limit_week'         => absint( $this->meta_or_default( $post_id, '_wpagent_token_limit_week', $defaults['token_limit_week'] ) ),
 			'token_limit_month'        => absint( $this->meta_or_default( $post_id, '_wpagent_token_limit_month', $defaults['token_limit_month'] ) ),
+			'show_token_usage'         => $this->meta_or_default( $post_id, '_wpagent_show_token_usage', $defaults['show_token_usage'] ),
 			'training_files'           => $this->get_training_files( $post_id ),
 		);
 	}
@@ -665,6 +679,7 @@ class WPAgent_Agents {
 			'token_limit_day'          => 0,
 			'token_limit_week'         => 0,
 			'token_limit_month'        => 0,
+			'show_token_usage'         => '0',
 			'training_files'           => array(),
 		);
 	}
@@ -929,4 +944,5 @@ class WPAgent_Agents {
 			absint( $source['chunk_count'] )
 		);
 	}
+}
 }

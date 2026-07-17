@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Shortcode' ) ) {
 class WPAgent_Shortcode {
 	private $settings;
 	private $agents;
@@ -87,6 +88,8 @@ class WPAgent_Shortcode {
 
 	private function render_chat( $agent, $title, $extra_class = '' ) {
 		$this->enqueue_chat_assets();
+		$provider_timeout = max( 15, min( 180, (int) apply_filters( 'wpagent_ai_request_timeout', 90, 'chat' ) ) );
+		$browser_timeout  = max( 30000, min( 240000, (int) apply_filters( 'wpagent_chat_request_timeout', ( $provider_timeout + 15 ) * 1000, $agent ) ) );
 
 		ob_start();
 		?>
@@ -99,8 +102,11 @@ class WPAgent_Shortcode {
 			data-abilities-url="<?php echo esc_url( rest_url( 'wpagent/v1/abilities/run' ) ); ?>"
 			data-email-actions-url="<?php echo esc_url( rest_url( 'wpagent/v1/email/send' ) ); ?>"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>"
+			data-request-timeout="<?php echo esc_attr( $browser_timeout ); ?>"
+			data-debug-errors="<?php echo current_user_can( 'manage_options' ) ? '1' : '0'; ?>"
 			data-logged-in="<?php echo is_user_logged_in() ? '1' : '0'; ?>"
 			data-user-profile-enabled="<?php echo '1' === ( $agent['user_profile_enabled'] ?? '0' ) ? '1' : '0'; ?>"
+			data-show-token-usage="<?php echo '1' === ( $agent['show_token_usage'] ?? '0' ) ? '1' : '0'; ?>"
 			data-default-theme="<?php echo 'dark' === ( $agent['default_theme'] ?? 'light' ) ? 'dark' : 'light'; ?>"
 			data-i18n="<?php echo esc_attr( wp_json_encode( WPAgent_I18n::chat_strings() ) ); ?>"
 		>
@@ -157,6 +163,15 @@ class WPAgent_Shortcode {
 						<button type="submit"><?php esc_html_e( 'Enviar', 'wpagent' ); ?></button>
 					</div>
 					<div class="wpagent-chat__hint"><?php esc_html_e( 'Enter envia. Shift + Enter quebra linha.', 'wpagent' ); ?></div>
+					<?php if ( '1' === ( $agent['show_token_usage'] ?? '0' ) ) : ?>
+						<div class="wpagent-chat__token-usage" data-wpagent-token-usage>
+							<div class="wpagent-chat__token-summary">
+								<span class="wpagent-chat__token-count"></span>
+								<span class="wpagent-chat__token-limit"></span>
+							</div>
+							<div class="wpagent-chat__token-progress" aria-hidden="true"><span></span></div>
+						</div>
+					<?php endif; ?>
 				</form>
 			</div>
 		</div>
@@ -248,4 +263,5 @@ class WPAgent_Shortcode {
 		<?php
 		return ob_get_clean();
 	}
+}
 }

@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Periodic_Tasks' ) ) {
 class WPAgent_Periodic_Tasks {
 	const CRON_HOOK = 'wpagent_process_periodic_tasks';
 	const STATE_OPTION = 'wpagent_periodic_task_state';
@@ -424,4 +425,5 @@ class WPAgent_Periodic_Tasks {
 
 		update_option( self::STATE_OPTION, $state, false );
 	}
+}
 }

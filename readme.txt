@@ -2,9 +2,9 @@
 Contributors: wpagent
 Tags: ai, chatbot, agents, rag, openrouter
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.0.1
 Requires PHP: 7.4
-Stable tag: 0.4.15
+Stable tag: 0.5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,11 @@ Yes. Depending on configuration, WPAgent can store conversation history, profile
 No. Admin abilities require an administrator, WordPress capability checks, and explicit confirmation in the UI before execution.
 
 == Changelog ==
+
+= 0.5.0 =
+* New: recurring and sequenced (drip) email scheduling per agent.
+* The agent proposes schedules from its instructions; the user confirms in the chat; WordPress Cron handles the sends with AI-generated content per send.
+* Per-agent enable flag, admin panel for schedules and subscribers, 1-click unsubscribe link, and consent tracking.
 
 = 0.4.15 =
 * Fix garbled accented characters (mojibake) in Portuguese/Spanish interface strings.

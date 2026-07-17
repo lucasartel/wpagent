@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Settings' ) ) {
 class WPAgent_Settings {
 	const OPTION_NAME = 'wpagent_settings';
 
@@ -69,6 +70,8 @@ class WPAgent_Settings {
 			'periodic_task_mode'      => in_array( $input['periodic_task_mode'] ?? '', array( 'report_only', 'drafts' ), true ) ? sanitize_key( $input['periodic_task_mode'] ) : ( $current['periodic_task_mode'] ?? 'report_only' ),
 			'periodic_tasks'          => $this->sanitize_periodic_tasks( $input['periodic_tasks'] ?? $current['periodic_tasks'] ?? array() ),
 			'system_prompt'           => wp_kses_post( $input['system_prompt'] ?? $current['system_prompt'] ?? '' ),
+			'enable_global_token_limit' => empty( $input['enable_global_token_limit'] ) ? '0' : '1',
+			'global_token_limit'      => max( 0, absint( $input['global_token_limit'] ?? 100000 ) ),
 		);
 
 		return $output;
@@ -95,6 +98,8 @@ class WPAgent_Settings {
 			'periodic_task_mode'      => 'report_only',
 			'periodic_tasks'          => $this->default_periodic_tasks(),
 			'system_prompt'           => 'Voce e um assistente pessoal cuidadoso, util e contextual.',
+			'enable_global_token_limit' => '0',
+			'global_token_limit'      => 100000,
 		);
 
 		$options = get_option( self::OPTION_NAME, array() );
@@ -149,7 +154,7 @@ class WPAgent_Settings {
 		}
 
 		$options = $this->all();
-		$tab = sanitize_key( $_GET['tab'] ?? 'general' );
+		$tab = sanitize_key( wp_unslash( $_GET['tab'] ?? 'general' ) );
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'WPAgent', 'wpagent' ); ?></h1>
@@ -295,6 +300,22 @@ class WPAgent_Settings {
 							</p>
 						</td>
 					</tr>
+					<tr>
+						<th scope="row"><label for="wpagent-enable-global-token-limit"><?php esc_html_e( 'Controle de tokens por usuário', 'wpagent' ); ?></label></th>
+						<td>
+							<label><input type="checkbox" name="<?php echo esc_attr( self::OPTION_NAME ); ?>[enable_global_token_limit]" value="1" <?php checked( $options['enable_global_token_limit'], '1' ); ?>> <?php esc_html_e( 'Ativar controle de uso de tokens por usuário', 'wpagent' ); ?></label>
+							<p class="description">
+								<?php esc_html_e( 'Quando ativado, cada usuário terá um limite mensal de tokens. Administradores não são limitados. O limite pode ser 0 para ilimitado.', 'wpagent' ); ?>
+							</p>
+							<p>
+								<label>
+									<?php esc_html_e( 'Limite mensal por usuário', 'wpagent' ); ?>
+									<input class="small-text" type="number" min="0" name="<?php echo esc_attr( self::OPTION_NAME ); ?>[global_token_limit]" value="<?php echo esc_attr( $options['global_token_limit'] ); ?>">
+								</label>
+							</p>
+							<p class="description"><?php esc_html_e( 'Deixe em branco (0) para permitir uso ilimitado. Os tokens são resetados automaticamente no início de cada mês.', 'wpagent' ); ?></p>
+						</td>
+					</tr>
 				</table>
 		<?php
 	}
@@ -424,4 +445,5 @@ class WPAgent_Settings {
 		</table>
 		<?php
 	}
+}
 }

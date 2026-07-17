@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Embeddings' ) ) {
 class WPAgent_Embeddings {
 	const CRON_HOOK = 'wpagent_process_embedding_batch';
 
@@ -279,4 +280,5 @@ class WPAgent_Embeddings {
 
 		return $dot / ( sqrt( $norm_a ) * sqrt( $norm_b ) );
 	}
+}
 }

@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_WordPress_AI_Integration' ) ) {
 class WPAgent_WordPress_AI_Integration {
 	private $settings;
 
@@ -91,4 +92,5 @@ class WPAgent_WordPress_AI_Integration {
 
 		return false !== strpos( $id, 'openrouter' ) || false !== strpos( $name, 'openrouter' );
 	}
+}
 }

@@ -2,15 +2,16 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-}
+	}
 
+if ( ! class_exists( 'WPAgent_AI_Client' ) ) {
 class WPAgent_AI_Client {
 	private $repository;
 	private $settings;
 	private $agents;
 	private $prompt_builder;
 
-	public function __construct( WPAgent_Repository $repository, WPAgent_Settings $settings, WPAgent_Agents $agents, WPAgent_Embeddings $embeddings = null, WPAgent_Admin_Abilities $admin_abilities = null, WPAgent_Email_Actions $email_actions = null ) {
+	public function __construct( WPAgent_Repository $repository, WPAgent_Settings $settings, WPAgent_Agents $agents, ?WPAgent_Embeddings $embeddings = null, ?WPAgent_Admin_Abilities $admin_abilities = null, ?WPAgent_Email_Actions $email_actions = null ) {
 		$this->repository     = $repository;
 		$this->settings       = $settings;
 		$this->agents         = $agents;
@@ -18,6 +19,14 @@ class WPAgent_AI_Client {
 	}
 
 	public function chat( $message, $user_id, $agent_slug, $conversation_id = '', $session_id = '' ) {
+		$user_id = absint( $user_id );
+		$tokens_needed = 100;
+		$can_use = $this->repository->can_user_use_tokens( $user_id, $tokens_needed );
+
+		if ( ! $can_use ) {
+			return new WP_Error( 'wpagent_token_limit_reached', __( 'Você atingiu o limite mensal de tokens. Tente novamente em 30 dias ou fale com o administrador.', 'wpagent' ), array( 'status' => 429 ) );
+	}
+
 		$prompt = $this->prompt_builder->build( $message, $user_id, $agent_slug, $conversation_id, $session_id );
 		$agent  = $prompt['agent'];
 
@@ -84,7 +93,7 @@ class WPAgent_AI_Client {
 			return $this->normalize_provider_error( $result );
 		}
 
-		return array(
+		$response = array(
 			'reply'        => (string) $result,
 			'provider'     => $agent['wordpress_ai_provider'] ?: 'wordpress-ai',
 			'model'        => $agent['wordpress_ai_model'] ?: '',
@@ -92,6 +101,8 @@ class WPAgent_AI_Client {
 			'token_output' => 0,
 			'raw'          => array(),
 		);
+
+		return $response;
 	}
 
 	private function chat_with_openrouter( $messages, $agent ) {
@@ -140,7 +151,7 @@ class WPAgent_AI_Client {
 			return new WP_Error( 'wpagent_empty_ai_reply', __( 'O fornecedor de IA respondeu sem conteudo.', 'wpagent' ), array( 'status' => 502 ) );
 		}
 
-		return array(
+		$response = array(
 			'reply'        => $reply,
 			'provider'     => 'openrouter',
 			'model'        => $body['model'] ?? $model,
@@ -148,6 +159,8 @@ class WPAgent_AI_Client {
 			'token_output' => absint( $body['usage']['completion_tokens'] ?? 0 ),
 			'raw'          => $body,
 		);
+
+		return $response;
 	}
 
 	public function maybe_extract_memory( $message, $reply, $interaction_id, $user_id, $agent_slug ) {
@@ -205,9 +218,9 @@ class WPAgent_AI_Client {
 	}
 
 	private function request_timeout( $context ) {
-		$timeout = (int) apply_filters( 'wpagent_ai_request_timeout', 60, $context );
+		$timeout = (int) apply_filters( 'wpagent_ai_request_timeout', 90, $context );
 
-		return max( 15, min( 90, $timeout ) );
+		return max( 15, min( 180, $timeout ) );
 	}
 
 	private function provider_exception_error( $code, Throwable $throwable ) {
@@ -234,6 +247,10 @@ class WPAgent_AI_Client {
 			return $this->timeout_error( $error->get_error_code(), $message );
 		}
 
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && $message ) {
+			error_log( 'WPAgent AI provider error (' . $error->get_error_code() . '): ' . $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
+
 		$data = $error->get_error_data();
 		$status = is_array( $data ) && ! empty( $data['status'] ) ? absint( $data['status'] ) : 502;
 
@@ -251,7 +268,7 @@ class WPAgent_AI_Client {
 
 		return new WP_Error(
 			'wpagent_ai_timeout',
-			__( 'A resposta demorou demais. Tente novamente em instantes ou use uma pergunta mais curta.', 'wpagent' ),
+			__( 'O provedor de IA demorou demais para responder. Tente novamente em instantes.', 'wpagent' ),
 			array(
 				'status'         => 504,
 				'provider_error' => $code,
@@ -278,4 +295,5 @@ class WPAgent_AI_Client {
 
 		return $response;
 	}
+}
 }

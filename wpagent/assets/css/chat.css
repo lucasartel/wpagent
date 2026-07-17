@@ -429,6 +429,86 @@
 	padding-right: 78px;
 }
 
+.wpagent-chat__message--agent .wpagent-chat__message-content:empty {
+	display: none;
+}
+
+.wpagent-md__p {
+	margin: 0 0 8px;
+}
+
+.wpagent-md__p:last-child {
+	margin-bottom: 0;
+}
+
+.wpagent-md__h1,
+.wpagent-md__h2,
+.wpagent-md__h3 {
+	font-weight: 700;
+	line-height: 1.3;
+	margin: 12px 0 6px;
+}
+
+.wpagent-md__h1 {
+	font-size: 1.2em;
+}
+
+.wpagent-md__h2 {
+	font-size: 1.1em;
+}
+
+.wpagent-md__h3 {
+	font-size: 1.05em;
+}
+
+.wpagent-md__ul,
+.wpagent-md__ol {
+	margin: 6px 0;
+	padding-left: 22px;
+}
+
+.wpagent-md__li {
+	margin: 2px 0;
+}
+
+.wpagent-md__code {
+	background: var(--wpagent-soft);
+	border-radius: 3px;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: 0.9em;
+	padding: 1px 5px;
+}
+
+.wpagent-md__code-block {
+	background: var(--wpagent-panel);
+	border: 1px solid var(--wpagent-border);
+	border-radius: 6px;
+	margin: 8px 0;
+	overflow-x: auto;
+	padding: 10px 12px;
+}
+
+.wpagent-md__code-block code {
+	background: none;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: 0.88em;
+	padding: 0;
+	white-space: pre;
+}
+
+.wpagent-chat__message-content a {
+	color: var(--wpagent-focus);
+	text-decoration: underline;
+}
+
+.wpagent-chat__message-content strong {
+	font-weight: 700;
+}
+
+.wpagent-chat__message-content em {
+	font-style: italic;
+}
+
 .wpagent-chat__copy-message,
 .wpagent-chat__export-message {
 	background: transparent;
@@ -544,7 +624,8 @@
 }
 
 .wpagent-chat__ability-proposal,
-.wpagent-chat__email-proposal {
+.wpagent-chat__email-proposal,
+.wpagent-chat__schedule-proposal {
 	background: var(--wpagent-surface);
 	border: 1px solid var(--wpagent-border);
 	border-radius: 8px;
@@ -556,13 +637,15 @@
 }
 
 .wpagent-chat__ability-proposal strong,
-.wpagent-chat__email-proposal strong {
+.wpagent-chat__email-proposal strong,
+.wpagent-chat__schedule-proposal strong {
 	font-size: 13px;
 	line-height: 1.3;
 }
 
 .wpagent-chat__ability-proposal span,
-.wpagent-chat__email-proposal span {
+.wpagent-chat__email-proposal span,
+.wpagent-chat__schedule-proposal span {
 	color: var(--wpagent-muted);
 	font-size: 12px;
 	line-height: 1.4;
@@ -582,7 +665,8 @@
 }
 
 .wpagent-chat__ability-proposal button,
-.wpagent-chat__email-proposal button {
+.wpagent-chat__email-proposal button,
+.wpagent-chat__schedule-proposal button {
 	background: #2d6a4f;
 	border-color: #2d6a4f;
 	color: #fff;
@@ -594,12 +678,15 @@
 .wpagent-chat__ability-proposal button:hover,
 .wpagent-chat__ability-proposal button:focus-visible,
 .wpagent-chat__email-proposal button:hover,
-.wpagent-chat__email-proposal button:focus-visible {
+.wpagent-chat__email-proposal button:focus-visible,
+.wpagent-chat__schedule-proposal button:hover,
+.wpagent-chat__schedule-proposal button:focus-visible {
 	background: #24563f;
 }
 
 .wpagent-chat__ability-proposal.is-executed button,
-.wpagent-chat__email-proposal.is-executed button {
+.wpagent-chat__email-proposal.is-executed button,
+.wpagent-chat__schedule-proposal.is-confirmed button {
 	background: #166534;
 	border-color: #166534;
 }
@@ -988,4 +1075,63 @@
 	.wpagent-floating-assistant .wpagent-chat--floating .wpagent-chat__messages {
 		max-height: 40vh;
 	}
+}
+
+.wpagent-chat__token-usage {
+	display: grid;
+	gap: 6px;
+	font-size: 12px;
+	color: var(--wpagent-muted);
+	padding: 8px 12px;
+	background: var(--wpagent-soft);
+	border-radius: 4px;
+	margin-top: 12px;
+	transition: all 0.2s ease;
+}
+
+.wpagent-chat__token-summary {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.wpagent-chat__token-count {
+	font-weight: 500;
+}
+
+.wpagent-chat__token-limit {
+	color: var(--wpagent-muted);
+}
+
+.wpagent-chat__token-progress {
+	background: var(--wpagent-border);
+	border-radius: 999px;
+	height: 5px;
+	overflow: hidden;
+}
+
+.wpagent-chat__token-progress span {
+	background: var(--wpagent-focus);
+	border-radius: inherit;
+	display: block;
+	height: 100%;
+	transition: width 0.2s ease;
+	width: var(--token-usage-pct, 0%);
+}
+
+.wpagent-chat__token-error {
+	font-size: 12px;
+}
+
+.wpagent-chat.is-dark-mode .wpagent-chat__token-usage {
+	background: var(--wpagent-soft);
+	color: var(--wpagent-muted);
+}
+
+.wpagent-chat.is-dark-mode .wpagent-chat__token-count {
+	color: var(--wpagent-muted);
+}
+
+.wpagent-chat.is-dark-mode .wpagent-chat__token-limit {
+	color: var(--wpagent-muted);
 }

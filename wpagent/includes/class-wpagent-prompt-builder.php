@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_Prompt_Builder' ) ) {
 class WPAgent_Prompt_Builder {
 	private $repository;
 	private $settings;
@@ -12,7 +13,7 @@ class WPAgent_Prompt_Builder {
 	private $admin_abilities;
 	private $email_actions;
 
-	public function __construct( WPAgent_Repository $repository, WPAgent_Settings $settings, WPAgent_Agents $agents, WPAgent_Embeddings $embeddings = null, WPAgent_Admin_Abilities $admin_abilities = null, WPAgent_Email_Actions $email_actions = null ) {
+	public function __construct( WPAgent_Repository $repository, WPAgent_Settings $settings, WPAgent_Agents $agents, ?WPAgent_Embeddings $embeddings = null, ?WPAgent_Admin_Abilities $admin_abilities = null, ?WPAgent_Email_Actions $email_actions = null ) {
 		$this->repository      = $repository;
 		$this->settings        = $settings;
 		$this->agents          = $agents;
@@ -194,4 +195,5 @@ class WPAgent_Prompt_Builder {
 
 		return substr( $text, 0, $limit - 3 ) . '...';
 	}
+}
 }

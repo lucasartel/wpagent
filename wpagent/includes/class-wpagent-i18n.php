@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'WPAgent_I18n' ) ) {
 class WPAgent_I18n {
 	public static function register() {
 		add_action( 'init', array( __CLASS__, 'load_textdomain' ) );
@@ -56,7 +57,8 @@ class WPAgent_I18n {
 		return array(
 			'genericErrorPrefix'       => __( 'Erro no WPAgent. Status ', 'wpagent' ),
 			'timeoutError'             => __( 'A resposta demorou demais. Verifique a chave, o modelo e o fornecedor de IA.', 'wpagent' ),
-			'serverTimeoutError'       => __( 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.', 'wpagent' ),
+			'serverTimeoutError'       => __( 'O provedor de IA demorou demais para responder. Tente novamente em instantes.', 'wpagent' ),
+			'browserTimeoutError'      => __( 'A resposta excedeu o tempo de espera do navegador. Tente novamente em instantes.', 'wpagent' ),
 			'serverUnavailableError'   => __( 'O servidor ou provedor de IA ficou indisponivel por alguns instantes. Tente novamente.', 'wpagent' ),
 			'invalidServerResponse'    => __( 'O servidor retornou uma pagina de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.', 'wpagent' ),
 			'emptyTitle'               => __( 'Como posso ajudar?', 'wpagent' ),
@@ -121,6 +123,9 @@ class WPAgent_I18n {
 			'savingProfile'            => __( 'Salvando perfil...', 'wpagent' ),
 			'profileSaved'             => __( 'Perfil salvo', 'wpagent' ),
 			'profileSaveError'         => __( 'Erro ao salvar perfil', 'wpagent' ),
+			'tokensThisMonth'          => __( 'Tokens este mes', 'wpagent' ),
+			'tokensUnlimited'          => __( ' / Ilimitado', 'wpagent' ),
+			'tokenLimitExceeded'       => __( 'Limite de tokens mensal atingido. Entre em contato com o administrador.', 'wpagent' ),
 		);
 	}
 
@@ -2201,6 +2206,49 @@ class WPAgent_I18n {
 				'pt' => 'Você é um assistente de manutenção WordPress. Recomende uma ordem segura de revisão, mas não afirme que atualizou plugins.',
 				'es' => 'Eres un asistente de mantenimiento de WordPress. Recomienda un orden seguro de revisión, pero no afirmes que actualizaste plugins.',
 			),
+			'Tokens este mes' => array(
+				'en' => 'Tokens this month',
+				'pt' => 'Tokens este mês',
+				'es' => 'Tokens este mes',
+			),
+			' / Ilimitado' => array(
+				'en' => ' / Unlimited',
+				'pt' => ' / Ilimitado',
+				'es' => ' / Ilimitado',
+			),
+			'Limite de tokens mensal atingido. Entre em contato com o administrador.' => array(
+				'en' => 'Monthly token limit reached. Contact the administrator.',
+				'pt' => 'Limite de tokens mensal atingido. Entre em contato com o administrador.',
+				'es' => 'Se alcanzó el límite mensual de tokens. Contacta al administrador.',
+			),
+			'A resposta excedeu o tempo de espera do navegador. Tente novamente em instantes.' => array(
+				'en' => 'The response exceeded the browser timeout. Try again shortly.',
+				'pt' => 'A resposta excedeu o tempo de espera do navegador. Tente novamente em instantes.',
+				'es' => 'La respuesta superó el tiempo de espera del navegador. Inténtalo de nuevo en unos instantes.',
+			),
+			'O provedor de IA demorou demais para responder. Tente novamente em instantes.' => array(
+				'en' => 'The AI provider took too long to respond. Try again shortly.',
+				'pt' => 'O provedor de IA demorou demais para responder. Tente novamente em instantes.',
+				'es' => 'El proveedor de IA tardó demasiado en responder. Inténtalo de nuevo en unos instantes.',
+			),
+			'Uso mensal no chat' => array(
+				'en' => 'Monthly chat usage',
+				'pt' => 'Uso mensal no chat',
+				'es' => 'Uso mensual en el chat',
+			),
+			'Mostrar o consumo mensal de tokens deste usuario no shortcode.' => array(
+				'en' => 'Show this user\'s monthly token consumption in the shortcode.',
+				'pt' => 'Mostrar o consumo mensal de tokens deste usuário no shortcode.',
+				'es' => 'Mostrar el consumo mensual de tokens de este usuario en el shortcode.',
+			),
+			'Esta opcao apenas controla a exibicao no chat. O limite mensal por usuario continua sendo configurado nas Configuracoes Gerais.' => array(
+				'en' => 'This option only controls display in the chat. The monthly user limit remains configured in General Settings.',
+				'pt' => 'Esta opção apenas controla a exibição no chat. O limite mensal por usuário continua sendo configurado nas Configurações Gerais.',
+				'es' => 'Esta opción solo controla la visualización en el chat. El límite mensual por usuario sigue configurándose en Ajustes generales.',
+			),
 		);
+
+		return $catalog;
 	}
+}
 }

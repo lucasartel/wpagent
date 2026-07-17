@@ -1,6 +1,5 @@
 (function () {
 	var i18n = window.wpagentChatI18n || {};
-	var chatRequestTimeoutMs = 70000;
 
 	function t(key, fallback) {
 		return i18n[key] || fallback;
@@ -37,15 +36,17 @@
 		return cleaned.length > 220 ? cleaned.slice(0, 217) + '...' : cleaned;
 	}
 
-	function responseErrorMessage(response, body, text, isHtml) {
+	function responseErrorMessage(config, response, body, text, isHtml) {
 		var status = response.status || 0;
 
 		if (status === 504) {
-			return t('serverTimeoutError', 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.');
+			return body.message || t('serverTimeoutError', 'O provedor de IA demorou demais para responder. Tente novamente em instantes.');
 		}
 
 		if (status === 502 || status === 503) {
-			return t('serverUnavailableError', 'O servidor ou provedor de IA ficou indisponível por alguns instantes. Tente novamente.');
+			return config.canDebugErrors && body.message
+				? body.message
+				: t('serverUnavailableError', 'O servidor ou provedor de IA ficou indisponível por alguns instantes. Tente novamente.');
 		}
 
 		if (isHtml) {
@@ -67,7 +68,7 @@
 			options.signal = controller.signal;
 			timer = window.setTimeout(function () {
 				controller.abort();
-			}, chatRequestTimeoutMs);
+			}, config.requestTimeoutMs);
 		}
 
 		return fetch(url, options).then(function (response) {
@@ -85,7 +86,7 @@
 					}
 				}
 				if (!response.ok) {
-					throw new Error(responseErrorMessage(response, body, text, isHtml));
+					throw new Error(responseErrorMessage(config, response, body, text, isHtml));
 				}
 				if (isHtml) {
 					throw new Error(t('invalidServerResponse', 'O servidor retornou uma página de erro em vez de uma resposta do WPAgent. Tente novamente em instantes.'));
@@ -97,7 +98,7 @@
 				window.clearTimeout(timer);
 			}
 			if (error.name === 'AbortError') {
-				throw new Error(t('serverTimeoutError', 'O servidor demorou demais para responder. Tente novamente em instantes ou use uma pergunta mais curta.'));
+				throw new Error(t('browserTimeoutError', 'A resposta excedeu o tempo de espera do navegador. Tente novamente em instantes.'));
 			}
 			throw error;
 		});
@@ -149,9 +150,13 @@
 			profileUrl: chat.getAttribute('data-profile-url') || '',
 			abilitiesUrl: chat.getAttribute('data-abilities-url') || '',
 			emailActionsUrl: chat.getAttribute('data-email-actions-url') || '',
+			emailSchedulesUrl: chat.getAttribute('data-email-schedules-url') || '',
 			nonce: chat.getAttribute('data-nonce') || '',
 			isLoggedIn: chat.getAttribute('data-logged-in') === '1',
+			canDebugErrors: chat.getAttribute('data-debug-errors') === '1',
 			userProfileEnabled: chat.getAttribute('data-user-profile-enabled') === '1',
+			requestTimeoutMs: Math.max(30000, Number(chat.getAttribute('data-request-timeout')) || 105000),
+			showTokenUsage: chat.getAttribute('data-show-token-usage') === '1',
 			defaultTheme: chat.getAttribute('data-default-theme') === 'dark' ? 'dark' : 'light'
 		};
 		var storedGuestState = loadGuestState();
@@ -338,7 +343,11 @@
 
 			var content = document.createElement('span');
 			content.className = 'wpagent-chat__message-content';
-			content.textContent = displayMessageText(text);
+			if (role === 'agent') {
+				content.innerHTML = renderMarkdown(text);
+			} else {
+				content.textContent = displayMessageText(text);
+			}
 			item.appendChild(content);
 
 			if (role === 'agent') {
@@ -386,7 +395,11 @@
 		function setMessageText(item, text) {
 			var content = item.querySelector('.wpagent-chat__message-content');
 			if (content) {
-				content.textContent = displayMessageText(text);
+				if (item.classList.contains('wpagent-chat__message--agent')) {
+					content.innerHTML = renderMarkdown(text);
+				} else {
+					content.textContent = displayMessageText(text);
+				}
 				updateExportButton(item, text);
 				saveGuestState();
 				return;
@@ -481,6 +494,93 @@
 
 		function displayMessageText(text) {
 			return stripExportMarkers(text);
+		}
+
+		function renderMarkdown(text) {
+			var html = stripExportMarkers(String(text || ''));
+
+			html = html.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#039;');
+
+			var codeBlocks = [];
+			html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, function (match, lang, code) {
+				var placeholder = '\x00CODEBLOCK' + codeBlocks.length + '\x00';
+				codeBlocks.push('<pre class="wpagent-md__code-block"><code>' + code.replace(/\n$/, '') + '</code></pre>');
+				return placeholder;
+			});
+
+			var lines = html.split(/\r?\n/);
+			var out = [];
+			var inUl = false;
+			var inOl = false;
+
+			function closeLists() {
+				if (inUl) { out.push('</ul>'); inUl = false; }
+				if (inOl) { out.push('</ol>'); inOl = false; }
+			}
+
+			for (var i = 0; i < lines.length; i++) {
+				var line = lines[i];
+
+				if (/^#{1,3}\s+/.test(line)) {
+					closeLists();
+					var match = line.match(/^(#{1,3})\s+(.+)$/);
+					if (match) {
+						var level = match[1].length;
+						out.push('<h' + level + ' class="wpagent-md__h' + level + '">' + match[2] + '</h' + level + '>');
+					}
+					continue;
+				}
+
+				if (/^[-*]\s+/.test(line)) {
+					if (inOl) { out.push('</ol>'); inOl = false; }
+					if (!inUl) { out.push('<ul class="wpagent-md__ul">'); inUl = true; }
+					out.push('<li>' + line.replace(/^[-*]\s+/, '') + '</li>');
+					continue;
+				}
+
+				if (/^\d+[.)]\s+/.test(line)) {
+					if (inUl) { out.push('</ul>'); inUl = false; }
+					if (!inOl) { out.push('<ol class="wpagent-md__ol">'); inOl = true; }
+					out.push('<li>' + line.replace(/^\d+[.)]\s+/, '') + '</li>');
+					continue;
+				}
+
+				closeLists();
+
+				if (line.trim() === '') {
+					out.push('');
+				} else {
+					out.push(line);
+				}
+			}
+			closeLists();
+
+			html = out.join('\n');
+
+			html = html.replace(/`([^`]+)`/g, '<code class="wpagent-md__code">$1</code>');
+			html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+			html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+			html = html.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+			var paragraphs = html.split(/\n{2,}/);
+			for (var p = 0; p < paragraphs.length; p++) {
+				var para = paragraphs[p].trim();
+				if (!para) { continue; }
+				if (/^<(h[1-3]|ul|ol|pre|blockquote)/.test(para)) { continue; }
+				if (/\x00CODEBLOCK/.test(para)) { continue; }
+				paragraphs[p] = '<p class="wpagent-md__p">' + para.replace(/\n/g, '<br>') + '</p>';
+			}
+			html = paragraphs.join('\n');
+
+			for (var c = 0; c < codeBlocks.length; c++) {
+				html = html.replace('\x00CODEBLOCK' + c + '\x00', codeBlocks[c]);
+			}
+
+			return html;
 		}
 
 		function exportMessageText(text) {
@@ -729,14 +829,108 @@
 				});
 			});
 
-			card.appendChild(heading);
-			card.appendChild(details);
-			card.appendChild(preview);
-			card.appendChild(button);
-			message.appendChild(card);
+		card.appendChild(heading);
+		card.appendChild(details);
+		card.appendChild(preview);
+		card.appendChild(button);
+		message.appendChild(card);
+	}
+
+	function addScheduleProposal(message, proposal, body) {
+		if (!proposal || !proposal.to_email || !config.emailSchedulesUrl) {
+			return;
 		}
 
-		function formatEmailResult(body) {
+		var card = document.createElement('div');
+		var heading = document.createElement('strong');
+		var details = document.createElement('span');
+		var button = document.createElement('button');
+
+		card.className = 'wpagent-chat__schedule-proposal';
+		heading.textContent = t('scheduleProposal', 'Agendamento de e-mails') + ': ' + (proposal.name || scheduleTypeLabel(proposal));
+		details.textContent = scheduleDescription(proposal);
+		button.type = 'button';
+		button.textContent = t('confirmSchedule', 'Confirmar inscrição');
+
+		button.addEventListener('click', function () {
+			if (!window.confirm(t('confirmSchedulePrompt', 'Confirmar este agendamento de e-mails recorrentes?'))) {
+				return;
+			}
+
+			button.disabled = true;
+			setStatus(t('scheduling', 'Agendando inscrição...'));
+			request(config, config.emailSchedulesUrl, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					agent_slug: agent,
+					proposal: proposal,
+					session_id: sessionId,
+					conversation_id: conversationId,
+					interaction_id: body && body.interaction_id ? body.interaction_id : 0
+				})
+			}).then(function (result) {
+				card.classList.add('is-confirmed');
+				button.textContent = t('scheduleConfirmed', 'Inscrição confirmada');
+				setStatus(t('scheduleConfirmed', 'Inscrição confirmada'));
+				addMessage('agent', formatScheduleResult(result));
+			}).catch(function (error) {
+				button.disabled = false;
+				setStatus(t('scheduleError', 'Erro ao confirmar agendamento'));
+				addMessage('agent', error.message, 'wpagent-chat__message--error');
+			});
+		});
+
+		card.appendChild(heading);
+		card.appendChild(details);
+		card.appendChild(button);
+		message.appendChild(card);
+	}
+
+	function scheduleTypeLabel(proposal) {
+		if (proposal.schedule_type === 'sequence' || proposal.type === 'sequence') {
+			return t('scheduleSequence', 'Sequência');
+		}
+		return t('scheduleRecurring', 'Recorrente');
+	}
+
+	function scheduleDescription(proposal) {
+		var type = proposal.schedule_type || proposal.type;
+		var name = proposal.name ? proposal.name + ' — ' : '';
+		var to = proposal.to_name ? proposal.to_name + ' <' + proposal.to_email + '>' : proposal.to_email;
+
+		if (type === 'sequence') {
+			var steps = proposal.sequence_steps || proposal.steps || [];
+			var labels = steps.map(function (step) {
+				return step.label || (t('scheduleStep', 'Passo') + ' ' + (step.offset_hours || 0) + 'h');
+			});
+			return name + t('scheduleSequenceOf', 'Sequência de ') + steps.length + ' ' + t('scheduleEmails', 'e-mails') + ' → ' + to + ' (' + labels.join(', ') + ')';
+		}
+
+		var freq = proposal.frequency || 'weekly';
+		var freqLabel = {
+			daily: t('scheduleDaily', 'diário'),
+			weekly: t('scheduleWeekly', 'semanal'),
+			monthly: t('scheduleMonthly', 'mensal')
+		}[freq] || freq;
+
+		return name + t('scheduleRecurringEmail', 'E-mail ') + freqLabel + ' → ' + to;
+	}
+
+	function formatScheduleResult(result) {
+		if (!result) {
+			return t('scheduleConfirmed', 'Inscrição confirmada');
+		}
+
+		if (result.already) {
+			return t('scheduleAlready', 'Este e-mail já está inscrito neste agendamento.');
+		}
+
+		var next = result.next_send_at ? '\n' + t('scheduleNextAt', 'Próximo envio: ') + formatDate(result.next_send_at) : '';
+		return t('scheduleConfirmed', 'Inscrição confirmada') + '.' + next;
+	}
+
+	function formatEmailResult(body) {
 			if (!body || (!body.sent && !body.queued)) {
 				return t('emailError', 'Erro ao enviar email');
 			}
@@ -1083,9 +1277,15 @@
 					setMessageText(pending, body.reply || '');
 					addAbilityProposal(pending, body.proposed_ability);
 					addEmailProposal(pending, body.proposed_email, body);
+					addScheduleProposal(pending, body.proposed_schedule, body);
 					sessionId = body.session_id || sessionId;
 					conversationId = body.conversation_id || conversationId;
 					saveGuestState();
+					if (body.token_usage) {
+						updateTokenUsageDisplay(body.token_usage);
+						updateProgressBar(body.token_usage);
+						checkTokenUsage(body.token_usage);
+					}
 					setStatus(t('replyReceived', 'Resposta recebida'));
 					if (conversationId) {
 						return loadConversations();
@@ -1105,6 +1305,63 @@
 			event.preventDefault();
 			sendMessage();
 		});
+
+		function updateTokenUsageDisplay(usage) {
+			var container = chat.querySelector('.wpagent-chat__token-usage');
+			if (!container) {
+				return;
+			}
+
+			var currentCount = container.querySelector('.wpagent-chat__token-count');
+			var currentLimit = container.querySelector('.wpagent-chat__token-limit');
+
+			if (usage && config.showTokenUsage) {
+				currentCount.textContent = t('tokensThisMonth', 'Tokens este mes') + ': ' + Number(usage.current_monthly || 0).toLocaleString();
+				currentLimit.textContent = usage.monthly_limit > 0
+					? ' / ' + Number(usage.monthly_limit).toLocaleString()
+					: t('tokensUnlimited', ' / Ilimitado');
+			}
+		}
+
+		function updateProgressBar(usage) {
+			var container = chat.querySelector('.wpagent-chat__token-usage');
+			if (!container) {
+				return;
+			}
+			if (!usage || usage.monthly_limit === 0) {
+				return;
+			}
+
+			var percentage = Math.min(100, Math.max(0, (usage.current_monthly / usage.monthly_limit) * 100));
+			container.style.setProperty('--token-usage-pct', Math.round(percentage) + '%');
+		}
+
+		function showTokenLimitError() {
+			var container = chat.querySelector('.wpagent-chat__token-usage');
+			if (!container) {
+				return;
+			}
+
+			var existingError = container.querySelector('.wpagent-chat__token-error');
+			if (existingError) {
+				return;
+			}
+
+			var errorDiv = document.createElement('div');
+			errorDiv.className = 'wpagent-chat__token-error';
+			errorDiv.textContent = t('tokenLimitExceeded', 'Limite de tokens mensal atingido. Entre em contato com o administrador.');
+			container.appendChild(errorDiv);
+		}
+
+		function checkTokenUsage(usage) {
+			if (!usage || !config.showTokenUsage || usage.monthly_limit <= 0) {
+				return;
+			}
+
+			if (usage.remaining !== null && usage.remaining <= 0) {
+				showTokenLimitError();
+			}
+		}
 
 		textarea.addEventListener('input', resizeTextarea);
 		textarea.addEventListener('keydown', function (event) {
