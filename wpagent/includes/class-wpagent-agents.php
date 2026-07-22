@@ -284,6 +284,13 @@ class WPAgent_Agents {
 					<p class="description"><?php esc_html_e( 'Esta opcao apenas controla a exibicao no chat. O limite mensal por usuario continua sendo configurado nas Configuracoes Gerais.', 'wpagent' ); ?></p>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Contexto do site', 'wpagent' ); ?></th>
+				<td>
+					<label><input type="checkbox" name="wpagent_agent[site_context_enabled]" value="1" <?php checked( $agent['site_context_enabled'], '1' ); ?>> <?php esc_html_e( 'Injetar informacoes publicas do site no contexto do agente (homepage, paginas, posts recentes).', 'wpagent' ); ?></label>
+					<p class="description"><?php esc_html_e( 'Quando ativo, o agente recebe automaticamente o conteudo publico do site (titulo, descricao, paginas, posts recentes) para dar respostas mais contextualizadas. Recomendado para agentes de atendimento ao visitante.', 'wpagent' ); ?></p>
+				</td>
+			</tr>
 		</table>
 		<?php
 	}
@@ -440,6 +447,7 @@ class WPAgent_Agents {
 			'_wpagent_token_limit_week'        => max( 0, absint( $input['token_limit_week'] ?? 0 ) ),
 			'_wpagent_token_limit_month'       => max( 0, absint( $input['token_limit_month'] ?? 0 ) ),
 			'_wpagent_show_token_usage'        => empty( $input['show_token_usage'] ) ? '0' : '1',
+			'_wpagent_site_context_enabled'    => empty( $input['site_context_enabled'] ) ? '0' : '1',
 		);
 
 		foreach ( $values as $key => $value ) {
@@ -529,6 +537,7 @@ class WPAgent_Agents {
 			'token_limit_week'         => absint( $this->meta_or_default( $post_id, '_wpagent_token_limit_week', $defaults['token_limit_week'] ) ),
 			'token_limit_month'        => absint( $this->meta_or_default( $post_id, '_wpagent_token_limit_month', $defaults['token_limit_month'] ) ),
 			'show_token_usage'         => $this->meta_or_default( $post_id, '_wpagent_show_token_usage', $defaults['show_token_usage'] ),
+			'site_context_enabled'     => $this->meta_or_default( $post_id, '_wpagent_site_context_enabled', $defaults['site_context_enabled'] ),
 			'training_files'           => $this->get_training_files( $post_id ),
 		);
 	}
@@ -680,6 +689,7 @@ class WPAgent_Agents {
 			'token_limit_week'         => 0,
 			'token_limit_month'        => 0,
 			'show_token_usage'         => '0',
+			'site_context_enabled'     => '1',
 			'training_files'           => array(),
 		);
 	}

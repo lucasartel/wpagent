@@ -36,6 +36,13 @@ class WPAgent_Prompt_Builder {
 
 		$context_parts = array();
 
+		if ( '1' === ( $agent['site_context_enabled'] ?? '0' ) ) {
+			$site_context = $this->get_site_context();
+			if ( $site_context ) {
+				$context_parts[] = $site_context;
+			}
+		}
+
 		if ( '' !== trim( wp_strip_all_tags( $user_profile ) ) ) {
 			$context_parts[] = "Perfil declarado pelo usuario para este agente:\n" . $this->compact_text( $user_profile, 1200 );
 		}
@@ -194,6 +201,173 @@ class WPAgent_Prompt_Builder {
 		}
 
 		return substr( $text, 0, $limit - 3 ) . '...';
+	}
+
+	private function get_site_context() {
+		$cache_key = 'wpagent_site_context_' . get_locale();
+		$ttl       = (int) apply_filters( 'wpagent_site_context_cache_ttl', 300 );
+		$cached    = get_transient( $cache_key );
+
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
+		$lines = array();
+
+		$lines[] = 'Informacoes do site:';
+		$lines[] = '- Nome: ' . get_bloginfo( 'name' );
+
+		$description = get_bloginfo( 'description' );
+		if ( $description ) {
+			$lines[] = '- Descricao: ' . $description;
+		}
+
+		$lines[] = '- URL: ' . home_url();
+		$lines[] = '- Idioma: ' . get_locale();
+
+		$tz = wp_timezone();
+		if ( $tz ) {
+			$lines[] = '- Fuso horario: ' . $tz->getName();
+		}
+
+		$lines[] = '- Data/hora atual: ' . wp_date( 'Y-m-d H:i (l)' );
+		$lines[] = '- Tema ativo: ' . wp_get_theme()->get( 'Name' );
+
+		$posts_count = wp_count_posts( 'post' );
+		$pages_count = wp_count_posts( 'page' );
+		$lines[] = '- Conteudo: ' . absint( $posts_count->publish ) . ' posts, ' . absint( $pages_count->publish ) . ' paginas publicados';
+
+		$home_content = $this->get_homepage_content();
+		if ( $home_content ) {
+			$lines[] = '';
+			$lines[] = 'Conteudo da pagina inicial:';
+			$lines[] = $home_content;
+		}
+
+		$static_pages = $this->get_static_pages();
+		if ( $static_pages ) {
+			$lines[] = '';
+			$lines[] = 'Paginas do site:';
+			$lines[] = $static_pages;
+		}
+
+		$recent_posts = $this->get_recent_posts_for_context();
+		if ( $recent_posts ) {
+			$lines[] = '';
+			$lines[] = 'Publicacoes recentes:';
+			$lines[] = $recent_posts;
+		}
+
+		$result = implode( "\n", $lines );
+		$result = apply_filters( 'wpagent_site_context', $result );
+
+		if ( $result ) {
+			set_transient( $cache_key, $result, $ttl );
+		}
+
+		return $result;
+	}
+
+	private function get_homepage_content() {
+		$front_page_id = absint( get_option( 'page_on_front' ) );
+
+		if ( $front_page_id ) {
+			$post = get_post( $front_page_id );
+			if ( $post && 'publish' === $post->post_status ) {
+				$content = wp_strip_all_tags( apply_filters( 'the_content', $post->post_content ) );
+				return $this->compact_text( $content, 800 );
+			}
+		}
+
+		$latest = get_posts( array(
+			'numberposts' => 3,
+			'post_status' => 'publish',
+			'orderby'     => 'date',
+			'order'       => 'DESC',
+		) );
+
+		if ( empty( $latest ) ) {
+			return '';
+		}
+
+		$lines = array( 'Posts recentes na pagina inicial:' );
+		foreach ( $latest as $post ) {
+			$excerpt = wp_strip_all_tags( get_the_excerpt( $post ) );
+			$lines[] = '- ' . $post->post_title . ': ' . $this->compact_text( $excerpt, 200 );
+		}
+
+		return implode( "\n", $lines );
+	}
+
+	private function get_static_pages() {
+		$known = array();
+		$search_terms = array( 'sobre', 'about', 'contato', 'contact', 'faq', 'duvidas', 'fale', 'servicos', 'services', 'equipe', 'team', 'missao', 'mission', 'valores', 'values', 'localizacao', 'location', 'endereco', 'address', 'horarios', 'schedule', 'eventos', 'events' );
+
+		$pages = get_posts( array(
+			'post_type'   => 'page',
+			'numberposts' => 15,
+			'post_status' => 'publish',
+			'orderby'     => 'menu_order',
+			'order'       => 'ASC',
+		) );
+
+		if ( empty( $pages ) ) {
+			return '';
+		}
+
+		foreach ( $pages as $page ) {
+			$title       = $page->post_title;
+			$title_lower = strtolower( $title );
+			$url         = get_permalink( $page->ID );
+			$excerpt     = wp_strip_all_tags( get_the_excerpt( $page ) );
+
+			$is_known = false;
+			foreach ( $search_terms as $term ) {
+				if ( false !== strpos( $title_lower, $term ) ) {
+					$is_known = true;
+					break;
+				}
+			}
+
+			if ( ! $is_known && count( $known ) >= 5 ) {
+				continue;
+			}
+
+			$line = '- ' . $title . ' (' . $url . ')';
+			if ( $excerpt ) {
+				$line .= ': ' . $this->compact_text( $excerpt, 200 );
+			}
+
+			$known[] = $line;
+
+			if ( $is_known || count( $known ) >= 10 ) {
+				break;
+			}
+		}
+
+		return implode( "\n", $known );
+	}
+
+	private function get_recent_posts_for_context() {
+		$posts = get_posts( array(
+			'numberposts' => 5,
+			'post_status' => 'publish',
+			'orderby'     => 'date',
+			'order'       => 'DESC',
+		) );
+
+		if ( empty( $posts ) ) {
+			return '';
+		}
+
+		$lines = array();
+		foreach ( $posts as $post ) {
+			$date   = wp_date( 'd/m/Y', strtotime( $post->post_date ) );
+			$excerpt = wp_strip_all_tags( get_the_excerpt( $post ) );
+			$lines[] = '- "' . $post->post_title . '" (publicado em ' . $date . '): ' . $this->compact_text( $excerpt, 200 );
+		}
+
+		return implode( "\n", $lines );
 	}
 }
 }

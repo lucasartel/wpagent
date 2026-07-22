@@ -1,6 +1,6 @@
 {
   "name": "wpagent",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "private": true,
   "description": "WordPress 7.0 AI companion plugin with OpenRouter and user memory.",
   "scripts": {

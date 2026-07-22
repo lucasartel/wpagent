@@ -62,6 +62,7 @@ $meta_keys = array(
 	'_wpagent_token_limit_week',
 	'_wpagent_token_limit_month',
 	'_wpagent_show_token_usage',
+	'_wpagent_site_context_enabled',
 	'_wpagent_email_schedules_enabled',
 	'_wpagent_conversation_summary_enabled',
 	'_wpagent_conversation_summary_delay',

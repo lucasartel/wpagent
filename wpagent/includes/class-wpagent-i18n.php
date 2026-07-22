@@ -2231,6 +2231,31 @@ class WPAgent_I18n {
 				'pt' => 'O provedor de IA demorou demais para responder. Tente novamente em instantes.',
 				'es' => 'El proveedor de IA tardó demasiado en responder. Inténtalo de nuevo en unos instantes.',
 			),
+			'Contexto do site' => array(
+				'en' => 'Site context',
+				'pt' => 'Contexto do site',
+				'es' => 'Contexto del sitio',
+			),
+			'Injetar informacoes publicas do site no contexto do agente (homepage, paginas, posts recentes).' => array(
+				'en' => 'Inject public site information into the agent context (homepage, pages, recent posts).',
+				'pt' => 'Injetar informações públicas do site no contexto do agente (homepage, páginas, posts recentes).',
+				'es' => 'Inyectar información pública del sitio en el contexto del agente (página principal, páginas, publicaciones recientes).',
+			),
+			'Quando ativo, o agente recebe automaticamente o conteudo publico do site (titulo, descricao, paginas, posts recentes) para dar respostas mais contextualizadas. Recomendado para agentes de atendimento ao visitante.' => array(
+				'en' => 'When active, the agent automatically receives public site content (title, description, pages, recent posts) for more contextual responses. Recommended for visitor support agents.',
+				'pt' => 'Quando ativo, o agente recebe automaticamente o conteúdo público do site (título, descrição, páginas, posts recentes) para dar respostas mais contextualizadas. Recomendado para agentes de atendimento ao visitante.',
+				'es' => 'Cuando está activo, el agente recibe automáticamente el contenido público del sitio (título, descripción, páginas, publicaciones recientes) para respuestas más contextualizadas. Recomendado para agentes de atención al visitante.',
+			),
+			'Titulo' => array(
+				'en' => 'Title',
+				'pt' => 'Título',
+				'es' => 'Título',
+			),
+			'Descricao' => array(
+				'en' => 'Description',
+				'pt' => 'Descrição',
+				'es' => 'Descripción',
+			),
 			'Uso mensal no chat' => array(
 				'en' => 'Monthly chat usage',
 				'pt' => 'Uso mensal no chat',
