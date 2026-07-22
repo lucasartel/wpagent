@@ -2246,6 +2246,41 @@ class WPAgent_I18n {
 				'pt' => 'Quando ativo, o agente recebe automaticamente o conteúdo público do site (título, descrição, páginas, posts recentes) para dar respostas mais contextualizadas. Recomendado para agentes de atendimento ao visitante.',
 				'es' => 'Cuando está activo, el agente recibe automáticamente el contenido público del sitio (título, descripción, páginas, publicaciones recientes) para respuestas más contextualizadas. Recomendado para agentes de atención al visitante.',
 			),
+			'Resumo de conversas' => array(
+				'en' => 'Conversation summaries',
+				'pt' => 'Resumo de conversas',
+				'es' => 'Resúmenes de conversaciones',
+			),
+			'Gerar resumo automatico das conversas apos periodo de inatividade.' => array(
+				'en' => 'Generate automatic summary of conversations after a period of inactivity.',
+				'pt' => 'Gerar resumo automático das conversas após período de inatividade.',
+				'es' => 'Generar resumen automático de conversaciones tras un período de inactividad.',
+			),
+			'Quando ativo, o WPAgent gera um resumo da conversa quando o usuario fica inativo por um tempo determinado. O resumo fica disponivel na pagina Atendimentos para consulta e follow-up humano.' => array(
+				'en' => 'When active, WPAgent generates a conversation summary when the user becomes inactive for a set period. The summary is available on the Attendant page for consultation and human follow-up.',
+				'pt' => 'Quando ativo, o WPAgent gera um resumo da conversa quando o usuário fica inativo por um tempo determinado. O resumo fica disponível na página Atendimentos para consulta e follow-up humano.',
+				'es' => 'Cuando está activo, WPAgent genera un resumen de la conversación cuando el usuario se vuelve inactivo durante un período determinado. El resumen está disponible en la página de Atención para consulta y seguimiento humano.',
+			),
+			'Horas de inatividade antes de gerar resumo:' => array(
+				'en' => 'Hours of inactivity before generating summary:',
+				'pt' => 'Horas de inatividade antes de gerar resumo:',
+				'es' => 'Horas de inactividad antes de generar resumen:',
+			),
+			'Conversas aguardando resumo' => array(
+				'en' => 'Conversations awaiting summary',
+				'pt' => 'Conversas aguardando resumo',
+				'es' => 'Conversaciones esperando resumen',
+			),
+			'Gerar resumo' => array(
+				'en' => 'Generate summary',
+				'pt' => 'Gerar resumo',
+				'es' => 'Generar resumen',
+			),
+			'(sem titulo)' => array(
+				'en' => '(untitled)',
+				'pt' => '(sem título)',
+				'es' => '(sin título)',
+			),
 			'Titulo' => array(
 				'en' => 'Title',
 				'pt' => 'Título',

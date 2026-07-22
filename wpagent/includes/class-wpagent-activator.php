@@ -358,6 +358,8 @@ class WPAgent_Activator {
 		update_post_meta( $post_id, '_wpagent_token_limit_month', 0 );
 		update_post_meta( $post_id, '_wpagent_show_token_usage', '0' );
 		update_post_meta( $post_id, '_wpagent_site_context_enabled', '1' );
+		update_post_meta( $post_id, '_wpagent_conversation_summary_enabled', '0' );
+		update_post_meta( $post_id, '_wpagent_conversation_summary_delay', 4 );
 	}
 
 	private static function seed_current_month_user_token_usage( $usage_table ) {

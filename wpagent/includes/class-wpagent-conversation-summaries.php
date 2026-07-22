@@ -30,7 +30,7 @@ class WPAgent_Conversation_Summaries {
 
 	public function maybe_schedule_cron() {
 		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
-			wp_schedule_event( time() + 180, 'hourly', self::CRON_HOOK );
+			wp_schedule_event( time() + HOUR_IN_SECONDS, 'hourly', self::CRON_HOOK );
 		}
 	}
 
@@ -65,7 +65,7 @@ class WPAgent_Conversation_Summaries {
 		$summaries = $this->repository->list_conversation_summaries( $args );
 
 		echo '<div class="wrap"><h1>' . esc_html__( 'Atendimentos', 'wpagent' ) . '</h1>';
-		echo '<p class="description">' . esc_html__( 'Resumos automaticos das conversas de cada agente, gerados 4 horas apos a ultima interacao, para consulta e follow-up humano.', 'wpagent' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Resumos automaticos das conversas de cada agente, gerados apos periodo de inatividade, para consulta e follow-up humano.', 'wpagent' ) . '</p>';
 
 		echo '<form method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" style="margin-bottom:16px">';
 		echo '<input type="hidden" name="page" value="wpagent-conversation-summaries">';
@@ -77,6 +77,35 @@ class WPAgent_Conversation_Summaries {
 		echo '</select> ';
 		submit_button( __( 'Filtrar', 'wpagent' ), 'secondary', 'filter', false );
 		echo '</form>';
+
+		$pending = $this->get_pending_conversations( $agent_filter, 20 );
+		if ( ! empty( $pending ) ) {
+			echo '<h2>' . esc_html__( 'Conversas aguardando resumo', 'wpagent' ) . '</h2>';
+			echo '<table class="widefat striped"><thead><tr>';
+			echo '<th>' . esc_html__( 'Conversa', 'wpagent' ) . '</th>';
+			echo '<th>' . esc_html__( 'Agente', 'wpagent' ) . '</th>';
+			echo '<th style="width:80px">' . esc_html__( 'Interacoes', 'wpagent' ) . '</th>';
+			echo '<th style="width:140px">' . esc_html__( 'Ultima interacao', 'wpagent' ) . '</th>';
+			echo '<th style="width:100px">' . esc_html__( 'Acao', 'wpagent' ) . '</th>';
+			echo '</tr></thead><tbody>';
+			foreach ( $pending as $conv ) {
+				$conv_id = esc_attr( $conv['conversation_id'] );
+				$slug    = esc_attr( $conv['agent_slug'] );
+				$url     = wp_nonce_url(
+					admin_url( 'admin-post.php?action=wpagent_generate_summary&conversation_id=' . $conv_id . '&agent_slug=' . $slug ),
+					'wpagent_generate_summary'
+				);
+				echo '<tr>';
+				echo '<td><strong>' . esc_html( $conv['title'] ?: __( '(sem titulo)', 'wpagent' ) ) . '</strong></td>';
+				echo '<td>' . esc_html( $agent_options[ $slug ] ?? $slug ) . '</td>';
+				echo '<td>' . absint( $conv['interaction_count'] ) . '</td>';
+				echo '<td>' . esc_html( $conv['last_interaction_at'] ?? '—' ) . '</td>';
+				echo '<td><a href="' . esc_url( $url ) . '" class="button button-small">' . esc_html__( 'Gerar resumo', 'wpagent' ) . '</a></td>';
+				echo '</tr>';
+			}
+			echo '</tbody></table>';
+			echo '<br>';
+		}
 
 		if ( empty( $summaries ) ) {
 			echo '<p>' . esc_html__( 'Nenhum resumo gerado ainda. Os resumos sao produzidos automaticamente quando o agente tem a opcao ativada e a conversa fica inativa por 4 horas.', 'wpagent' ) . '</p>';
@@ -148,6 +177,32 @@ class WPAgent_Conversation_Summaries {
 		);
 
 		return $labels[ strtolower( $key ) ] ?? ucfirst( $key );
+	}
+
+	private function get_pending_conversations( $agent_filter = '', $limit = 20 ) {
+		$agents  = $this->agents->get_agent_options();
+		$pending = array();
+
+		foreach ( $agents as $slug => $name ) {
+			if ( count( $pending ) >= $limit ) {
+				break;
+			}
+
+			if ( $agent_filter && $agent_filter !== $slug ) {
+				continue;
+			}
+
+			$agent = $this->agents->get_agent( $slug );
+			if ( '1' !== ( $agent['conversation_summary_enabled'] ?? '0' ) ) {
+				continue;
+			}
+
+			$delay_hours  = max( 1, absint( $agent['conversation_summary_delay'] ?? 4 ) );
+			$conversations = $this->repository->get_conversations_needing_summary( $slug, $delay_hours, $limit - count( $pending ) );
+			$pending = array_merge( $pending, $conversations );
+		}
+
+		return $pending;
 	}
 
 	public function process_due() {
@@ -280,28 +335,33 @@ public function generate_summary_for_conversation( $conversation, $agent ) {
 		$conversation_id = sanitize_text_field( wp_unslash( $_GET['conversation_id'] ?? '' ) );
 		$agent_slug      = sanitize_key( wp_unslash( $_GET['agent_slug'] ?? 'default' ) );
 		$agent = $this->agents->get_agent( $agent_slug );
-		$conv  = $this->repository->get_conversation( $conversation_id, 0, $agent_slug );
 
-		if ( ! $conv ) {
-			$conv = $this->repository->get_conversation( $conversation_id, get_current_user_id(), $agent_slug );
+		$interactions = $this->repository->get_conversation_interactions( $conversation_id, $agent_slug, 100 );
+		$interaction_count  = count( $interactions );
+		$last_interaction_id = $interaction_count > 0 ? absint( $interactions[ $interaction_count - 1 ]['id'] ?? 0 ) : 0;
+		$last_interaction_at = $interaction_count > 0 ? ( $interactions[ $interaction_count - 1 ]['created_at'] ?? '' ) : '';
+		$title = '';
+		$user_id = 0;
+
+		if ( $interaction_count > 0 ) {
+			$conv = $this->repository->get_conversation( $conversation_id, 0, $agent_slug );
+			if ( ! $conv ) {
+				$conv = $this->repository->get_conversation( $conversation_id, get_current_user_id(), $agent_slug );
+			}
+			if ( $conv ) {
+				$title   = $conv['title'] ?? '';
+				$user_id = absint( $conv['user_id'] ?? 0 );
+			}
 		}
 
-		$data = $conv ? array(
-			'conversation_id'    => $conv['conversation_id'] ?? $conversation_id,
-			'title'              => $conv['title'] ?? '',
-			'user_id'            => absint( $conv['user_id'] ?? 0 ),
-			'agent_slug'         => $agent_slug,
-			'interaction_count'  => 0,
-			'last_interaction_id' => 0,
-			'last_interaction_at' => '',
-		) : array(
-			'conversation_id'    => $conversation_id,
-			'title'              => '',
-			'user_id'            => 0,
-			'agent_slug'         => $agent_slug,
-			'interaction_count'  => 0,
-			'last_interaction_id' => 0,
-			'last_interaction_at' => '',
+		$data = array(
+			'conversation_id'     => $conversation_id,
+			'title'               => $title,
+			'user_id'             => $user_id,
+			'agent_slug'          => $agent_slug,
+			'interaction_count'   => $interaction_count,
+			'last_interaction_id' => $last_interaction_id,
+			'last_interaction_at' => $last_interaction_at,
 		);
 
 		$this->generate_summary_for_conversation( $data, $agent );

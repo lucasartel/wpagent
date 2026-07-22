@@ -291,6 +291,19 @@ class WPAgent_Agents {
 					<p class="description"><?php esc_html_e( 'Quando ativo, o agente recebe automaticamente o conteudo publico do site (titulo, descricao, paginas, posts recentes) para dar respostas mais contextualizadas. Recomendado para agentes de atendimento ao visitante.', 'wpagent' ); ?></p>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Resumo de conversas', 'wpagent' ); ?></th>
+				<td>
+					<label><input type="checkbox" name="wpagent_agent[conversation_summary_enabled]" value="1" <?php checked( $agent['conversation_summary_enabled'], '1' ); ?>> <?php esc_html_e( 'Gerar resumo automatico das conversas apos periodo de inatividade.', 'wpagent' ); ?></label>
+					<p class="description"><?php esc_html_e( 'Quando ativo, o WPAgent gera um resumo da conversa quando o usuario fica inativo por um tempo determinado. O resumo fica disponivel na pagina Atendimentos para consulta e follow-up humano.', 'wpagent' ); ?></p>
+					<p>
+						<label>
+							<?php esc_html_e( 'Horas de inatividade antes de gerar resumo:', 'wpagent' ); ?>
+							<input class="small-text" type="number" min="1" max="168" name="wpagent_agent[conversation_summary_delay]" value="<?php echo esc_attr( $agent['conversation_summary_delay'] ); ?>">
+						</label>
+					</p>
+				</td>
+			</tr>
 		</table>
 		<?php
 	}
@@ -448,6 +461,8 @@ class WPAgent_Agents {
 			'_wpagent_token_limit_month'       => max( 0, absint( $input['token_limit_month'] ?? 0 ) ),
 			'_wpagent_show_token_usage'        => empty( $input['show_token_usage'] ) ? '0' : '1',
 			'_wpagent_site_context_enabled'    => empty( $input['site_context_enabled'] ) ? '0' : '1',
+			'_wpagent_conversation_summary_enabled' => empty( $input['conversation_summary_enabled'] ) ? '0' : '1',
+			'_wpagent_conversation_summary_delay'   => max( 1, min( 168, absint( $input['conversation_summary_delay'] ?? 4 ) ) ),
 		);
 
 		foreach ( $values as $key => $value ) {
@@ -538,6 +553,8 @@ class WPAgent_Agents {
 			'token_limit_month'        => absint( $this->meta_or_default( $post_id, '_wpagent_token_limit_month', $defaults['token_limit_month'] ) ),
 			'show_token_usage'         => $this->meta_or_default( $post_id, '_wpagent_show_token_usage', $defaults['show_token_usage'] ),
 			'site_context_enabled'     => $this->meta_or_default( $post_id, '_wpagent_site_context_enabled', $defaults['site_context_enabled'] ),
+			'conversation_summary_enabled' => $this->meta_or_default( $post_id, '_wpagent_conversation_summary_enabled', $defaults['conversation_summary_enabled'] ),
+			'conversation_summary_delay'   => absint( $this->meta_or_default( $post_id, '_wpagent_conversation_summary_delay', $defaults['conversation_summary_delay'] ) ),
 			'training_files'           => $this->get_training_files( $post_id ),
 		);
 	}
@@ -690,6 +707,8 @@ class WPAgent_Agents {
 			'token_limit_month'        => 0,
 			'show_token_usage'         => '0',
 			'site_context_enabled'     => '1',
+			'conversation_summary_enabled' => '0',
+			'conversation_summary_delay'   => 4,
 			'training_files'           => array(),
 		);
 	}
