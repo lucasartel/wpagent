@@ -3,7 +3,7 @@
  * Plugin Name: WPAgent
  * Plugin URI: https://github.com/lucasartel/wpagent
  * Description: Personalized AI companion for WordPress 7.0 with local knowledge, user memory, WordPress AI connectors, and OpenRouter fallback.
- * Version: 0.5.6
+ * Version: 0.5.7
  * Requires at least: 7.0
  * Requires PHP: 7.4
  * Tested up to: 7.0.1
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WPAGENT_VERSION', '0.5.6' );
+define( 'WPAGENT_VERSION', '0.5.7' );
 define( 'WPAGENT_FILE', __FILE__ );
 define( 'WPAGENT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WPAGENT_URL', plugin_dir_url( __FILE__ ) );

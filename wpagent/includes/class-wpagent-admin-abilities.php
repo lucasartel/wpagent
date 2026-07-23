@@ -325,6 +325,283 @@ class WPAgent_Admin_Abilities {
 				),
 			)
 		);
+
+		wp_register_ability(
+			'wpagent/list-pages',
+			array(
+				'label'               => __( 'Listar paginas', 'wpagent' ),
+				'description'         => __( 'Lista paginas do WordPress por titulo, status e data.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'status' => array(
+							'type'        => 'string',
+							'description' => __( 'Status das paginas.', 'wpagent' ),
+							'enum'        => array( 'publish', 'draft', 'pending', 'private', 'any' ),
+							'default'     => 'publish',
+						),
+						'limit'  => array(
+							'type'        => 'integer',
+							'description' => __( 'Quantidade maxima.', 'wpagent' ),
+							'minimum'     => 1,
+							'maximum'     => 50,
+							'default'     => 20,
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'pages' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_pages' ),
+				'permission_callback' => array( $this, 'can_list_pages' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/create-category',
+			array(
+				'label'               => __( 'Criar categoria', 'wpagent' ),
+				'description'         => __( 'Cria uma nova categoria de posts no WordPress.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'name'        => array(
+							'type'        => 'string',
+							'description' => __( 'Nome da categoria.', 'wpagent' ),
+							'minLength'   => 1,
+						),
+						'description' => array(
+							'type'        => 'string',
+							'description' => __( 'Descricao opcional.', 'wpagent' ),
+						),
+						'parent'      => array(
+							'type'        => 'integer',
+							'description' => __( 'ID da categoria pai (0 para nenhuma).', 'wpagent' ),
+							'default'     => 0,
+						),
+					),
+					'required'             => array( 'name' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'id' => array( 'type' => 'integer' ), 'name' => array( 'type' => 'string' ), 'message' => array( 'type' => 'string' ) ) ),
+				'execute_callback'    => array( $this, 'create_category' ),
+				'permission_callback' => array( $this, 'can_manage_categories' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => false, 'destructive' => false, 'idempotent' => false ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/list-categories',
+			array(
+				'label'               => __( 'Listar categorias', 'wpagent' ),
+				'description'         => __( 'Lista as categorias de posts existentes.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'limit' => array(
+							'type'        => 'integer',
+							'description' => __( 'Quantidade maxima.', 'wpagent' ),
+							'minimum'     => 1,
+							'maximum'     => 100,
+							'default'     => 50,
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'categories' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_categories' ),
+				'permission_callback' => array( $this, 'can_manage_categories' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/list-users',
+			array(
+				'label'               => __( 'Listar usuarios', 'wpagent' ),
+				'description'         => __( 'Lista usuarios do WordPress com funcoes e status.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'role'  => array(
+							'type'        => 'string',
+							'description' => __( 'Filtrar por funcao (ex: administrator, editor, author).', 'wpagent' ),
+						),
+						'limit' => array(
+							'type'        => 'integer',
+							'description' => __( 'Quantidade maxima.', 'wpagent' ),
+							'minimum'     => 1,
+							'maximum'     => 100,
+							'default'     => 20,
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'users' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_users' ),
+				'permission_callback' => array( $this, 'can_list_users' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/search-users',
+			array(
+				'label'               => __( 'Buscar usuarios', 'wpagent' ),
+				'description'         => __( 'Busca usuarios por nome ou e-mail.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'search' => array(
+							'type'        => 'string',
+							'description' => __( 'Nome ou e-mail para buscar.', 'wpagent' ),
+							'minLength'   => 1,
+						),
+						'limit'  => array(
+							'type'        => 'integer',
+							'description' => __( 'Quantidade maxima.', 'wpagent' ),
+							'minimum'     => 1,
+							'maximum'     => 50,
+							'default'     => 10,
+						),
+					),
+					'required'             => array( 'search' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'users' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'search_users' ),
+				'permission_callback' => array( $this, 'can_list_users' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/list-plugins',
+			array(
+				'label'               => __( 'Listar plugins', 'wpagent' ),
+				'description'         => __( 'Lista plugins instalados com status (ativo/inativo).', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'active' => array(
+							'type'        => 'boolean',
+							'description' => __( 'Se true, mostra apenas ativos. Se false, apenas inativos. Se omitido, mostra todos.', 'wpagent' ),
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'plugins' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_plugins' ),
+				'permission_callback' => array( $this, 'can_manage_options' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/list-themes',
+			array(
+				'label'               => __( 'Listar temas', 'wpagent' ),
+				'description'         => __( 'Lista temas instalados indicando qual esta ativo.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'       => 'object',
+					'properties' => array(),
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'themes' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_themes' ),
+				'permission_callback' => array( $this, 'can_manage_options' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/list-media',
+			array(
+				'label'               => __( 'Listar midia', 'wpagent' ),
+				'description'         => __( 'Lista itens da biblioteca de midia.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'limit'  => array(
+							'type'        => 'integer',
+							'description' => __( 'Quantidade maxima.', 'wpagent' ),
+							'minimum'     => 1,
+							'maximum'     => 50,
+							'default'     => 20,
+						),
+						'search' => array(
+							'type'        => 'string',
+							'description' => __( 'Texto para buscar no titulo.', 'wpagent' ),
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'media' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_media' ),
+				'permission_callback' => array( $this, 'can_list_media' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/get-site-info',
+			array(
+				'label'               => __( 'Informacoes do site', 'wpagent' ),
+				'description'         => __( 'Retorna informacoes gerais do site: titulo, descricao, versao do WP, tema ativo, plugins ativos e total de conteudo.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'       => 'object',
+					'properties' => array(),
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'site_name'      => array( 'type' => 'string' ),
+						'description'    => array( 'type' => 'string' ),
+						'wp_version'     => array( 'type' => 'string' ),
+						'active_theme'   => array( 'type' => 'string' ),
+						'active_plugins' => array( 'type' => 'array' ),
+						'total_posts'    => array( 'type' => 'integer' ),
+						'total_pages'    => array( 'type' => 'integer' ),
+						'total_users'    => array( 'type' => 'integer' ),
+						'total_comments' => array( 'type' => 'integer' ),
+					),
+				),
+				'execute_callback'    => array( $this, 'get_site_info' ),
+				'permission_callback' => array( $this, 'can_manage_options' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
+
+		wp_register_ability(
+			'wpagent/list-menus',
+			array(
+				'label'               => __( 'Listar menus de navegacao', 'wpagent' ),
+				'description'         => __( 'Lista os menus de navegacao registrados e seus itens.', 'wpagent' ),
+				'category'            => 'content-management',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'menu' => array(
+							'type'        => 'string',
+							'description' => __( 'Slug ou ID do menu especifico. Se omitido, lista todos.', 'wpagent' ),
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array( 'type' => 'object', 'properties' => array( 'menus' => array( 'type' => 'array' ) ) ),
+				'execute_callback'    => array( $this, 'list_menus' ),
+				'permission_callback' => array( $this, 'can_manage_options' ),
+				'meta'                => array( 'annotations' => array( 'readonly' => true, 'destructive' => false, 'idempotent' => true ) ),
+			)
+		);
 	}
 
 	public function prompt_context( $limit = 16 ) {
@@ -712,6 +989,333 @@ class WPAgent_Admin_Abilities {
 		}
 
 		return $this->comment_result( $comment_id, __( 'Comentario moderado.', 'wpagent' ) );
+	}
+
+	public function can_list_pages() {
+		return current_user_can( 'edit_pages' );
+	}
+
+	public function list_pages( $input = array() ) {
+		$status = sanitize_key( $input['status'] ?? 'publish' );
+		if ( ! in_array( $status, array( 'publish', 'draft', 'pending', 'private', 'any' ), true ) ) {
+			$status = 'publish';
+		}
+
+		$pages = get_posts( array(
+			'post_type'   => 'page',
+			'post_status' => 'any' === $status ? array( 'publish', 'draft', 'pending', 'private' ) : $status,
+			'numberposts' => min( 50, max( 1, absint( $input['limit'] ?? 20 ) ) ),
+			'orderby'     => 'title',
+			'order'       => 'ASC',
+		) );
+
+		$result = array();
+		foreach ( $pages as $page ) {
+			$result[] = array(
+				'id'        => $page->ID,
+				'title'     => get_the_title( $page ),
+				'status'    => $page->post_status,
+				'edit_link' => get_edit_post_link( $page->ID, 'raw' ),
+			);
+		}
+
+		return array( 'pages' => $result );
+	}
+
+	public function can_manage_categories() {
+		return current_user_can( 'manage_categories' );
+	}
+
+	public function create_category( $input ) {
+		if ( ! current_user_can( 'manage_categories' ) ) {
+			return new WP_Error( 'wpagent_create_category_forbidden', __( 'Voce nao tem permissao para criar categorias.', 'wpagent' ) );
+		}
+
+		$name = sanitize_text_field( $input['name'] ?? '' );
+		if ( '' === $name ) {
+			return new WP_Error( 'wpagent_empty_category_name', __( 'Nome da categoria e obrigatorio.', 'wpagent' ) );
+		}
+
+		$exists = get_term_by( 'name', $name, 'category' );
+		if ( $exists ) {
+			return new WP_Error( 'wpagent_category_exists', __( 'Categoria com este nome ja existe.', 'wpagent' ) );
+		}
+
+		$result = wp_insert_term( $name, 'category', array(
+			'description' => sanitize_textarea_field( $input['description'] ?? '' ),
+			'parent'      => absint( $input['parent'] ?? 0 ),
+		) );
+
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		return array(
+			'id'      => absint( $result['term_id'] ),
+			'name'    => $name,
+			'message' => __( 'Categoria criada.', 'wpagent' ),
+		);
+	}
+
+	public function list_categories( $input = array() ) {
+		$categories = get_terms( array(
+			'taxonomy'   => 'category',
+			'number'     => min( 100, max( 1, absint( $input['limit'] ?? 50 ) ) ),
+			'orderby'    => 'name',
+			'order'      => 'ASC',
+			'hide_empty' => false,
+		) );
+
+		if ( is_wp_error( $categories ) ) {
+			return array( 'categories' => array() );
+		}
+
+		$result = array();
+		foreach ( $categories as $cat ) {
+			$result[] = array(
+				'id'          => $cat->term_id,
+				'name'        => $cat->name,
+				'slug'        => $cat->slug,
+				'count'       => $cat->count,
+				'parent'      => $cat->parent,
+				'description' => $cat->description,
+			);
+		}
+
+		return array( 'categories' => $result );
+	}
+
+	public function can_list_users() {
+		return current_user_can( 'list_users' );
+	}
+
+	public function list_users( $input = array() ) {
+		if ( ! current_user_can( 'list_users' ) ) {
+			return new WP_Error( 'wpagent_list_users_forbidden', __( 'Voce nao tem permissao para listar usuarios.', 'wpagent' ) );
+		}
+
+		$args = array(
+			'number' => min( 100, max( 1, absint( $input['limit'] ?? 20 ) ) ),
+			'orderby'=> 'display_name',
+			'order'  => 'ASC',
+		);
+
+		if ( ! empty( $input['role'] ) ) {
+			$args['role'] = sanitize_text_field( $input['role'] );
+		}
+
+		$wp_users = get_users( $args );
+		$result   = array();
+
+		foreach ( $wp_users as $user ) {
+			$result[] = array(
+				'id'           => $user->ID,
+				'display_name' => $user->display_name,
+				'email'        => $user->user_email,
+				'roles'        => $user->roles,
+				'registered'   => $user->user_registered,
+			);
+		}
+
+		return array( 'users' => $result );
+	}
+
+	public function search_users( $input = array() ) {
+		if ( ! current_user_can( 'list_users' ) ) {
+			return new WP_Error( 'wpagent_search_users_forbidden', __( 'Voce nao tem permissao para buscar usuarios.', 'wpagent' ) );
+		}
+
+		$search = sanitize_text_field( $input['search'] ?? '' );
+		$limit  = min( 50, max( 1, absint( $input['limit'] ?? 10 ) ) );
+
+		$wp_users = get_users( array(
+			'search'         => '*' . $search . '*',
+			'search_columns' => array( 'display_name', 'user_login', 'user_email' ),
+			'number'         => $limit,
+			'orderby'        => 'display_name',
+			'order'          => 'ASC',
+		) );
+
+		$result = array();
+		foreach ( $wp_users as $user ) {
+			$result[] = array(
+				'id'           => $user->ID,
+				'display_name' => $user->display_name,
+				'email'        => $user->user_email,
+				'roles'        => $user->roles,
+			);
+		}
+
+		return array( 'users' => $result );
+	}
+
+	public function list_plugins( $input = array() ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return new WP_Error( 'wpagent_list_plugins_forbidden', __( 'Voce nao tem permissao para listar plugins.', 'wpagent' ) );
+		}
+
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$all_plugins = get_plugins();
+		$active      = get_option( 'active_plugins', array() );
+		$filter      = array_key_exists( 'active', $input ) ? (bool) $input['active'] : null;
+		$result      = array();
+
+		foreach ( $all_plugins as $file => $data ) {
+			$is_active = in_array( $file, $active, true );
+
+			if ( null !== $filter && $filter !== $is_active ) {
+				continue;
+			}
+
+			$result[] = array(
+				'file'    => $file,
+				'name'    => $data['Name'] ?? '',
+				'version' => $data['Version'] ?? '',
+				'active'  => $is_active,
+			);
+		}
+
+		return array( 'plugins' => $result );
+	}
+
+	public function list_themes( $input = array() ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return new WP_Error( 'wpagent_list_themes_forbidden', __( 'Voce nao tem permissao para listar temas.', 'wpagent' ) );
+		}
+
+		$wp_themes = wp_get_themes();
+		$active    = get_option( 'template' );
+		$result    = array();
+
+		foreach ( $wp_themes as $slug => $theme ) {
+			$result[] = array(
+				'slug'        => $slug,
+				'name'        => $theme->get( 'Name' ),
+				'version'     => $theme->get( 'Version' ),
+				'active'      => $slug === $active,
+				'description' => $theme->get( 'Description' ),
+			);
+		}
+
+		return array( 'themes' => $result );
+	}
+
+	public function can_list_media() {
+		return current_user_can( 'upload_files' );
+	}
+
+	public function list_media( $input = array() ) {
+		if ( ! current_user_can( 'upload_files' ) ) {
+			return new WP_Error( 'wpagent_list_media_forbidden', __( 'Voce nao tem permissao para listar midia.', 'wpagent' ) );
+		}
+
+		$args = array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => min( 50, max( 1, absint( $input['limit'] ?? 20 ) ) ),
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		);
+
+		if ( ! empty( $input['search'] ) ) {
+			$args['s'] = sanitize_text_field( $input['search'] );
+		}
+
+		$query   = new WP_Query( $args );
+		$result  = array();
+
+		foreach ( $query->posts as $item ) {
+			$url = wp_get_attachment_url( $item->ID );
+			$result[] = array(
+				'id'        => $item->ID,
+				'title'     => get_the_title( $item ),
+				'filename'  => get_the_title( $item ),
+				'mime_type' => $item->post_mime_type,
+				'url'       => $url ? $url : '',
+				'date'      => $item->post_date,
+			);
+		}
+
+		return array( 'media' => $result );
+	}
+
+	public function get_site_info( $input = array() ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return new WP_Error( 'wpagent_site_info_forbidden', __( 'Voce nao tem permissao para ver informacoes do site.', 'wpagent' ) );
+		}
+
+		$posts_count = wp_count_posts( 'post' );
+		$pages_count = wp_count_posts( 'page' );
+		$users_count = count_users();
+
+		$active_plugins = array();
+		if ( function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$all_plugins  = get_plugins();
+		$active_files = get_option( 'active_plugins', array() );
+		foreach ( $active_files as $file ) {
+			if ( isset( $all_plugins[ $file ] ) ) {
+				$active_plugins[] = $all_plugins[ $file ]['Name'] ?? $file;
+			}
+		}
+
+		return array(
+			'site_name'      => get_bloginfo( 'name' ),
+			'description'    => get_bloginfo( 'description' ),
+			'wp_version'     => get_bloginfo( 'version' ),
+			'active_theme'   => wp_get_theme()->get( 'Name' ),
+			'active_plugins' => $active_plugins,
+			'total_posts'    => absint( $posts_count->publish ),
+			'total_pages'    => absint( $pages_count->publish ),
+			'total_users'    => absint( $users_count['total_users'] ),
+			'total_comments' => absint( wp_count_comments()->approved ),
+		);
+	}
+
+	public function list_menus( $input = array() ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return new WP_Error( 'wpagent_list_menus_forbidden', __( 'Voce nao tem permissao para listar menus.', 'wpagent' ) );
+		}
+
+		$menus = get_terms( array(
+			'taxonomy'   => 'nav_menu',
+			'hide_empty' => false,
+		) );
+
+		if ( is_wp_error( $menus ) ) {
+			return array( 'menus' => array() );
+		}
+
+		$result = array();
+		foreach ( $menus as $menu ) {
+			$items     = wp_get_nav_menu_items( $menu->term_id );
+			$menu_items = array();
+
+			if ( $items ) {
+				foreach ( $items as $item ) {
+					$menu_items[] = array(
+						'id'    => $item->ID,
+						'title' => $item->title,
+						'url'   => $item->url,
+						'order' => $item->menu_order,
+					);
+				}
+			}
+
+			$result[] = array(
+				'id'    => $menu->term_id,
+				'name'  => $menu->name,
+				'slug'  => $menu->slug,
+				'count' => $menu->count,
+				'items' => $menu_items,
+			);
+		}
+
+		return array( 'menus' => $result );
 	}
 
 	private function ability_to_array( $fallback_name, $ability ) {
