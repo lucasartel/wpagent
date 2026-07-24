@@ -760,6 +760,10 @@ class WPAgent_Admin_Abilities {
 		);
 	}
 
+	public function can_manage_options() {
+		return current_user_can( 'manage_options' );
+	}
+
 	public function can_create_post( $input = array() ) {
 		$post_type = $this->safe_post_type( $input['post_type'] ?? 'post' );
 		$type      = get_post_type_object( $post_type );
